@@ -16,10 +16,8 @@ function* throwErrorByDefault() {
 }
 
 function* webhook() {
-  console.log(this.request.query);
-  this.body = "webhook";
   if (this.request.query['hub.verify_token'] === process.env.WEBHOOK_TOKEN) {
-      this.body(this.request.query['hub.challenge']);
+      this.body = this.request.query['hub.challenge'];
     } else {
       this.throw('Error, wrong validation token');    
     }
