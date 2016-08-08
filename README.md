@@ -1,0 +1,3 @@
+#FXBOT
+
+Foreign Exchange Bot.
