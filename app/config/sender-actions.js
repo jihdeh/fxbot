@@ -1,6 +1,6 @@
 import request from "request";
 
-function sendActions(recipientId) {
+async function sendActions(recipientId) {
   const actionData = {
     recipient: {
       id: recipientId

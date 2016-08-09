@@ -79,11 +79,12 @@ async function receivedMessage(event) {
 
       default:
         try {
-          await sendActions(senderID);
+          sendActions(senderID).then(() => {
+            sendTextMessage(senderID, messageText);
+          });
         }catch(error) {
           console.log(error)
         }
-        sendTextMessage(senderID, messageText);
     }
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
