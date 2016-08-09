@@ -47,7 +47,7 @@ function* webhook() {
     //
     // You must send back a 200, within 20 seconds, to let us know you've 
     // successfully received the callback. Otherwise, the request will time out.
-    this.body = 200;
+    this.response.status = 200;
   }
 }
 
