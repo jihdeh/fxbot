@@ -1,11 +1,15 @@
 import request from "request";
+import greeting from "../util/generic-greetings";
+import { intersection } from "lodash";
 
+// const s = ["hello"];
+// console.log(intersection(s, greeting), greeting)
 
 function* webhook() {
   const data = this.request.body;
-  console.log(data);
   // Make sure this is a page subscription
   if (data.object == 'page') {
+    sendGreetingText()
     // Iterate over each entry
     // There may be multiple if batched
     data.entry.forEach(function(pageEntry) {
@@ -41,7 +45,7 @@ function receivedMessage(event) {
   const timeOfMessage = event.timestamp;
   const message = event.message;
 
-  console.log("Received message for user %d and page %d at %d with message:", 
+  console.log("Received message for user %d and page %d at %d with message:",
     senderID, recipientID, timeOfMessage);
   console.log(JSON.stringify(message));
 
@@ -95,60 +99,135 @@ function sendTextMessage(recipientId, messageText) {
   callSendAPI(messageData);
 }
 
-function callSendAPI(messageData) {
-  request({
-    uri: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
-    method: 'POST',
-    json: messageData
-
-  }, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      const recipientId = body.recipient_id;
-      const messageId = body.message_id;
-
-      console.log("Successfully sent generic message with id %s to recipient %s", 
-        messageId, recipientId);
-    } else {
-      console.error("Unable to send message.");
-      console.error(response);
-      console.error(error);
+function sendGreetingText() {
+  const messageData = {
+    {
+      setting_type: "greeting",
+      greeting: {
+        "text": "Welcome to FxBot0. An Experimental Tool for Facebooks MSSGR BOT!"
+      }
     }
-  });  
+  }
+  callSendGreetingText(messageData);
 }
-function receivedDeliveryConfirmation(event) {
-  var senderID = event.sender.id;
-  var recipientID = event.recipient.id;
-  var delivery = event.delivery;
-  var messageIDs = delivery.mids;
-  var watermark = delivery.watermark;
-  var sequenceNumber = delivery.seq;
 
-  if (messageIDs) {
-    messageIDs.forEach(function(messageID) {
-      console.log("Received delivery confirmation for message ID: %s", 
-        messageID);
+  function callSendGreetingText(messageData) {
+    request({
+      uri: "https://graph.facebook.com/v2.6/me/thread_settings",
+      qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
+      method: 'POST',
+      json: messageData
+    })
+  }
+
+  function callSendAPI(messageData) {
+    request({
+      uri: 'https://graph.facebook.com/v2.6/me/messages',
+      qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
+      method: 'POST',
+      json: messageData
+
+    }, function(error, response, body) {
+      if (!error && response.statusCode == 200) {
+        const recipientId = body.recipient_id;
+        const messageId = body.message_id;
+
+        console.log("Successfully sent generic message with id %s to recipient %s",
+          messageId, recipientId);
+      } else {
+        console.error("Unable to send message.");
+        console.error(response);
+        console.error(error);
+      }
     });
   }
 
-  console.log("All message before %d were delivered.", watermark);
-}
+  function receivedDeliveryConfirmation(event) {
+    var senderID = event.sender.id;
+    var recipientID = event.recipient.id;
+    var delivery = event.delivery;
+    var messageIDs = delivery.mids;
+    var watermark = delivery.watermark;
+    var sequenceNumber = delivery.seq;
 
-function receivedPostback(event) {
-  var senderID = event.sender.id;
-  var recipientID = event.recipient.id;
-  var timeOfPostback = event.timestamp;
+    if (messageIDs) {
+      messageIDs.forEach(function(messageID) {
+        console.log("Received delivery confirmation for message ID: %s",
+          messageID);
+      });
+    }
 
-  // The 'payload' param is a developer-defined field which is set in a postback 
-  // button for Structured Messages. 
-  var payload = event.postback.payload;
+    console.log("All message before %d were delivered.", watermark);
+  }
 
-  console.log("Received postback for user %d and page %d with payload '%s' " + 
-    "at %d", senderID, recipientID, payload, timeOfPostback);
+  function receivedPostback(event) {
+    var senderID = event.sender.id;
+    var recipientID = event.recipient.id;
+    var timeOfPostback = event.timestamp;
 
-  // When a postback is called, we'll send a message back to the sender to 
-  // let them know it was successful
-  sendTextMessage(senderID, "Postback called");
-}
+    // The 'payload' param is a developer-defined field which is set in a postback 
+    // button for Structured Messages. 
+    var payload = event.postback.payload;
 
-export default { webhook };
+    console.log("Received postback for user %d and page %d with payload '%s' " +
+      "at %d", senderID, recipientID, payload, timeOfPostback);
+
+    // When a postback is called, we'll send a message back to the sender to 
+    // let them know it was successful
+    sendTextMessage(senderID, "Postback called");
+  }
+
+
+  /*
+   * Turn typing indicator on
+   *
+   */
+  function sendTypingOn(recipientId) {
+    console.log("Turning typing indicator on");
+
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      sender_action: "typing_on"
+    };
+
+    callSendAPI(messageData);
+  }
+
+  /*
+   * Turn typing indicator off
+   *
+   */
+  function sendTypingOff(recipientId) {
+    console.log("Turning typing indicator off");
+
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      sender_action: "typing_off"
+    };
+
+    callSendAPI(messageData);
+  }
+
+  /*
+   * Send a read receipt to indicate the message has been read
+   *
+   */
+  function sendReadReceipt(recipientId) {
+    console.log("Sending a read receipt to mark message as seen");
+
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      sender_action: "mark_seen"
+    };
+
+    callSendAPI(messageData);
+  }
+
+
+  export default { webhook };
