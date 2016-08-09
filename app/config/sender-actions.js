@@ -23,7 +23,7 @@ function* sendMarkAsSeen(recipientId) {
   callSendAPI(actionData);
 }
 
-function* sendActions(recipientId, senderID) {
+function* sendActions(recipientId) {
   sendTyping(recipientId);
 }
 

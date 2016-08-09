@@ -2,7 +2,7 @@ import greeting from "../util/generic-greetings";
 import welcomeGreeting from "./config/welcome-greeting";
 import { intersection } from "lodash";
 import callSendAPI from "./config/send-requests";
-import {sendActions, sendMarkAsSeen} from "./config/sender-actions";
+import actions from "./config/sender-actions";
 import sendTextMessage from "./config/text-responder";
 // const s = ["hello"];
 // console.log(intersection(s, greeting), greeting)
@@ -80,7 +80,7 @@ async function receivedMessage(event) {
 
       default:
         try {
-          await sendActions(senderID);
+          await actions.sendActions(senderID);
         } catch (error) {
           console.log(error)
         }
@@ -105,7 +105,7 @@ function receivedDeliveryConfirmation(event) {
         messageID);
     });
   }
-  sendMarkAsSeen(recipientID)
+  actions.sendMarkAsSeen(recipientID);
 
   console.log("All message before %d were delivered.", watermark);
 }
