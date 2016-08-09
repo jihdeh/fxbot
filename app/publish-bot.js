@@ -101,13 +101,11 @@ function sendTextMessage(recipientId, messageText) {
 
 function sendGreetingText() {
   const messageData = {
-    {
       setting_type: "greeting",
       greeting: {
         "text": "Welcome to FxBot0. An Experimental Tool for Facebooks MSSGR BOT!"
       }
     }
-  }
   callSendGreetingText(messageData);
 }
 
