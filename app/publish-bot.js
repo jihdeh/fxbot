@@ -14,9 +14,7 @@ function* webhook() {
 
       // Iterate over each messaging event
       pageEntry.messaging.forEach(function(messagingEvent) {
-        if (messagingEvent.optin) {
-          receivedAuthentication(messagingEvent);
-        } else if (messagingEvent.message) {
+        if (messagingEvent.message) {
           receivedMessage(messagingEvent);
         } else if (messagingEvent.delivery) {
           receivedDeliveryConfirmation(messagingEvent);
@@ -118,6 +116,39 @@ function callSendAPI(messageData) {
     }
   });  
 }
+function receivedDeliveryConfirmation(event) {
+  var senderID = event.sender.id;
+  var recipientID = event.recipient.id;
+  var delivery = event.delivery;
+  var messageIDs = delivery.mids;
+  var watermark = delivery.watermark;
+  var sequenceNumber = delivery.seq;
 
+  if (messageIDs) {
+    messageIDs.forEach(function(messageID) {
+      console.log("Received delivery confirmation for message ID: %s", 
+        messageID);
+    });
+  }
+
+  console.log("All message before %d were delivered.", watermark);
+}
+
+function receivedPostback(event) {
+  var senderID = event.sender.id;
+  var recipientID = event.recipient.id;
+  var timeOfPostback = event.timestamp;
+
+  // The 'payload' param is a developer-defined field which is set in a postback 
+  // button for Structured Messages. 
+  var payload = event.postback.payload;
+
+  console.log("Received postback for user %d and page %d with payload '%s' " + 
+    "at %d", senderID, recipientID, payload, timeOfPostback);
+
+  // When a postback is called, we'll send a message back to the sender to 
+  // let them know it was successful
+  sendTextMessage(senderID, "Postback called");
+}
 
 export default { webhook };
