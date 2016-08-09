@@ -18,7 +18,7 @@ async function sendMarkAsSeen(recipientId) {
     },
     sender_action: "mark_seen"
   }
-  await callSendAPI(actionData);
+  callSendAPI(actionData);
 }
 
 function sendActions(recipientId) {
