@@ -23,7 +23,6 @@ function sendMarkAsSeen(recipientId) {
 
 function sendActions(recipientId) {
   sendMarkAsSeen(recipientId);
-  sendTyping(recipientId);
 }
 
 // function callSendAction(actionData) {
