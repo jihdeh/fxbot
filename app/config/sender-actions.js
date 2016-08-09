@@ -11,7 +11,7 @@ function sendTyping(recipientId) {
   callSendAPI(actionData);
 }
 
-async function sendMarkAsSeen(recipientId) {
+function sendMarkAsSeen(recipientId) {
   const actionData = {
     recipient: {
       id: recipientId
@@ -22,12 +22,8 @@ async function sendMarkAsSeen(recipientId) {
 }
 
 function sendActions(recipientId) {
-  sendMarkAsSeen(recipientId).then(() => {
-    sendTyping(recipientId);
-  })
-  .catch((error) => {
-    console.log("Error", error)
-  })
+  sendMarkAsSeen(recipientId);
+  sendTyping(recipientId);
 }
 
 // function callSendAction(actionData) {
