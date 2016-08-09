@@ -1,3 +1,5 @@
+import callSendAPI from "./send-requests";
+
 function sendTextMessage(recipientId, messageText) {
   const messageData = {
     recipient: {
