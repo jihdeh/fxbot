@@ -13,7 +13,7 @@ function sendTyping(recipientId) {
 
 //Apparently this isn't working on FB
 //But it's on their doc
-function* sendMarkAsSeen(recipientId) {
+function sendMarkAsSeen(recipientId) {
   const actionData = {
     recipient: {
       id: recipientId
@@ -23,8 +23,8 @@ function* sendMarkAsSeen(recipientId) {
   callSendAPI(actionData);
 }
 
-function* sendActions(recipientId) {
-  sendTyping(recipientId);
+function sendActions(recipientId, senderID) {
+  sendMarkAsSeen(recipientId);
 }
 
-export default {sendActions, sendMarkAsSeen};
+export default sendActions;
