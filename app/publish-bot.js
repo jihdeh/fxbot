@@ -98,7 +98,8 @@ function sendTextMessage(recipientId, messageText) {
     },
     message: {
       text: messageText
-    }
+    },
+    sender_action: "mark_seen"
   };
 
   callSendAPI(messageData);
