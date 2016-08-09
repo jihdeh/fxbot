@@ -2,7 +2,8 @@ import greeting from "../util/generic-greetings";
 import welcomeGreeting from "./config/welcome-greeting";
 import { intersection } from "lodash";
 import callSendAPI from "./config/send-requests";
-import sendActions from "./config/sender-actions";
+import {sendActions, sendMarkAsSeen} from "./config/sender-actions";
+import sendTextMessage from "./config/text-responder";
 // const s = ["hello"];
 // console.log(intersection(s, greeting), greeting)
 
@@ -79,7 +80,7 @@ async function receivedMessage(event) {
 
       default:
         try {
-          await sendActions(senderID, recipientID);
+          await sendActions(senderID);
         } catch (error) {
           console.log(error)
         }
@@ -89,24 +90,6 @@ async function receivedMessage(event) {
     sendTextMessage(senderID, "Message with attachment received");
   }
 }
-
-
-function sendTextMessage(recipientId, messageText) {
-  const messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      text: messageText
-    }
-  };
-
-  callSendAPI(messageData);
-}
-
-
-
-
 
 function receivedDeliveryConfirmation(event) {
   var senderID = event.sender.id;
@@ -122,6 +105,7 @@ function receivedDeliveryConfirmation(event) {
         messageID);
     });
   }
+  sendMarkAsSeen(recipientID)
 
   console.log("All message before %d were delivered.", watermark);
 }
