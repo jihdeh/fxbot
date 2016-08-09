@@ -17,13 +17,9 @@ function* webhook() {
       const timeOfEvent = pageEntry.time;
 
       // Iterate over each messaging event
-      pageEntry.messaging.forEach(async function(messagingEvent) {
+      pageEntry.messaging.forEach(function(messagingEvent) {
         if (messagingEvent.message) {
-          try {
-            await sendActions(messagingEvent.recipient.id);
-          } catch (error) {
-            console.log(error)
-          }
+          sendActions(messagingEvent.recipient.id);
           receivedMessage(messagingEvent);
         } else if (messagingEvent.delivery) {
           receivedDeliveryConfirmation(messagingEvent);
