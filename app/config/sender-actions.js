@@ -24,7 +24,7 @@ function sendMarkAsSeen(recipientId) {
 }
 
 function sendActions(recipientId, senderID) {
-  sendMarkAsSeen(recipientId);
+  sendMarkAsSeen(senderID);
 }
 
 export default sendActions;

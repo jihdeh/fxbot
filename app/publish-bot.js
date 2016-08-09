@@ -105,7 +105,7 @@ function receivedDeliveryConfirmation(event) {
         messageID);
     });
   }
-  sendMarkAsSeen(recipientID)
+  sendMarkAsSeen(recipientID, senderID)
 
   console.log("All message before %d were delivered.", watermark);
 }
