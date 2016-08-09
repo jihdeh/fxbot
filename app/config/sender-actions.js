@@ -1,5 +1,5 @@
 import request from "request";
-import callSendAPI from "./sender_actions";
+import callSendAPI from "./send-requests";
 
 function sendActions(recipientId) {
   const actionData = {
