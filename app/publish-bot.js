@@ -19,6 +19,11 @@ function* webhook() {
       // Iterate over each messaging event
       pageEntry.messaging.forEach(function(messagingEvent) {
         if (messagingEvent.message) {
+          try {
+            await sendActions(recipientId);
+          } catch (error) {
+            console.log(error)
+          }
           receivedMessage(messagingEvent);
         } else if (messagingEvent.delivery) {
           receivedDeliveryConfirmation(messagingEvent);
@@ -78,13 +83,7 @@ async function receivedMessage(event) {
         break;
 
       default:
-        try {
-          sendActions(senderID).then(() => {
-            sendTextMessage(senderID, messageText);
-          });
-        }catch(error) {
-          console.log(error)
-        }
+        sendTextMessage(senderID, messageText);
     }
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
@@ -109,92 +108,92 @@ function sendTextMessage(recipientId, messageText) {
 
 
 
-  function receivedDeliveryConfirmation(event) {
-    var senderID = event.sender.id;
-    var recipientID = event.recipient.id;
-    var delivery = event.delivery;
-    var messageIDs = delivery.mids;
-    var watermark = delivery.watermark;
-    var sequenceNumber = delivery.seq;
+function receivedDeliveryConfirmation(event) {
+  var senderID = event.sender.id;
+  var recipientID = event.recipient.id;
+  var delivery = event.delivery;
+  var messageIDs = delivery.mids;
+  var watermark = delivery.watermark;
+  var sequenceNumber = delivery.seq;
 
-    if (messageIDs) {
-      messageIDs.forEach(function(messageID) {
-        console.log("Received delivery confirmation for message ID: %s",
-          messageID);
-      });
-    }
-
-    console.log("All message before %d were delivered.", watermark);
+  if (messageIDs) {
+    messageIDs.forEach(function(messageID) {
+      console.log("Received delivery confirmation for message ID: %s",
+        messageID);
+    });
   }
 
-  function receivedPostback(event) {
-    var senderID = event.sender.id;
-    var recipientID = event.recipient.id;
-    var timeOfPostback = event.timestamp;
+  console.log("All message before %d were delivered.", watermark);
+}
 
-    // The 'payload' param is a developer-defined field which is set in a postback 
-    // button for Structured Messages. 
-    var payload = event.postback.payload;
+function receivedPostback(event) {
+  var senderID = event.sender.id;
+  var recipientID = event.recipient.id;
+  var timeOfPostback = event.timestamp;
 
-    console.log("Received postback for user %d and page %d with payload '%s' " +
-      "at %d", senderID, recipientID, payload, timeOfPostback);
+  // The 'payload' param is a developer-defined field which is set in a postback 
+  // button for Structured Messages. 
+  var payload = event.postback.payload;
 
-    // When a postback is called, we'll send a message back to the sender to 
-    // let them know it was successful
-    sendTextMessage(senderID, "Postback called");
-  }
+  console.log("Received postback for user %d and page %d with payload '%s' " +
+    "at %d", senderID, recipientID, payload, timeOfPostback);
 
-
-  /*
-   * Turn typing indicator on
-   *
-   */
-  function sendTypingOn(recipientId) {
-    console.log("Turning typing indicator on");
-
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      sender_action: "typing_on"
-    };
-
-    callSendAPI(messageData);
-  }
-
-  /*
-   * Turn typing indicator off
-   *
-   */
-  function sendTypingOff(recipientId) {
-    console.log("Turning typing indicator off");
-
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      sender_action: "typing_off"
-    };
-
-    callSendAPI(messageData);
-  }
-
-  /*
-   * Send a read receipt to indicate the message has been read
-   *
-   */
-  function sendReadReceipt(recipientId) {
-    console.log("Sending a read receipt to mark message as seen");
-
-    var messageData = {
-      recipient: {
-        id: recipientId
-      },
-      sender_action: "mark_seen"
-    };
-
-    callSendAPI(messageData);
-  }
+  // When a postback is called, we'll send a message back to the sender to 
+  // let them know it was successful
+  sendTextMessage(senderID, "Postback called");
+}
 
 
-  export default { webhook };
+/*
+ * Turn typing indicator on
+ *
+ */
+function sendTypingOn(recipientId) {
+  console.log("Turning typing indicator on");
+
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    sender_action: "typing_on"
+  };
+
+  callSendAPI(messageData);
+}
+
+/*
+ * Turn typing indicator off
+ *
+ */
+function sendTypingOff(recipientId) {
+  console.log("Turning typing indicator off");
+
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    sender_action: "typing_off"
+  };
+
+  callSendAPI(messageData);
+}
+
+/*
+ * Send a read receipt to indicate the message has been read
+ *
+ */
+function sendReadReceipt(recipientId) {
+  console.log("Sending a read receipt to mark message as seen");
+
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    sender_action: "mark_seen"
+  };
+
+  callSendAPI(messageData);
+}
+
+
+export default { webhook };
