@@ -11,6 +11,8 @@ function sendTyping(recipientId) {
   callSendAPI(actionData);
 }
 
+//Apparently this isn't working on FB
+//But it's on their doc
 function sendMarkAsSeen(recipientId) {
   const actionData = {
     recipient: {
@@ -21,8 +23,9 @@ function sendMarkAsSeen(recipientId) {
   callSendAPI(actionData);
 }
 
-function sendActions(recipientId) {
-  sendMarkAsSeen(recipientId);
+function sendActions(recipientId, senderID) {
+  sendTyping(recipientId);
+  sendMarkAsSeen(senderID);
 }
 
 // function callSendAction(actionData) {

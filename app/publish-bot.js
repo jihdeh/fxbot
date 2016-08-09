@@ -79,7 +79,7 @@ async function receivedMessage(event) {
 
       default:
         try {
-          await sendActions(senderID);
+          await sendActions(senderID, recipientID);
         } catch (error) {
           console.log(error)
         }
