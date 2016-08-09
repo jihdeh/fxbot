@@ -14,17 +14,21 @@ function sendTyping(recipientId) {
 //Apparently this isn't working on FB
 //But it's on their doc
 function sendMarkAsSeen(recipientId) {
-  const actionData = {
+  console.log("Sending a read receipt to mark message as seen");
+
+  var actionData = {
     recipient: {
       id: recipientId
     },
     sender_action: "mark_seen"
-  }
+  };
+
   callSendAPI(actionData);
 }
 
-function sendActions(recipientId, senderID) {
-  sendMarkAsSeen(senderID);
+function sendActions(recipientId) {
+  sendTyping(recipientId);
 }
+
 
 export default sendActions;
