@@ -1,7 +1,7 @@
 import request from "request";
 import callSendAPI from "./send-requests";
 
-function sendActions(recipientId) {
+function sendTyping(recipientId) {
   const actionData = {
     recipient: {
       id: recipientId
@@ -9,6 +9,25 @@ function sendActions(recipientId) {
     sender_action: "typing_on"
   }
   callSendAPI(actionData);
+}
+
+async function sendMarkAsSeen(recipientId) {
+  const actionData = {
+    recipient: {
+      id: recipientId
+    },
+    sender_action: "mark_seen"
+  }
+  await callSendAPI(actionData);
+}
+
+function sendActions(recipientId) {
+  sendMarkAsSeen(recipientId).then(() => {
+    sendTyping(recipientId);
+  })
+  .catch((error) => {
+    console.log("Error", error)
+  })
 }
 
 // function callSendAction(actionData) {
