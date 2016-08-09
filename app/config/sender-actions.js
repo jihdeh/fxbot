@@ -7,7 +7,7 @@ function sendActions(recipientId) {
     },
     sender_action: "typing_on"
   }
-  callSendAction(messageData);
+  callSendAction(actionData);
 }
 
 function callSendAction(actionData) {
