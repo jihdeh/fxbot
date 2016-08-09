@@ -20,7 +20,7 @@ function* webhook() {
       pageEntry.messaging.forEach(async function(messagingEvent) {
         if (messagingEvent.message) {
           try {
-            await sendActions(recipientId);
+            await sendActions(messagingEvent.recipient.id);
           } catch (error) {
             console.log(error)
           }
