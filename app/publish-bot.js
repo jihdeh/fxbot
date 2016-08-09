@@ -19,7 +19,6 @@ function* webhook() {
       // Iterate over each messaging event
       pageEntry.messaging.forEach(function(messagingEvent) {
         if (messagingEvent.message) {
-          sendActions(messagingEvent.recipient.id);
           receivedMessage(messagingEvent);
         } else if (messagingEvent.delivery) {
           receivedDeliveryConfirmation(messagingEvent);
@@ -40,7 +39,7 @@ function* webhook() {
 }
 
 
-function receivedMessage(event) {
+async function receivedMessage(event) {
   const senderID = event.sender.id;
   const recipientID = event.recipient.id;
   const timeOfMessage = event.timestamp;
@@ -79,6 +78,11 @@ function receivedMessage(event) {
         break;
 
       default:
+        try {
+          await sendActions(recipientId);
+        } catch (error) {
+          console.log(error)
+        }
         sendTextMessage(senderID, messageText);
     }
   } else if (messageAttachments) {
