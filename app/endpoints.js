@@ -15,7 +15,6 @@ router.get("/webhook", queryRoutes.webhook);
 
 
 api
-  .use(router.routes())
-  .use(router.allowedMethods());
+  .use(router.routes());
 
 export default api;
