@@ -1,5 +1,6 @@
 import request from "request";
 import greeting from "../util/generic-greetings";
+import welcomeGreeting from "./config/welcome-greeting";
 import { intersection } from "lodash";
 
 // const s = ["hello"];
@@ -7,11 +8,10 @@ import { intersection } from "lodash";
 
 function* webhook() {
   const data = this.request.body;
-  // Make sure this is a page subscription
+
   if (data.object == 'page') {
-    sendGreetingText()
-    // Iterate over each entry
-    // There may be multiple if batched
+    welcomeGreeting();
+    
     data.entry.forEach(function(pageEntry) {
       const pageID = pageEntry.id;
       const timeOfEvent = pageEntry.time;
@@ -99,24 +99,7 @@ function sendTextMessage(recipientId, messageText) {
   callSendAPI(messageData);
 }
 
-function sendGreetingText() {
-  const messageData = {
-      setting_type: "greeting",
-      greeting: {
-        "text": "Welcome to FxBot0. An Experimental Tool for Facebooks MSSGR BOT!"
-      }
-    }
-  callSendGreetingText(messageData);
-}
 
-  function callSendGreetingText(messageData) {
-    request({
-      uri: "https://graph.facebook.com/v2.6/me/thread_settings",
-      qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
-      method: 'POST',
-      json: messageData
-    })
-  }
 
   function callSendAPI(messageData) {
     request({
