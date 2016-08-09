@@ -1,8 +1,8 @@
-import request from "request";
 import greeting from "../util/generic-greetings";
 import welcomeGreeting from "./config/welcome-greeting";
 import { intersection } from "lodash";
-
+import callSendAPI from "./config/send-requests";
+import sendActions from "./config/sender-actions";
 // const s = ["hello"];
 // console.log(intersection(s, greeting), greeting)
 
@@ -11,7 +11,7 @@ function* webhook() {
 
   if (data.object == 'page') {
     welcomeGreeting();
-    
+
     data.entry.forEach(function(pageEntry) {
       const pageID = pageEntry.id;
       const timeOfEvent = pageEntry.time;
@@ -39,7 +39,7 @@ function* webhook() {
 }
 
 
-function receivedMessage(event) {
+async function receivedMessage(event) {
   const senderID = event.sender.id;
   const recipientID = event.recipient.id;
   const timeOfMessage = event.timestamp;
@@ -78,6 +78,11 @@ function receivedMessage(event) {
         break;
 
       default:
+        try {
+          await sendActions(recipientId);
+        }catch(error) {
+          console.log(error)
+        }
         sendTextMessage(senderID, messageText);
     }
   } else if (messageAttachments) {
@@ -101,27 +106,7 @@ function sendTextMessage(recipientId, messageText) {
 
 
 
-  function callSendAPI(messageData) {
-    request({
-      uri: 'https://graph.facebook.com/v2.6/me/messages',
-      qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
-      method: 'POST',
-      json: messageData
 
-    }, function(error, response, body) {
-      if (!error && response.statusCode == 200) {
-        const recipientId = body.recipient_id;
-        const messageId = body.message_id;
-
-        console.log("Successfully sent generic message with id %s to recipient %s",
-          messageId, recipientId);
-      } else {
-        console.error("Unable to send message.");
-        console.error(response);
-        console.error(error);
-      }
-    });
-  }
 
   function receivedDeliveryConfirmation(event) {
     var senderID = event.sender.id;
