@@ -12,6 +12,7 @@
     "babel-preset-react": "6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "chai": "^3.5.0",
+    "eslint": "^3.2.2",
     "koa": "^1.2.0",
     "koa-bodyparser": "^2.2.0",
     "koa-cache-control": "^1.0.0",
@@ -30,13 +31,15 @@
     "babel-preset-es2015": "6.6.0",
     "babel-preset-react": "6.5.0",
     "istanbul": "^0.4.4",
+    "eslint-plugin-babel": "^3.3.0",
     "mocha": "^2.5.3",
     "supertest": "^1.2.0",
     "supertest-as-promised": "^3.2.0"
   },
   "scripts": {
     "start": "node server/index.js",
-    "dev": "nodemon --ignore public -d 2 server/index.js",
+    "dev": "nodemon --ignore public -d 2 server/index.js && npm run lint",
+    "lint": "eslint ./app",
     "test": "istanbul cover _mocha -- -R spec $npm_package_options_mocha"
   },
   "options": {
