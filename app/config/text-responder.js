@@ -1,7 +1,7 @@
 import callSendAPI from "./send-requests";
 
 let string = "convert 100 usd to naira";
-const rates = `USD => 390 | \n GBP => 500 | EUR => 420`;
+const rates = `USD => 390 \n GBP => 500 \n EUR => 420`;
 
 // [
 //   {
@@ -12,7 +12,6 @@ const rates = `USD => 390 | \n GBP => 500 | EUR => 420`;
 // ]
 
 function listener(text) {
-  console.log(text, text===rates)
   if(text === ("rates" || "rate")) {
     return rates;
   }
