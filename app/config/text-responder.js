@@ -24,10 +24,10 @@ function listener(text) {
   } else {
     console.log("else enter here", text)
     let newText = newText.split(" ");
+    console.log(newText)
     let amount = newText[1];
     let currencyTo = newText[2].toUpperCase();
     let currencyFrom = newText[4].toUpperCase();
-    console.log(newText, amount, currencyTo, currencyFrom, "----")
     let vv = fx.convert(amount, {from: currencyFrom, to: currencyTo});
     console.log(vv, "vv")
     return fx.convert(amount, {from: currencyFrom, to: currencyTo});
