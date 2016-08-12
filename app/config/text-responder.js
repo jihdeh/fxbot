@@ -28,7 +28,7 @@ function listener(text) {
     let currencyFrom = text[2].toUpperCase();
     let currencyTo = text[4].toUpperCase();
 
-    console.log(text[1], "forst text");
+    console.log(text[1], "forst text", fx.convert(amount, {from: currencyFrom, to: currencyTo}));
     return fx.convert(amount, {from: currencyFrom, to: currencyTo});
   }
 }
@@ -36,6 +36,7 @@ function listener(text) {
 
 function sendTextMessage(recipientId, messageText) {
   const response = listener(messageText);
+  console.log(response, "-----response")
   const messageData = {
     recipient: {
       id: recipientId
