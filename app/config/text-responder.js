@@ -55,7 +55,7 @@ function listener(text) {
       });
     } else {
       return "Sorry there was a problem processing your command \nPlease check the commands on the facebook page \n \
-      @ https://facebook.com/fxauth0";
+      @ https://facebook.com/fxbot0";
     }
     return numbro(value).format('0,0');
   }
