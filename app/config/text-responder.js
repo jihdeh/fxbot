@@ -1,7 +1,6 @@
 import callSendAPI from "./send-requests";
 import fx from "money";
 
-let string = "convert 100 usd to naira";
 const rates = `USD => 390 \nGBP => 505 \nEUR => 420`;
 
 // [
@@ -24,14 +23,14 @@ function listener(text) {
     return rates;
   } else {
     console.log("else enter here", text)
-    // let text = text.split(" ");
-    // let amount = text[1];
-    // let currencyTo = text[2].toUpperCase();
-    // let currencyFrom = text[4].toUpperCase();
-    // console.log(text, amount, currencyTo, currencyFrom, "----")
-    // let vv = fx.convert(amount, {from: currencyFrom, to: currencyTo});
-    // console.log(vv, "vv")
-    // return fx.convert(amount, {from: currencyFrom, to: currencyTo});
+    let newText = newText.split(" ");
+    let amount = newText[1];
+    let currencyTo = newText[2].toUpperCase();
+    let currencyFrom = newText[4].toUpperCase();
+    console.log(newText, amount, currencyTo, currencyFrom, "----")
+    let vv = fx.convert(amount, {from: currencyFrom, to: currencyTo});
+    console.log(vv, "vv")
+    return fx.convert(amount, {from: currencyFrom, to: currencyTo});
   }
 }
 
