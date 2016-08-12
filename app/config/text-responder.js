@@ -54,11 +54,11 @@ function listener(text) {
         to: response.convertCurrencyFrom
       });
     } else {
-      return ```Sorry there was a problem processing your command \nPlease check the commands \n \
+      return `Sorry there was a problem processing your command \nPlease check the commands \n \
         rates || rate => To view current rates \n \
         convert 50 euros => to convert 50 euros to naira(default) \n \ 
         convert 100 dollars to naira \n \
-        convert 100 USD (currency is case sensitive for now :D) defaults to naira conversion.```;
+        convert 100 USD (currency is case sensitive for now :D) defaults to naira conversion.`;
     }
     return numbro(value).format('0,0');
   }
