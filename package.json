@@ -21,6 +21,7 @@
     "koa-router": "^5.4.0",
     "koa-static": "^2.0.0",
     "lodash": "^4.14.2",
+    "money": "^0.2.0",
     "nodemon": "^1.9.2",
     "request": "^2.74.0",
     "winston": "^2.2.0"
