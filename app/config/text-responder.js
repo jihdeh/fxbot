@@ -23,7 +23,7 @@ function listener(text) {
     return rates;
   } else {
     console.log("else enter here", text)
-    let newText = newText.split(" ");
+    let newText = text.split(" ");
     console.log(newText)
     let amount = newText[1];
     let currencyTo = newText[2].toUpperCase();
