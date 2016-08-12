@@ -1,11 +1,6 @@
-import greeting from "../util/generic-greetings";
 import welcomeGreeting from "./config/welcome-greeting";
-import { intersection } from "lodash";
-import callSendAPI from "./config/send-requests";
 import sendActions from "./config/sender-actions";
 import sendTextMessage from "./config/text-responder";
-// const s = ["hello"];
-// console.log(intersection(s, greeting), greeting)
 
 function* webhook() {
   const data = this.request.body;
@@ -14,8 +9,6 @@ function* webhook() {
     welcomeGreeting();
 
     data.entry.forEach(function(pageEntry) {
-      const pageID = pageEntry.id;
-      const timeOfEvent = pageEntry.time;
 
       // Iterate over each messaging event
       pageEntry.messaging.forEach(function(messagingEvent) {
@@ -24,7 +17,6 @@ function* webhook() {
         } else if (messagingEvent.delivery) {
           receivedDeliveryConfirmation(messagingEvent);
         } else if (messagingEvent.postback) {
-          receivedPostback(messagingEvent);
         } else {
           console.log("Webhook received unknown messagingEvent: ", messagingEvent);
         }
@@ -50,7 +42,6 @@ async function receivedMessage(event) {
     senderID, recipientID, timeOfMessage);
   console.log(JSON.stringify(message));
 
-  const messageId = message.mid;
 
   // You may get a text or attachment but not both
   const messageText = message.text;
@@ -62,22 +53,6 @@ async function receivedMessage(event) {
     // keywords and send back the corresponding example. Otherwise, just echo
     // the text we received.
     switch (messageText) {
-      case 'image':
-        sendImageMessage(senderID);
-        break;
-
-      case 'button':
-        sendButtonMessage(senderID);
-        break;
-
-      case 'generic':
-        sendGenericMessage(senderID);
-        break;
-
-      case 'receipt':
-        sendReceiptMessage(senderID);
-        break;
-
       default:
         try {
           await sendActions(senderID);
@@ -92,12 +67,9 @@ async function receivedMessage(event) {
 }
 
 function receivedDeliveryConfirmation(event) {
-  var senderID = event.sender.id;
-  var recipientID = event.recipient.id;
-  var delivery = event.delivery;
-  var messageIDs = delivery.mids;
-  var watermark = delivery.watermark;
-  var sequenceNumber = delivery.seq;
+  let delivery = event.delivery;
+  let messageIDs = delivery.mids;
+  let watermark = delivery.watermark;
 
   if (messageIDs) {
     messageIDs.forEach(function(messageID) {
@@ -106,23 +78,6 @@ function receivedDeliveryConfirmation(event) {
     });
   }
   console.log("All message before %d were delivered.", watermark);
-}
-
-function receivedPostback(event) {
-  var senderID = event.sender.id;
-  var recipientID = event.recipient.id;
-  var timeOfPostback = event.timestamp;
-
-  // The 'payload' param is a developer-defined field which is set in a postback 
-  // button for Structured Messages. 
-  var payload = event.postback.payload;
-
-  console.log("Received postback for user %d and page %d with payload '%s' " +
-    "at %d", senderID, recipientID, payload, timeOfPostback);
-
-  // When a postback is called, we'll send a message back to the sender to 
-  // let them know it was successful
-  sendTextMessage(senderID, "Postback called");
 }
 
 

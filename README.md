@@ -8,6 +8,9 @@ This application is just an experiment on the Facebook messenger bot
 [![Commands](https://s10.postimg.org/dwiu74vih/Screen_Shot_2016_08_12_at_10_30_30_PM.png)](https://postimg.org/image/vmkis6939/)
 
 
+P.S: This bot hasn't been reviewed by facebook, so it will not work publicly, except you're a tester or developer on the bot app.
+
+
 This bot only works for three currencies converting to naira by default.
 
 1. USD | dollars | dollar
@@ -34,3 +37,9 @@ Create your environment variables
 $ npm install
 $ gulp
 ```
+
+Advantage of the Facebook Messenger Bot?
+
+It's good for your business page.
+
+[For documentation on the Messenger Bot](https://developers.facebook.com/docs/messenger-platform/product-overview)
