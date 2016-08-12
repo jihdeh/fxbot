@@ -1,16 +1,10 @@
 import callSendAPI from "./send-requests";
 import fx from "money";
-import allowedCurrencies from "../util/allowed-currency";
+import numbro from "numbro"
+import transform from "../util/transform";
 
 const rates = `USD => 390 \nGBP => 505 \nEUR => 420`;
 
-// [
-//   {
-//     "USD": "390",
-//     "GBP": "500",
-//     "EUR": "420"
-//   }
-// ]
 fx.base = "NGN";
 fx.settings = { from: "NGN" };
 fx.rates = {
@@ -19,23 +13,6 @@ fx.rates = {
     "EUR": 420,
     "NGN": 1
   }
-
-function transform(currencyName) {
-  let caseCurrency = (currencyName !== undefined) ? currencyName.toLowerCase() : false;
-  if (allowedCurrencies.indexOf(currencyName) > -1) {
-    if (currencyName === "USD" || caseCurrency === "dollars" || caseCurrency === "dollar") {
-      return "USD";
-    } else if (currencyName === "GBP" || caseCurrency === "pounds" || caseCurrency === "pound") {
-      return "GBP";
-    } else if (currencyName === "EUR" || caseCurrency === "euros" || caseCurrency === "euro") {
-      return "EUR";
-    } else if (currencyName === "NGN" || caseCurrency === "naira") {
-      return "NGN";
-    }
-  } else {
-    return false;
-  }
-}
 
 function generate(text) {
   let newText = text.split(" ");
@@ -60,7 +37,6 @@ function generate(text) {
     return false;
   }
 }
-// listener("convert 1000 pounds");
 
 function listener(text) {
   if (text === "rates" || text === "rate") {
@@ -81,15 +57,13 @@ function listener(text) {
     } else {
       return "Sorry there was a problem processing your command \nPlease check the commands";
     }
-    console.log("value", value)
-    return value;
+    return numbro(value).format('0,0');
   }
 }
 
 
 function sendTextMessage(recipientId, messageText) {
   const response = listener(messageText);
-  console.log(response, "-----response")
   const messageData = {
     recipient: {
       id: recipientId
