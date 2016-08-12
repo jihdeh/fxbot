@@ -1,5 +1,6 @@
 import callSendAPI from "./send-requests";
 import fx from "money";
+import allowedCurrencies from "../util/allowed-currency";
 
 const rates = `USD => 390 \nGBP => 505 \nEUR => 420`;
 
@@ -11,26 +12,77 @@ const rates = `USD => 390 \nGBP => 505 \nEUR => 420`;
 //   }
 // ]
 fx.base = "NGN";
+fx.settings = { from: "NGN" };
 fx.rates = {
-  "USD": 390,
-  "GBP": 505,
-  "EUR": 420,
-  "NGN": 1
+    "USD": 390,
+    "GBP": 505,
+    "EUR": 420,
+    "NGN": 1
+  }
+
+function transform(currencyName) {
+  let caseCurrency = (currencyName !== undefined) ? currencyName.toLowerCase() : false;
+  if (allowedCurrencies.indexOf(currencyName) > -1) {
+    if (currencyName === "USD" || caseCurrency === "dollars" || caseCurrency === "dollar") {
+      return "USD";
+    } else if (currencyName === "GBP" || caseCurrency === "pounds" || caseCurrency === "pound") {
+      return "GBP";
+    } else if (currencyName === "EUR" || caseCurrency === "euros" || caseCurrency === "euro") {
+      return "EUR";
+    } else if (currencyName === "NGN" || caseCurrency === "naira") {
+      return "NGN";
+    }
+  } else {
+    return false;
+  }
 }
+
+function generate(text) {
+  let newText = text.split(" ");
+  let fromCurrency = transform(newText[2]);
+  let toCurrency = transform(newText[4]);
+  let amount = newText[1];
+
+  if (fromCurrency && toCurrency !== false && !isNaN(amount)) {
+    const structure = {
+      amount: amount,
+      convertCurrencyFrom: fromCurrency,
+      convertCurrencyTo: toCurrency
+    }
+    return structure;
+  } else if (fromCurrency !== false && toCurrency === false && !isNaN(amount)) {
+    const structure = {
+      amount: amount,
+      convertCurrencyFrom: fromCurrency
+    }
+    return structure;
+  } else {
+    return false;
+  }
+}
+// listener("convert 1000 pounds");
 
 function listener(text) {
   if (text === "rates" || text === "rate") {
     return rates;
   } else {
-    console.log("else enter here", text)
-    let newText = text.split(" ");
-    console.log(newText)
-    let amount = newText[1];
-    let currencyTo = newText[2].toUpperCase();
-    let currencyFrom = newText[4].toUpperCase();
-    let vv = fx.convert(amount, {from: currencyFrom, to: currencyTo});
-    console.log(vv, "vv")
-    return fx.convert(amount, {from: currencyFrom, to: currencyTo});
+    const response = generate(text);
+    let value = "";
+    if (response.convertCurrencyFrom && response.convertCurrencyTo) {
+      value = fx.convert(response.amount, {
+        from: response.convertCurrencyFrom,
+        to: response.convertCurrencyTo
+      });
+      return value;
+    } else if (response.convertCurrencyFrom) {
+      value = fx.convert(response.amount, {
+        to: response.convertCurrencyFrom
+      });
+    } else {
+      return "Sorry there was a problem processing your command \nPlease check the commands";
+    }
+    console.log("value", value)
+    return value;
   }
 }
 

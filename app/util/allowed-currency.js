@@ -1,0 +1,20 @@
+module.exports = [
+  "USD",
+  "GBP",
+  "EUR",
+  "NGN",
+  "dollars",
+  "DOLLARS",
+  "pounds",
+  "POUNDS",
+  "euros",
+  "EUROS",
+  "naira",
+  "NAIRA",
+  "dollar",
+  "DOLLAR",
+  "pound",
+  "POUND",
+  "euro",
+  "EURO"
+];
