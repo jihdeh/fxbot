@@ -43,14 +43,12 @@ function listener(text) {
     return rates;
   } else {
     const response = generate(text);
-    console.log(response)
     let value = "";
     if (response.convertCurrencyFrom && response.convertCurrencyTo) {
       value = fx.convert(response.amount, {
         to: response.convertCurrencyFrom,
         from: response.convertCurrencyTo
       });
-      return value;
     } else if (response.convertCurrencyFrom) {
       value = fx.convert(response.amount, {
         to: response.convertCurrencyFrom
@@ -62,7 +60,6 @@ function listener(text) {
   }
 }
 
-listener("convert 1000 dollars to naira")
 
 function sendTextMessage(recipientId, messageText) {
   const response = listener(messageText);
