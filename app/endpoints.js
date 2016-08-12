@@ -9,8 +9,6 @@ const router = koaRouter();
 
 api.use(bodyParser());
 
-router.get("/message", queryRoutes.fetchMessage);
-router.get("/throwError", queryRoutes.throwErrorByDefault);
 // ......................
 router.get("/webhook", queryRoutes.webhook);
 router.post("/webhook", pubNub.webhook)
