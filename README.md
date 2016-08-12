@@ -17,3 +17,10 @@ convert 50 euros => to convert 50 euros to naira(default)
 convert 100 dollars to naira
 convert 100 USD (currency is case sensitive for now :D) defaults to naira conversion.
 ```
+
+Development
+
+```
+$ npm install
+$ gulp
+```
