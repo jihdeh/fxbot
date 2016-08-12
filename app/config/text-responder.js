@@ -23,12 +23,12 @@ function listener(text) {
   if (text === "rates" || text === "rate") {
     return rates;
   } else {
-    console.log("else enter here")
+    console.log("else enter here", text)
     let text = text.split(" ");
     let amount = text[1];
-    let currencyFrom = text[2].toUpperCase();
-    let currencyTo = text[4].toUpperCase();
-    console.log(amount, currencyTo, currencyFrom, "----")
+    let currencyTo = text[2].toUpperCase();
+    let currencyFrom = text[4].toUpperCase();
+    console.log(text, amount, currencyTo, currencyFrom, "----")
     let vv = fx.convert(amount, {from: currencyFrom, to: currencyTo});
     console.log(vv, "vv")
     return fx.convert(amount, {from: currencyFrom, to: currencyTo});
