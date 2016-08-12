@@ -1,4 +1,4 @@
-import allowedCurrencies from "./util/allowed-currency";
+import allowedCurrencies from "./allowed-currency";
 
 function transform(currencyName) {
   let caseCurrency = (currencyName !== undefined) ? currencyName.toLowerCase() : false;
