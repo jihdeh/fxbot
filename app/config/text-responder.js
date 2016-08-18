@@ -16,8 +16,8 @@ fx.rates = {
 
 function generate(text) {
   let newText = text.split(" ");
-  let fromCurrency = transform(newText[2]);
-  let toCurrency = transform(newText[4]);
+  let fromCurrency = transform(newText[2].toUpperCase());
+  let toCurrency = transform(newText[4].toUpperCase());
   let amount = newText[1];
 
   if (fromCurrency && toCurrency !== false && !isNaN(amount)) {
@@ -39,10 +39,12 @@ function generate(text) {
 }
 
 function listener(text) {
+  text = text.toLowerCase();
   if (text === "rates" || text === "rate") {
     return rates;
   } else {
     const response = generate(text);
+    console.log(response);
     let value = "";
     if (response.convertCurrencyFrom && response.convertCurrencyTo) {
       value = fx.convert(response.amount, {
@@ -57,10 +59,10 @@ function listener(text) {
       return "Sorry there was a problem processing your command \nPlease check the commands on the facebook page \n \
       @ https://facebook.com/fxbot0";
     }
+    console.log(numbro(value).format('0,0'));
     return numbro(value).format('0,0');
   }
 }
-
 
 function sendTextMessage(recipientId, messageText) {
   const response = listener(messageText);

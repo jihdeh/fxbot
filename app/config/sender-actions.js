@@ -1,4 +1,3 @@
-import request from "request";
 import callSendAPI from "./send-requests";
 
 function sendTyping(recipientId) {
