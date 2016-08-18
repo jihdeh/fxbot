@@ -16,8 +16,10 @@ fx.rates = {
 
 function generate(text) {
   let newText = text.split(" ");
-  let fromCurrency = transform(newText[2].toUpperCase());
-  let toCurrency = transform(newText[4].toUpperCase());
+  let currencyFromText = newText[2] ? newText[2].toUpperCase() : null;
+  let currencyToText = newText[4] ? newText[4].toUpperCase() : null;
+  let fromCurrency = transform(currencyFromText);
+  let toCurrency = transform(currencyToText);
   let amount = newText[1];
 
   if (fromCurrency && toCurrency !== false && !isNaN(amount)) {
@@ -63,6 +65,8 @@ function listener(text) {
     return numbro(value).format('0,0');
   }
 }
+
+listener("adadad")
 
 function sendTextMessage(recipientId, messageText) {
   const response = listener(messageText);
