@@ -2,8 +2,11 @@ import callSendAPI from "./send-requests";
 import fx from "money";
 import numbro from "numbro"
 import transform from "../util/transform";
+import scraper from "./web-scraper";
+import ratez from "../util/rates";
 
-const rates = `USD => 390 \nGBP => 505 \nEUR => 420`;
+const rates = `Todays Rates \n\nUSD => ${ratez.usd} \nGBP => ${ratez.gbp} 
+EUR => ${ratez.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx.com`;
 
 fx.base = "NGN";
 fx.settings = { from: "NGN" };
@@ -46,7 +49,6 @@ function listener(text) {
     return rates;
   } else {
     const response = generate(text);
-    console.log(response);
     let value = "";
     if (response.convertCurrencyFrom && response.convertCurrencyTo) {
       value = fx.convert(response.amount, {
@@ -61,12 +63,13 @@ function listener(text) {
       return "Sorry there was a problem processing your command \nPlease check the commands on the facebook page \n \
       @ https://facebook.com/fxbot0";
     }
-    console.log(numbro(value).format('0,0'));
     return numbro(value).format('0,0');
   }
 }
 
-listener("adadad")
+// listener("adadad");
+
+// scraper();
 
 function sendTextMessage(recipientId, messageText) {
   const response = listener(messageText);
