@@ -2,18 +2,18 @@ import callSendAPI from "./send-requests";
 import fx from "money";
 import numbro from "numbro"
 import transform from "../util/transform";
-import scraper from "./web-scraper";
 import ratez from "../util/rates";
 
 const rates = `Todays Rates \n\nUSD => ${ratez.usd} \nGBP => ${ratez.gbp} 
 EUR => ${ratez.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx.com`;
 
+
 fx.base = "NGN";
 fx.settings = { from: "NGN" };
 fx.rates = {
-    "USD": 390,
-    "GBP": 505,
-    "EUR": 420,
+    "USD": ratez.usd.split(" ")[0],
+    "GBP": ratez.gbp.split(" ")[0],
+    "EUR": ratez.eur.split(" ")[0],
     "NGN": 1
   }
 
@@ -68,8 +68,6 @@ function listener(text) {
 }
 
 // listener("adadad");
-
-// scraper();
 
 function sendTextMessage(recipientId, messageText) {
   const response = listener(messageText);
