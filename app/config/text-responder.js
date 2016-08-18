@@ -63,12 +63,9 @@ function listener(text) {
       return "Sorry there was a problem processing your command \nPlease check the commands on the facebook page \n \
       @ https://facebook.com/fxbot0";
     }
-    console.log("&#8358; " + numbro(value).format('0,0') + " is what you will get on parallel market");
-    return "&#x20A6; " + numbro(value).format('0,0') + " is what you will get on parallel market";
+    return numbro(value).format('0,0') + " naira, is what you will get on parallel market";
   }
 }
-
-listener("convert 100 pounds");
 
 function sendTextMessage(recipientId, messageText) {
   const response = listener(messageText);
