@@ -27,6 +27,7 @@ function scrape() {
 
         fs.writeFileSync(`./app/util/rates.json`, JSON.stringify(result, null, 2), { encoding: 'utf8' });
         try {
+          console.log(API_BASE);
           request.put({url: API_BASE, body: result, json: true}, function(error, response, body) {
             if (error) {
               return console.error('upload failed:', error);
