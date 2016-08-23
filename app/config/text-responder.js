@@ -4,6 +4,10 @@ import numbro from "numbro"
 import transform from "../util/transform";
 import ratez from "../util/rates";
 
+var fs = require('fs');
+var obj = JSON.parse(fs.readFileSync('./app/util/rates.json', 'utf8'));
+console.log(obj, "-----------------obj")
+
 const rates = `Todays Rates \n\nUSD => ${ratez.usd} \nGBP => ${ratez.gbp} 
 EUR => ${ratez.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx.com`;
 
