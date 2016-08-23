@@ -24,18 +24,25 @@ function scrape() {
           "gbp": GBP,
           "eur": EUR
         };
-
-        fs.writeFileSync(`./app/util/rates.json`, JSON.stringify(result, null, 2), { encoding: 'utf8' });
-        try {
-          request.put({url: API_BASE, body: result, json: true}, function(error, response, body) {
-            if (error) {
-              return console.error('upload failed:', error);
-            }
-            console.log('Upload successful!  Server responded with:', body);
-          });
-        } catch (e) {
-          console.log("error occured sending json", e);
-        }
+        const writableStream = fs.createWriteStream("./app/util/rates.json");
+        writableStream.write(JSON.stringify(result, null, 2), "UTF8");
+        writableStream.end();
+        writableStream.on('finish', async function() {
+          console.log("Write completed to rates file.");
+        });
+        writableStream.on('error', function(err) {
+          console.log("error writing main json", err.stack);
+        });
+        // try {
+        //   request.put({ url: API_BASE, body: result, json: true }, function(error, response, body) {
+        //     if (error) {
+        //       return console.error('upload failed:', error);
+        //     }
+        //     console.log('Upload successful!  Server responded with:', body);
+        //   });
+        // } catch (e) {
+        //   console.log("error occured sending json", e);
+        // }
       });
     }
   });
