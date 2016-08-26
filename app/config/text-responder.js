@@ -1,8 +1,12 @@
 import callSendAPI from "./send-requests";
 import fx from "money";
-import numbro from "numbro"
+import numbro from "numbro";
 import transform from "../util/transform";
 import fetchRates from "./web-scraper";
+import request from "request";
+let API_BASE = "https://api.myjson.com/bins/186hf";
+
+
 // import ratez from "../util/rates";
 const ratez = fetchRates.v[0];
 
@@ -63,10 +67,11 @@ function generate(text) {
 }
 
 function listener(text) {
-console.log(rates, ratez, "======RARRRRRRR");
   text = text.toLowerCase();
   if (text === "rates" || text === "rate") {
-    return rates;
+    request.get({ url: API_BASE, json: true }, (err, res, body) => {
+      return body;
+    });
   } else {
     const response = generate(text);
     let value = "";
