@@ -65,13 +65,16 @@ function westernUnionScrape() {
   });
 }
 
-function getRates(cb) {
-  request.get({ url: API_BASE, json: true }, function(error, response, body) {
-    if (error) {
-      return console.error('upload failed:', error);
-    }
-    cb(body);
+function getRates() {
+  let x = [];
+  request.get({ url: API_BASE, json: true }, (err, res, body) => {
+    x.push(body);
   });
+  return x;
 }
 
-export default { scrape, westernUnionScrape, getRates }
+let v = getRates();
+
+
+
+export default { scrape, westernUnionScrape, v }
