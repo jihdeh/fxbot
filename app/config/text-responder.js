@@ -4,12 +4,6 @@ import numbro from "numbro"
 import transform from "../util/transform";
 import fetchRates from "./web-scraper";
 
-
-
-
-
-
-
 function generate(text) {
   let newText = text.split(" ");
   let currencyFromText = newText[2] ? newText[2].toUpperCase() : null;
@@ -37,7 +31,7 @@ function generate(text) {
 }
 
 function listener(text) {
-  fetchRates.getRates(data => {
+  return fetchRates.getRates(data => {
 
     const ratez = data;
     const rates = `Todays Rates \n\nUSD => ${ratez.usd} \nGBP => ${ratez.gbp} 
