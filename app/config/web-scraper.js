@@ -1,6 +1,5 @@
 import request from "request";
 import cheerio from "cheerio";
-import fs from "fs";
 
 let API_BASE = "https://api.myjson.com/bins/186hf";
 let url = "http://abokifx.com";
@@ -24,25 +23,16 @@ function scrape() {
           "gbp": GBP,
           "eur": EUR
         };
-        const writableStream = fs.createWriteStream("./app/util/rates.json");
-        writableStream.write(JSON.stringify(result, null, 2), "UTF8");
-        writableStream.end();
-        writableStream.on('finish', async function() {
-          console.log("Write completed to rates file.");
-        });
-        writableStream.on('error', function(err) {
-          console.log("error writing main json", err.stack);
-        });
-        // try {
-        //   request.put({ url: API_BASE, body: result, json: true }, function(error, response, body) {
-        //     if (error) {
-        //       return console.error('upload failed:', error);
-        //     }
-        //     console.log('Upload successful!  Server responded with:', body);
-        //   });
-        // } catch (e) {
-        //   console.log("error occured sending json", e);
-        // }
+        try {
+          request.put({ url: API_BASE, body: result, json: true }, function(error, response, body) {
+            if (error) {
+              return console.error('upload failed:', error);
+            }
+            console.log('Upload successful!  Server responded with:', body);
+          });
+        } catch (e) {
+          console.log("error occured sending json", e);
+        }
       });
     }
   });
@@ -75,4 +65,13 @@ function westernUnionScrape() {
   });
 }
 
-export default { scrape, westernUnionScrape }
+function getRates(cb) {
+  request.get({ url: API_BASE, json: true }, function(error, response, body) {
+    if (error) {
+      return console.error('upload failed:', error);
+    }
+    cb(body);
+  });
+}
+
+export default { scrape, westernUnionScrape, getRates }

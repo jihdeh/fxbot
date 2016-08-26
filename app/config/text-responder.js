@@ -2,24 +2,28 @@ import callSendAPI from "./send-requests";
 import fx from "money";
 import numbro from "numbro"
 import transform from "../util/transform";
-// import ratez from "../util/rates";
+import fetchRates from "./web-scraper";
 
-import fs from  "fs";
-const ratez  = JSON.parse(fs.readFileSync("./app/util/rates.json", "utf8"));
-console.log(ratez, "-----------------obj")
+let ratez, rates;
+fetchRates.getRates(data => {
+  ratez = data;
+  return data;
+});
 
-const rates = `Todays Rates \n\nUSD => ${ratez.usd} \nGBP => ${ratez.gbp} 
+if (ratez) {
+  rates = `Todays Rates \n\nUSD => ${ratez.usd} \nGBP => ${ratez.gbp} 
 EUR => ${ratez.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx.com`;
 
 
-fx.base = "NGN";
-fx.settings = { from: "NGN" };
-fx.rates = {
+  fx.base = "NGN";
+  fx.settings = { from: "NGN" };
+  fx.rates = {
     "USD": ratez.usd.split(" ")[0],
     "GBP": ratez.gbp.split(" ")[0],
     "EUR": ratez.eur.split(" ")[0],
     "NGN": 1
   }
+}
 
 function generate(text) {
   let newText = text.split(" ");
