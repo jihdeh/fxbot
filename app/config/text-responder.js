@@ -25,6 +25,10 @@ EUR => ${ratez.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx
   }
 }
 
+setTimeout(() => {
+  console.log(ratez);
+}, 5000)
+
 function generate(text) {
   let newText = text.split(" ");
   let currencyFromText = newText[2] ? newText[2].toUpperCase() : null;
