@@ -15,9 +15,13 @@ const ratez = fetchRates.v[0];
 //   let v = fetchRates.v;
 //   console.log(v);
 // }, 9000)
+setTimeout(() => {
+  console.log(ratez);
+}, 9000);
 
-
-const  rates = `Todays Rates \n\nUSD => ${ratez.usd} \nGBP => ${ratez.gbp} 
+if (ratez) {
+  console.log("YAAAAAAAA", ratez)
+  const rates = `Todays Rates \n\nUSD => ${ratez.usd} \nGBP => ${ratez.gbp} 
 EUR => ${ratez.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx.com`;
 
 
@@ -29,7 +33,7 @@ EUR => ${ratez.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx
     "EUR": ratez.eur.split(" ")[0],
     "NGN": 1
   }
-
+}
 
 function generate(text) {
   let newText = text.split(" ");
