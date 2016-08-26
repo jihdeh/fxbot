@@ -19,9 +19,10 @@ setTimeout(() => {
   console.log(ratez);
 }, 9000);
 
+let rates;
 if (ratez) {
   console.log("YAAAAAAAA", ratez)
-  const rates = `Todays Rates \n\nUSD => ${ratez.usd} \nGBP => ${ratez.gbp} 
+  rates = `Todays Rates \n\nUSD => ${ratez.usd} \nGBP => ${ratez.gbp} 
 EUR => ${ratez.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx.com`;
 
 
@@ -62,6 +63,7 @@ function generate(text) {
 }
 
 function listener(text) {
+console.log(rates, ratez, "======RARRRRRRR");
   text = text.toLowerCase();
   if (text === "rates" || text === "rate") {
     return rates;
