@@ -7,7 +7,7 @@ import fetchRates from "./web-scraper";
 let ratez, rates;
 fetchRates.getRates(data => {
   ratez = data;
-  return data;
+  return ratez;
 });
 
 if (ratez) {
