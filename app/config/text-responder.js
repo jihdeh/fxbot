@@ -23,11 +23,9 @@ setTimeout(() => {
   console.log(ratez);
 }, 9000);
 
-let rates;
 if (ratez) {
   console.log("YAAAAAAAA", ratez)
-  rates = `Todays Rates \n\nUSD => ${ratez.usd} \nGBP => ${ratez.gbp} 
-EUR => ${ratez.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx.com`;
+  
 
 
   fx.base = "NGN";
@@ -70,7 +68,10 @@ function listener(text) {
   text = text.toLowerCase();
   if (text === "rates" || text === "rate") {
     request.get({ url: API_BASE, json: true }, (err, res, body) => {
-      return body;
+      const rates = `Todays Rates \n\nUSD => ${ratez.usd} \nGBP => ${ratez.gbp} 
+EUR => ${ratez.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx.com`;
+  console.log(rates)
+      return rates;
     });
   } else {
     const response = generate(text);
