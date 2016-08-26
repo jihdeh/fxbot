@@ -68,8 +68,8 @@ function listener(text) {
   text = text.toLowerCase();
   if (text === "rates" || text === "rate") {
     request.get({ url: API_BASE, json: true }, (err, res, body) => {
-      const rates = `Todays Rates \n\nUSD => ${ratez.usd} \nGBP => ${ratez.gbp} 
-EUR => ${ratez.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx.com`;
+      const rates = `Todays Rates \n\nUSD => ${body.usd} \nGBP => ${body.gbp} 
+EUR => ${body.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx.com`;
   console.log(rates)
       return rates;
     });
