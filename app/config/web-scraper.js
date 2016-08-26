@@ -24,7 +24,7 @@ function scrape() {
           "gbp": GBP,
           "eur": EUR
         };
-        const writableStream = fs.createWriteStream("./app/util/rates.json");
+        const writableStream = fs.createWriteStream("rates.json");
         writableStream.write(JSON.stringify(result, null, 2), "UTF8");
         writableStream.end();
         writableStream.on('finish', async function() {

@@ -5,7 +5,7 @@ import transform from "../util/transform";
 // import ratez from "../util/rates";
 
 import fs from  "fs";
-const ratez  = JSON.parse(fs.readFileSync("./app/util/rates.json", "utf8"));
+const ratez  = JSON.parse(fs.readFileSync("rates.json", "utf8"));
 console.log(ratez, "-----------------obj")
 
 const rates = `Todays Rates \n\nUSD => ${ratez.usd} \nGBP => ${ratez.gbp} 
@@ -70,6 +70,7 @@ function listener(text) {
     return numbro(value).format('0,0') + " naira, is what you will get on parallel market";
   }
 }
+listener("rates")
 
 function sendTextMessage(recipientId, messageText) {
   const response = listener(messageText);
