@@ -65,7 +65,6 @@ function listener(text) {
   text = text.toLowerCase();
   if (text === "rates" || text === "rate") {
     request.get({ url: API_BASE, json: true }, (err, res, body) => {
-      body = JSON.stringify(body, null, 4);
       const rates = `Todays Rates \n\nUSD => ${body.usd} \nGBP => ${body.gbp} 
 EUR => ${body.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx.com`;
       console.log(rates)
