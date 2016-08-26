@@ -1,39 +1,25 @@
 import callSendAPI from "./send-requests";
 import fx from "money";
-import numbro from "numbro";
+import numbro from "numbro"
 import transform from "../util/transform";
-import fetchRates from "./web-scraper";
-import request from "request";
-let API_BASE = "https://api.myjson.com/bins/186hf";
-
-
 // import ratez from "../util/rates";
-const ratez = fetchRates.v[0];
 
-// fetchRates.getRates(data => {
-//   ratez = data;
-//   return ratez;
-// });
+import fs from  "fs";
+const ratez  = JSON.parse(fs.readFileSync("rates.json", "utf8"));
+console.log(ratez, "-----------------obj")
 
-// setTimeout(() => {
-//   let v = fetchRates.v;
-//   console.log(v);
-// }, 9000)
-
-if (ratez) {
-  console.log("YAAAAAAAA", ratez)
+const rates = `Todays Rates \n\nUSD => ${ratez.usd} \nGBP => ${ratez.gbp} 
+EUR => ${ratez.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx.com`;
 
 
-
-  fx.base = "NGN";
-  fx.settings = { from: "NGN" };
-  fx.rates = {
+fx.base = "NGN";
+fx.settings = { from: "NGN" };
+fx.rates = {
     "USD": ratez.usd.split(" ")[0],
     "GBP": ratez.gbp.split(" ")[0],
     "EUR": ratez.eur.split(" ")[0],
     "NGN": 1
   }
-}
 
 function generate(text) {
   let newText = text.split(" ");
@@ -64,12 +50,7 @@ function generate(text) {
 function listener(text) {
   text = text.toLowerCase();
   if (text === "rates" || text === "rate") {
-    request.get({ url: API_BASE, json: true }, (err, res, body) => {
-      const rates = `Todays Rates \n\nUSD => ${body.usd} \nGBP => ${body.gbp} 
-EUR => ${body.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx.com`;
-      console.log(rates)
-      return rates;
-    });
+    return rates;
   } else {
     const response = generate(text);
     let value = "";
@@ -89,8 +70,7 @@ EUR => ${body.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx.
     return numbro(value).format('0,0') + " naira, is what you will get on parallel market";
   }
 }
-
-listener("rates");
+listener("rates")
 
 function sendTextMessage(recipientId, messageText) {
   const response = listener(messageText);
