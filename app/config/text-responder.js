@@ -19,13 +19,10 @@ const ratez = fetchRates.v[0];
 //   let v = fetchRates.v;
 //   console.log(v);
 // }, 9000)
-setTimeout(() => {
-  console.log(ratez);
-}, 9000);
 
 if (ratez) {
   console.log("YAAAAAAAA", ratez)
-  
+
 
 
   fx.base = "NGN";
@@ -68,9 +65,10 @@ function listener(text) {
   text = text.toLowerCase();
   if (text === "rates" || text === "rate") {
     request.get({ url: API_BASE, json: true }, (err, res, body) => {
+      body = JSON.stringify(body, null, 4);
       const rates = `Todays Rates \n\nUSD => ${body.usd} \nGBP => ${body.gbp} 
 EUR => ${body.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx.com`;
-  console.log(rates)
+      console.log(rates)
       return rates;
     });
   } else {
@@ -92,6 +90,8 @@ EUR => ${body.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx.
     return numbro(value).format('0,0') + " naira, is what you will get on parallel market";
   }
 }
+
+listener("rates");
 
 function sendTextMessage(recipientId, messageText) {
   const response = listener(messageText);
