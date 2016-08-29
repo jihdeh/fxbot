@@ -38,16 +38,16 @@ async function listener(text) {
   text = text.toLowerCase();
   const rates = await Rates.getRates();
   fx.rates = {
-    "USD": rates.usd.split(" ")[0],
-    "GBP": rates.gbp.split(" ")[0],
-    "EUR": rates.eur.split(" ")[0],
+    "USD": rates.parallel.usd.split(" ")[0],
+    "GBP": rates.parallel.gbp.split(" ")[0],
+    "EUR": rates.parallel.eur.split(" ")[0],
     "NGN": 1
   }
 
   if (text === "rates" || text === "rate") {
-    console.log(rates);
-    const endRatesResult = `Todays Rates \n\nUSD => ${rates.usd} \nGBP => ${rates.gbp} 
-EUR => ${rates.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx.com`;
+    const endRatesResult = `Todays Rates \n\nUSD => ${rates.parallel.usd} \nGBP => ${rates.parallel.gbp} 
+EUR => ${rates.parallel.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx.com`;
+    console.log(endRatesResult);
     return endRatesResult;
   } else {
     const response = generate(text);
@@ -68,6 +68,7 @@ EUR => ${rates.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx
     return numbro(value).format('0,0') + " naira, is what you will get on parallel market";
   }
 }
+listener("rates");
 
 async function sendTextMessage(recipientId, messageText) {
   const response = await listener(messageText);
