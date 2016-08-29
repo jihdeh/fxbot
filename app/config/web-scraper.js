@@ -1,6 +1,6 @@
 import request from "request";
 import cheerio from "cheerio";
-import writeToFile from "./writefile";
+import axios from "axios";
 
 let API_BASE = "https://api.myjson.com/bins/186hf";
 let url = "http://abokifx.com";
@@ -24,17 +24,16 @@ function scrape() {
           "gbp": GBP,
           "eur": EUR
         };
-        writeToFile(result);
-        // try {
-        //   request.put({ url: API_BASE, body: result, json: true }, function(error, response, body) {
-        //     if (error) {
-        //       return console.error('upload failed:', error);
-        //     }
-        //     console.log('Upload successful!  Server responded with:', body);
-        //   });
-        // } catch (e) {
-        //   console.log("error occured sending json", e);
-        // }
+        try {
+          request.put({ url: API_BASE, body: result, json: true }, function(error, response, body) {
+            if (error) {
+              return console.error('upload failed:', error);
+            }
+            console.log('Upload successful!  Server responded with:', body);
+          });
+        } catch (e) {
+          console.log("error occured sending json", e);
+        }
       });
     }
   });
@@ -67,4 +66,13 @@ function westernUnionScrape() {
   });
 }
 
-export default { scrape, westernUnionScrape }
+async function getRates() {
+  try {
+    const response = await axios.get(API_BASE);
+    return response.data;
+  } catch (error) {
+    console.log(error, "error retreiving data");
+  }
+}
+
+export default { scrape, westernUnionScrape, getRates }

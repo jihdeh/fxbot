@@ -2,23 +2,16 @@ import callSendAPI from "./send-requests";
 import fx from "money";
 import numbro from "numbro"
 import transform from "../util/transform";
-import fs from  "fs";
-
-const ratez  = JSON.parse(fs.readFileSync("rates.json", "utf8"));
-console.log(ratez, "-----------------obj")
-
-const rates = `Todays Rates \n\nUSD => ${ratez.usd} \nGBP => ${ratez.gbp} 
-EUR => ${ratez.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx.com`;
-
+import parallelRates from "./web-scraper";
 
 fx.base = "NGN";
 fx.settings = { from: "NGN" };
-fx.rates = {
-    "USD": ratez.usd.split(" ")[0],
-    "GBP": ratez.gbp.split(" ")[0],
-    "EUR": ratez.eur.split(" ")[0],
-    "NGN": 1
-  }
+// fx.rates = {
+//   "USD": ratez.usd.split(" ")[0],
+//   "GBP": ratez.gbp.split(" ")[0],
+//   "EUR": ratez.eur.split(" ")[0],
+//   "NGN": 1
+// }
 
 function generate(text) {
   let newText = text.split(" ");
@@ -46,10 +39,15 @@ function generate(text) {
   }
 }
 
-function listener(text) {
+async function listener(text) {
+  console.log("errrr", text)
   text = text.toLowerCase();
   if (text === "rates" || text === "rate") {
-    return rates;
+    const rates = await parallelRates.getRates();
+    const endRatesResult = `Todays Rates \n\nUSD => ${rates.usd} \nGBP => ${rates.gbp} 
+EUR => ${rates.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx.com`;
+  console.log(endRatesResult)
+    return endRatesResult;
   } else {
     const response = generate(text);
     let value = "";
@@ -69,9 +67,11 @@ function listener(text) {
     return numbro(value).format('0,0') + " naira, is what you will get on parallel market";
   }
 }
+listener("rates");
 
-function sendTextMessage(recipientId, messageText) {
-  const response = listener(messageText);
+async function sendTextMessage(recipientId, messageText) {
+  const response = await listener(messageText);
+  console.log(response, "from sendtes")
   const messageData = {
     recipient: {
       id: recipientId

@@ -45,7 +45,7 @@
   },
   "scripts": {
     "start": "touch rates.json && node server/index.js",
-    "dev": "touch rates.json && nodemon --ignore public -d 2 server/index.js && npm run lint",
+    "dev": "nodemon --ignore public -d 2 server/index.js && npm run lint",
     "lint": "eslint ./app",
     "test": "istanbul cover _mocha -- -R spec $npm_package_options_mocha"
   },
