@@ -2,7 +2,7 @@ import callSendAPI from "./send-requests";
 import fx from "money";
 import numbro from "numbro"
 import transform from "../util/transform";
-import parallelRates from "./web-scraper";
+import Rates from "./web-scraper";
 
 fx.base = "NGN";
 fx.settings = { from: "NGN" };
@@ -36,7 +36,7 @@ function generate(text) {
 
 async function listener(text) {
   text = text.toLowerCase();
-  const rates = await parallelRates.getRates();
+  const rates = await Rates.getRates();
   fx.rates = {
     "USD": rates.usd.split(" ")[0],
     "GBP": rates.gbp.split(" ")[0],

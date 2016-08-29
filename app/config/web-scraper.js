@@ -8,17 +8,15 @@ let url = "http://abokifx.com";
 function scrape() {
   request(url, function(error, response, html) {
     if (!error) {
-
       let $ = cheerio.load(html);
-      $(".entry-content table tbody").first().filter(function() {
+      $(".entry-content table tbody tr").first().next().next().filter(function() {
         let data = $(this);
-        let recentData = data.contents().children().map(function(i, el) {
+        let recentData = data.contents().map(function(i, el) {
           return $(this).html();
         }).get();
-        let USD = $(recentData[9]).text();
-        let GBP = $(recentData[10]).text();
-        let EUR = $(recentData[11]).text();
-
+        let USD = $(recentData[1]).text();
+        let GBP = $(recentData[2]).text();
+        let EUR = $(recentData[3]).text();
         const result = {
           "usd": USD,
           "gbp": GBP,
@@ -44,12 +42,12 @@ function westernUnionScrape() {
     if (!error) {
 
       let $ = cheerio.load(html);
-      $(".entry-content table tbody tr").next().next().next().filter(function() {
+      $(".entry-content table tbody tr").next().next().filter(function() {
         let data = $(this);
         let recentData = data.contents().map(function(i, el) {
           return $(this).html();
         }).get();
-        console.log(recentData[1])
+        // console.log(recentData[1])
           // let USD = $(recentData[9]).text();
           // let GBP = $(recentData[10]).text();
           // let EUR = $(recentData[11]).text();
@@ -59,12 +57,12 @@ function westernUnionScrape() {
         //   "gbp": GBP,
         //   "eur": EUR
         // };
-
-        // fs.writeFileSync(`./app/util/rates.json`, JSON.stringify(result, null, 2), { encoding: 'utf8' });
       });
     }
   });
 }
+
+westernUnionScrape()
 
 async function getRates() {
   try {
