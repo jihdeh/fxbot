@@ -68,16 +68,16 @@ function scrape() {
           }
         }
         console.log(nse);
-        // try {
-        //   request.put({ url: API_BASE, body: nse, json: true }, function(error, response, body) {
-        //     if (error) {
-        //       return console.error('upload failed:', error);
-        //     }
-        //     console.log('Upload successful!  Server responded with:', body);
-        //   });
-        // } catch (e) {
-        //   console.log("error occured sending json", e);
-        // }
+        try {
+          request.put({ url: API_BASE, body: nse, json: true }, function(error, response, body) {
+            if (error) {
+              return console.error('upload failed:', error);
+            }
+            console.log('Upload successful!  Server responded with:', body);
+          });
+        } catch (e) {
+          console.log("error occured sending json", e);
+        }
     }
   });
 }
