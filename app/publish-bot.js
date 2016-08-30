@@ -93,11 +93,11 @@ function receivedPostback(event) {
 
   if (payload === "PAYLOAD_HELP" || payload === "PAYLOAD_GETTING_STARTED") {
     postbackMessage = `Hello there! \nYou can use commands like
-    \n"rates"\n"convert 100 dollars"\n"westy"(for wester union rates)
-    \n"wu convert 400 pounds"\nplease check our page for more commands you can use`;
-    sendTextMessage(senderID, postbackMessage, true);
-  } else {
-    sendTextMessage(senderID, postbackMessage);
+    \n"rates"\n"convert 100 dollars"\n"westy"(for wester union rates)\n"wu convert 400 pounds"
+    \nplease check our page for more commands you can use`;
+    sendTextMessage(senderID, postbackMessage, "help");
+  } else if(payload === "PAYLOAD_PARALLEL") {
+    sendTextMessage(senderID, "rates");
   }
 }
 

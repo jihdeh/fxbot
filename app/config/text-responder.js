@@ -86,7 +86,7 @@ listener("wu rates");
 
 async function sendTextMessage(recipientId, messageText, postback) {
   let response;
-  if(postback) {
+  if(postback === "help") {
     response = messageText
   } else {
     response = await listener(messageText);
