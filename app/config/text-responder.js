@@ -3,6 +3,8 @@ import fx from "money";
 import numbro from "numbro"
 import transform from "../util/transform";
 import Rates from "./web-scraper";
+import returnRates from "../util/return-rates";
+import wordAI from "../util/word-ai";
 
 fx.base = "NGN";
 fx.settings = { from: "NGN" };
@@ -10,11 +12,20 @@ fx.settings = { from: "NGN" };
 
 function generate(text) {
   let newText = text.split(" ");
-  let currencyFromText = newText[2] ? newText[2].toUpperCase() : null;
-  let currencyToText = newText[4] ? newText[4].toUpperCase() : null;
-  let fromCurrency = transform(currencyFromText);
-  let toCurrency = transform(currencyToText);
-  let amount = newText[1];
+  let fromCurrency, toCurrency, amount;
+  if (newText[0] === "convert") {
+    let currencyFromText = newText[2] ? newText[2].toUpperCase() : null;
+    let currencyToText = newText[4] ? newText[4].toUpperCase() : null;
+    fromCurrency = transform(currencyFromText);
+    toCurrency = transform(currencyToText);
+    amount = newText[1];
+  } else if (newText[0] === "wu") {
+    let currencyFromText = newText[3] ? newText[3].toUpperCase() : null;
+    let currencyToText = newText[5] ? newText[5].toUpperCase() : null;
+    fromCurrency = transform(currencyFromText);
+    toCurrency = transform(currencyToText);
+    amount = newText[2];
+  }
 
   if (fromCurrency && toCurrency !== false && !isNaN(amount)) {
     const structure = {
@@ -37,18 +48,21 @@ function generate(text) {
 async function listener(text) {
   text = text.toLowerCase();
   const rates = await Rates.getRates();
-  fx.rates = {
-    "USD": rates.parallel.usd.split(" ")[0],
-    "GBP": rates.parallel.gbp.split(" ")[0],
-    "EUR": rates.parallel.eur.split(" ")[0],
-    "NGN": 1
-  }
+  fx.rates = returnRates(text, rates);
 
-  if (text === "rates" || text === "rate") {
+  const parallel = wordAI.generalRates.includes(text);
+  const wu = wordAI.westernRates.includes(text);
+  const cbn = wordAI.cbnRates.includes(text);
+  console.log(parallel, wu, cbn)
+
+  if (parallel) {
     const endRatesResult = `Todays Rates \n\nUSD => ${rates.parallel.usd} \nGBP => ${rates.parallel.gbp} 
 EUR => ${rates.parallel.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx.com`;
-    console.log(endRatesResult);
     return endRatesResult;
+  } else if (wu) {
+    const endWuRatesResult = `Todays Western Union Rates(receiving) \n\nUSD => ${rates.wu.usd} \nGBP => ${rates.wu.gbp} 
+EUR => ${rates.wu.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx.com`;
+    return endWuRatesResult;
   } else {
     const response = generate(text);
     let value = "";
@@ -65,10 +79,10 @@ EUR => ${rates.parallel.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http:
       return "Sorry there was a problem processing your command \nPlease check the commands on the facebook page \n \
       @ https://facebook.com/fxbot0";
     }
-    return numbro(value).format('0,0') + " naira, is what you will get on parallel market";
+    return numbro(value).format('0,0') + " naira, is what you will get in return";
   }
 }
-listener("rates");
+listener("wu rates");
 
 async function sendTextMessage(recipientId, messageText) {
   const response = await listener(messageText);

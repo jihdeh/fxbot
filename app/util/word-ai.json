@@ -1,0 +1,6 @@
+{
+  "generalRates": ["rates", "rate"],
+  "westernRates": ["wu rates", "wu rate", "western union rates", "westy"],
+  "cbnRates": ["cbn rates", "cbn rate", "cb"],
+  "moneygramRates": ["gram rates", "moneygram rates", "moneygram rate", "gram rate", "grammy"]
+}
