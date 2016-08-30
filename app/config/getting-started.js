@@ -18,6 +18,8 @@ function gettingStartedThread(messageData) {
     qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
     method: 'POST',
     json: messageData
+  }, (err, response, body) => {
+    console.log(body, response);
   })
 }
 

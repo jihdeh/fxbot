@@ -8,7 +8,7 @@ function* webhook() {
 
   if (data.object == 'page') {
     welcomeGreeting();
-    sendGettingStartedBtn()
+    sendGettingStartedBtn();
 
     data.entry.forEach(function(pageEntry) {
 
