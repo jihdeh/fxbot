@@ -21,7 +21,6 @@ function scrape() {
           eur: $(recentData[3]).text()
         });
       });
-
       let storeWURates = [];
       $(".entry-content table tbody tr").filter(function() {
         let data = $(this);
@@ -33,7 +32,7 @@ function scrape() {
         storeWURates.push(y);
       });
 
-      // console.log(parallelRates[0], storeWURates[59])
+      console.log(parallelRates[0], storeWURates[61])
       const nse = {
         parallel: {
           usd: parallelRates[0].usd,
@@ -41,9 +40,9 @@ function scrape() {
           eur: parallelRates[0].eur
         },
         wu: {
-          usd: $(storeWURates[59][1]).text(),
-          gbp: $(storeWURates[59][2]).text(),
-          eur: $(storeWURates[59][3]).text()
+          usd: $(storeWURates[61][1]).text(),
+          gbp: $(storeWURates[61][2]).text(),
+          eur: $(storeWURates[61][3]).text()
         }
       }
       try {
@@ -62,6 +61,7 @@ function scrape() {
 
 async function getRates() {
   try {
+    const refreshScrape = await scrape();
     const response = await axios.get(API_BASE);
     return response.data;
   } catch (error) {
