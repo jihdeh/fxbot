@@ -84,13 +84,21 @@ function receivedPostback(event) {
   const senderID = event.sender.id;
   const recipientID = event.recipient.id;
   const timeOfPostback = event.timestamp;
+  let postbackMessage;
 
   const payload = event.postback.payload;
 
   console.log("Received postback for user %d and page %d with payload '%s' " +
     "at %d", senderID, recipientID, payload, timeOfPostback);
-  const commands = `Hello there! \nYou can use commands "rates" for a start to get parallel market rates`;
-  sendTextMessage(senderID, commands, true);
+
+  if (payload === "PAYLOAD_HELP" || payload === "PAYLOAD_GETTING_STARTED") {
+    postbackMessage = `Hello there! \nYou can use commands like
+    \n"rates"\n"convert 100 dollars"\n"westy"(for wester union rates)
+    \n"wu convert 400 pounds"\nplease check our page for more commands you can use`;
+    sendTextMessage(senderID, postbackMessage, true);
+  } else {
+    sendTextMessage(senderID, postbackMessage);
+  }
 }
 
 
