@@ -10,6 +10,7 @@ function sendGettingStartedBtn() {
     }]
   }
   gettingStartedThread(messageData);
+  console.log("AH AH WHATS NAMMMMM")
 }
 
 function gettingStartedThread(messageData) {
