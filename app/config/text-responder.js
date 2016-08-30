@@ -57,11 +57,11 @@ async function listener(text) {
 
   if (parallel) {
     const endRatesResult = `Todays Rates \n\nUSD => ${rates.parallel.usd} \nGBP => ${rates.parallel.gbp} 
-EUR => ${rates.parallel.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx.com`;
+EUR => ${rates.parallel.eur} \n\nCURRENCY => BUY / SELL`;
     return endRatesResult;
   } else if (wu) {
     const endWuRatesResult = `Todays Western Union Rates(receiving) \n\nUSD => ${rates.wu.usd} \nGBP => ${rates.wu.gbp} 
-EUR => ${rates.wu.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abokifx.com`;
+EUR => ${rates.wu.eur} \n\nCURRENCY => BUY / SELL`;
     return endWuRatesResult;
   } else {
     const response = generate(text);
