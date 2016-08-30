@@ -84,9 +84,13 @@ EUR => ${rates.wu.eur} \n\nCURRENCY => BUY / SELL \nData pulled from http://abok
 }
 listener("wu rates");
 
-async function sendTextMessage(recipientId, messageText) {
-  const response = await listener(messageText);
-  console.log(response, "from sendtes")
+async function sendTextMessage(recipientId, messageText, postback) {
+  let response;
+  if(postback) {
+    response = messageText
+  } else {
+    response = await listener(messageText);
+  }
   const messageData = {
     recipient: {
       id: recipientId

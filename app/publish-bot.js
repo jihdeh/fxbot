@@ -90,7 +90,7 @@ function receivedPostback(event) {
   console.log("Received postback for user %d and page %d with payload '%s' " +
     "at %d", senderID, recipientID, payload, timeOfPostback);
   const commands = `Hello there! \nYou can use commands "rates" for a start to get parallel market rates`;
-  sendTextMessage(senderID, commands);
+  sendTextMessage(senderID, commands, true);
 }
 
 
