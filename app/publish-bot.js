@@ -1,5 +1,4 @@
 import welcomeGreeting from "./config/welcome-greeting";
-import sendGettingStartedBtn from "./config/getting-started";
 import sendActions from "./config/sender-actions";
 import sendTextMessage from "./config/text-responder";
 
@@ -8,7 +7,6 @@ function* webhook() {
 
   if (data.object == 'page') {
     welcomeGreeting();
-    sendGettingStartedBtn();
 
     data.entry.forEach(function(pageEntry) {
 
