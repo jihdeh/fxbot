@@ -4,7 +4,7 @@ function sendGreetingText() {
   const messageData = {
     setting_type: "greeting",
     greeting: {
-      "text": "Welcome to FxBot0. An Experimental Tool for Facebooks MSSGR BOT!"
+      "text": "Welcome to NAIRABOT, a quick Foreign exchange bot at your service"
     }
   }
   callSendGreetingText(messageData);
@@ -18,6 +18,8 @@ function callSendGreetingText(messageData) {
     json: messageData
   })
 }
+
+
 
 
 export default sendGreetingText;

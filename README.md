@@ -1,4 +1,6 @@
-#FXBOT
+#NAIRABOT => 
+
+Previously FXBOT.
 
 Foreign Exchange Bot.
 This application is just an experiment on the Facebook messenger bot
@@ -23,7 +25,7 @@ Commands
 rates || rate => To view current rates
 convert 50 euros => to convert 50 euros to naira(default) 
 convert 100 dollars to naira
-convert 100 USD (currency is case sensitive for now :D) defaults to naira conversion.
+convert 100 usd defaults to naira conversion.
 ```
 
 Development
