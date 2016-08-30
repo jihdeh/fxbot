@@ -21,5 +21,18 @@ function callSendGreetingText(messageData) {
 
 
 
+// {
+//   "setting_type":"call_to_actions",
+//   "thread_state":"new_thread",
+//   "call_to_actions":[
+//     {
+//       "payload":"USER_DEFINED_PAYLOAD"
+//     }
+//   ]
+// }' "https://graph.facebook.com/v2.6/me/thread_settings?access_token=PAGE_ACCESS_TOKEN"      
+// Fields
+
+
+
 
 export default sendGreetingText;

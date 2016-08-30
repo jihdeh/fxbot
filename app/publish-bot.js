@@ -1,4 +1,5 @@
 import welcomeGreeting from "./config/welcome-greeting";
+import sendGettingStartedBtn from "./config/getting-started";
 import sendActions from "./config/sender-actions";
 import sendTextMessage from "./config/text-responder";
 
@@ -7,6 +8,7 @@ function* webhook() {
 
   if (data.object == 'page') {
     welcomeGreeting();
+    sendGettingStartedBtn()
 
     data.entry.forEach(function(pageEntry) {
 
@@ -17,6 +19,7 @@ function* webhook() {
         } else if (messagingEvent.delivery) {
           receivedDeliveryConfirmation(messagingEvent);
         } else if (messagingEvent.postback) {
+          receivedPostback(messagingEvent);
         } else {
           console.log("Webhook received unknown messagingEvent: ", messagingEvent);
         }
@@ -53,13 +56,12 @@ async function receivedMessage(event) {
     // keywords and send back the corresponding example. Otherwise, just echo
     // the text we received.
     switch (messageText) {
-      default:
-        try {
-          await sendActions(senderID);
-        } catch (error) {
-          console.log(error)
-        }
-        sendTextMessage(senderID, messageText);
+      default: try {
+        await sendActions(senderID);
+      } catch (error) {
+        console.log(error)
+      }
+      sendTextMessage(senderID, messageText);
     }
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
@@ -67,9 +69,9 @@ async function receivedMessage(event) {
 }
 
 function receivedDeliveryConfirmation(event) {
-  let delivery = event.delivery;
-  let messageIDs = delivery.mids;
-  let watermark = delivery.watermark;
+  const delivery = event.delivery;
+  const messageIDs = delivery.mids;
+  const watermark = delivery.watermark;
 
   if (messageIDs) {
     messageIDs.forEach(function(messageID) {
@@ -80,6 +82,18 @@ function receivedDeliveryConfirmation(event) {
   console.log("All message before %d were delivered.", watermark);
 }
 
+function receivedPostback(event) {
+  const senderID = event.sender.id;
+  const recipientID = event.recipient.id;
+  const timeOfPostback = event.timestamp;
+
+  const payload = event.postback.payload;
+
+  console.log("Received postback for user %d and page %d with payload '%s' " +
+    "at %d", senderID, recipientID, payload, timeOfPostback);
+  const commands = `Hello there! \nYou can use commands "rates" for a start to get parallel market rates`;
+  sendTextMessage(senderID, "commands");
+}
 
 
 export default { webhook };
