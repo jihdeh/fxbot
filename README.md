@@ -27,6 +27,7 @@ rates || rate => To view current rates
 convert 50 euros => to convert 50 euros to naira(default) 
 convert 100 dollars to naira
 convert 100 usd defaults to naira conversion.
+wu rates => to get western union rates (return values are currently unstable)
 ```
 
 Development
@@ -38,7 +39,7 @@ Create your environment variables
  -- PAGE_ACCESS_TOKEN
 
 $ npm install
-$ gulp
+$ npm run dev
 ```
 
 Advantage of the Facebook Messenger Bot?
