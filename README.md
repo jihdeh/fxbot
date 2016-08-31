@@ -47,3 +47,9 @@ Advantage of the Facebook Messenger Bot?
 It's good for your business page.
 
 [For documentation on the Messenger Bot](https://developers.facebook.com/docs/messenger-platform/product-overview)
+
+#TODO
+
+Proper error logging
+Code modularity/clean up
+More Tests
