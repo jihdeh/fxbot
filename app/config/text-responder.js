@@ -46,7 +46,6 @@ function generate(text) {
 }
 
 async function listener(text) {
-  text = text.toLowerCase();
   const rates = await Rates.getRates();
   fx.rates = returnRates(text, rates);
 
@@ -90,7 +89,8 @@ listener("cbn rates");
 
 async function sendTextMessage(recipientId, messageText, postback) {
   let response;
-  if (postback === "help") {
+  messageText = messageText.toLowerCase();
+  if (postback === "help" || messageText === "help") {
     response = messageText
   } else {
     response = await listener(messageText);
