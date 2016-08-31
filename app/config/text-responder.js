@@ -63,6 +63,10 @@ EUR => ${rates.parallel.eur} \n\nCURRENCY => BUY / SELL`;
     const endWuRatesResult = `Todays Western Union Rates(receiving) \n\nUSD => ${rates.wu.usd} \nGBP => ${rates.wu.gbp} 
 EUR => ${rates.wu.eur} \n\nCURRENCY => BUY / SELL`;
     return endWuRatesResult;
+  } else if (cbn) {
+    const endCbnRatesResult = `Todays CBN EX Rates \n\nUSD => ${rates.cbn.usd} \nGBP => ${rates.cbn.gbp} 
+EUR => ${rates.cbn.eur} \n\nCURRENCY => BUY / SELL`;
+    return endCbnRatesResult;
   } else {
     const response = generate(text);
     let value = "";
@@ -82,11 +86,11 @@ EUR => ${rates.wu.eur} \n\nCURRENCY => BUY / SELL`;
     return numbro(value).format('0,0') + " naira, is what you will get in return";
   }
 }
-listener("wu rates");
+listener("cbn rates");
 
 async function sendTextMessage(recipientId, messageText, postback) {
   let response;
-  if(postback === "help") {
+  if (postback === "help") {
     response = messageText
   } else {
     response = await listener(messageText);

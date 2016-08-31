@@ -22,7 +22,7 @@ function scrape() {
         });
       });
       let storeWURates = [];
-      $(".entry-content table").next().next().next().filter(function() {
+      $(".entry-content table").last().prev().prev().prev().prev().filter(function() {
         let data = $(this);
         let recentData = data.contents().map(function(i, el) {
           return $(this).html();
@@ -31,11 +31,10 @@ function scrape() {
         let y = JSON.parse(x);
         storeWURates.push(y);
       });
-      // console.log(JSON.parse(JSON.stringify(storeWURates[4])))
-      const wu0 = JSON.parse(JSON.stringify($(storeWURates[4][0]).text().split(" ")[4].split("\n")));
-      console.log(parallelRates[0], wu0[4]);
+      const wu0 = JSON.parse(JSON.stringify($(storeWURates[0][0]).text().split("\n")));
+      console.log(parallelRates[0], wu0[9]);
       let cbnRates = [];
-      $(".entry-content table tbody tr").last().prev().filter(function() {
+      $(".entry-content table tbody tr").last().siblings().filter(function() {
         let data = $(this);
         let recentData = data.contents().map(function(i, el) {
           return $(this).html();
@@ -51,33 +50,35 @@ function scrape() {
         return;
       }
       const nse = {
-          parallel: {
-            usd: parallelRates[0].usd,
-            gbp: parallelRates[0].gbp,
-            eur: parallelRates[0].eur
-          },
-          wu: {
-            usd: wu0[4],
-            gbp: wu0[5],
-            eur: wu0[6]
-          },
-          cbn: {
-            usd: $(cbnRates[0][1]).text(),
-            gbp: $(cbnRates[0][2]).text(),
-            eur: $(cbnRates[0][3]).text()
-          }
+        parallel: {
+          usd: parallelRates[0].usd,
+          gbp: parallelRates[0].gbp,
+          eur: parallelRates[0].eur
+        },
+        wu: {
+          usd: wu0[9],
+          gbp: wu0[10],
+          eur: wu0[11]
+        },
+        cbn: {
+          usd: $(cbnRates[1][1]).text(),
+          gbp: $(cbnRates[1][2]).text(),
+          eur: $(cbnRates[1][3]).text()
         }
-        console.log(nse);
-        try {
+      }
+      console.log(nse);
+      try {
+        if (nse) {
           request.put({ url: API_BASE, body: nse, json: true }, function(error, response, body) {
             if (error) {
               return console.error('upload failed:', error);
             }
             console.log('Upload successful!  Server responded with:', body);
           });
-        } catch (e) {
-          console.log("error occured sending json", e);
         }
+      } catch (e) {
+        console.log("error occured sending json", e);
+      }
     }
   });
 }
