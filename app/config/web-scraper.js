@@ -1,6 +1,7 @@
 import request from "request";
 import cheerio from "cheerio";
 import axios from "axios";
+import {get} from "lodash";
 
 let API_BASE = process.env.JSON_RATES_STORE;
 let url = "http://abokifx.com";
@@ -31,7 +32,8 @@ function scrape() {
         let y = JSON.parse(x);
         storeWURates.push(y);
       });
-      const wu0 = JSON.parse(JSON.stringify($(storeWURates[0][0]).text().split("\n")));
+      //western union rates is currently unstable and sometimes breaks.
+      const wu0 = JSON.parse(JSON.stringify($(get(storeWURates, "[0][0]")).text().split("\n")));
       console.log(parallelRates[0], wu0[9]);
       let cbnRates = [];
       $(".entry-content table tbody tr").last().siblings().filter(function() {
@@ -66,7 +68,6 @@ function scrape() {
           eur: $(cbnRates[1][3]).text()
         }
       }
-      console.log(nse);
       try {
         if (nse) {
           request.put({ url: API_BASE, body: nse, json: true }, function(error, response, body) {
