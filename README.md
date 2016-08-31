@@ -1,6 +1,7 @@
 #NAIRABOT => 
 
 Previously FXBOT.
+Probably the first Messenger Bot built in Nigeria.
 
 Foreign Exchange Bot.
 This application is just an experiment on the Facebook messenger bot
