@@ -1,5 +1,6 @@
 import Twit from "twit";
 import report from "./text-responder";
+import shortId from "shortid";
 
 const Tweet = new Twit({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,
@@ -13,6 +14,7 @@ var stream = Tweet.stream('statuses/filter', { track: ['@nairabot'] });
 stream.on('tweet', tweetEvent);
 
 function tweetEvent(tweet) {
+  const generateShortId = "#"+shortId.generate();
   console.log(tweet, "=====================teswwett");
   // const rates = await report("rates");
   // console.log(rates)
@@ -33,7 +35,7 @@ function tweetEvent(tweet) {
     // var txt = txt.replace(/@myTwitterHandle/g, "");
 
     // Start a reply back to the sender
-    var reply = "@" + name + ' ' + 'You are super cool!';
+    var reply = "@" + name + ' ' + `You are super cool!\n${generateShortId}`;
     var params             = {
                               status: reply,
                               in_reply_to_status_id: nameID
