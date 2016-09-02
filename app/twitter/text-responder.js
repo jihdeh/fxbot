@@ -52,7 +52,6 @@ async function listener(text) {
   const parallel = wordAI.generalRates.includes(text);
   const wu = wordAI.westernRates.includes(text);
   const cbn = wordAI.cbnRates.includes(text);
-  console.log(parallel, wu, cbn)
 
   if (parallel) {
     const endRatesResult = `Todays Rates \n\nUSD => ${rates.parallel.usd} \nGBP => ${rates.parallel.gbp} 
