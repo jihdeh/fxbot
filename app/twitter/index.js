@@ -5,8 +5,7 @@ const Tweet = new Twit({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,
   consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
   access_token: process.env.TWITTER_ACCESS_TOKEN,
-  access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
-  timeout_ms: 60*1000
+  access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
 });
 
 var stream = Tweet.stream('statuses/filter', { track: ['@nairabot'] });
@@ -16,6 +15,7 @@ function tweetEvent(tweet) {
   console.log(tweet, "=====================teswwett");
   // const rates = await report("rates");
   // console.log(rates)
+
     // Who sent the tweet?
     var name = tweet.user.screen_name;
     // What is the text?
