@@ -1,4 +1,6 @@
 import Twit from "twit";
+import report from "./text-responder";
+
 const Tweet = new Twit({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,
   consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
@@ -7,15 +9,13 @@ const Tweet = new Twit({
   timeout_ms: 60*1000
 });
 
-Tweet.post('statuses/update', { status: 'Twitter Bot test.....take 1' }, function(err, data, response) {
-  console.log(data)
-})
-
 var stream = Tweet.stream('statuses/filter', { track: ['@nairabot'] });
 stream.on('tweet', tweetEvent);
 
 function tweetEvent(tweet) {
-
+  console.log(tweet, "=====================teswwett");
+  const rates = report("rates");
+  console.log(rates)
     // Who sent the tweet?
     var name = tweet.user.screen_name;
     // What is the text?
