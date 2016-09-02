@@ -11,7 +11,7 @@ Tweet.post('statuses/update', { status: 'Twitter Bot test.....take 1' }, functio
   console.log(data)
 })
 
-var stream = Tweet.stream('statuses/filter', { track: ['@myTwitterHandle'] });
+var stream = Tweet.stream('statuses/filter', { track: ['@nairabot'] });
 stream.on('tweet', tweetEvent);
 
 function tweetEvent(tweet) {
