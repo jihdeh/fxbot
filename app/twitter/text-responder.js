@@ -1,7 +1,7 @@
 import fx from "money";
 import numbro from "numbro"
 import transform from "../util/transform";
-import Rates from "../config/web-scraper";
+import Rates from "../get-rates";
 import returnRates from "../util/return-rates";
 import wordAI from "../util/word-ai";
 
@@ -46,7 +46,7 @@ function generate(text) {
 }
 
 async function listener(text) {
-  const rates = await Rates.getRates();
+  const rates = await Rates();
   fx.rates = returnRates(text, rates);
 
   const parallel = wordAI.generalRates.includes(text);
