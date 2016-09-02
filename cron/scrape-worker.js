@@ -6,5 +6,5 @@ import twitterPublish from "../app/twitter";
 
 console.log("Updating Facebook once every", moment.duration(schedule.update).humanize());
 console.log("Updating Twitter once every", moment.duration(schedule.twitterUpdate).humanize());
-// setInterval(scraper.scrape, schedule.update);
+setInterval(scraper.scrape, schedule.update);
 setInterval(twitterPublish, schedule.twitterUpdate);
