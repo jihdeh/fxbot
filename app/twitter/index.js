@@ -12,9 +12,9 @@ const Tweet = new Twit({
 var stream = Tweet.stream('statuses/filter', { track: ['@nairabot'] });
 stream.on('tweet', tweetEvent);
 
-function tweetEvent(tweet) {
+async function tweetEvent(tweet) {
   console.log(tweet, "=====================teswwett");
-  const rates = report("rates");
+  const rates = await report("rates");
   console.log(rates)
     // Who sent the tweet?
     var name = tweet.user.screen_name;
