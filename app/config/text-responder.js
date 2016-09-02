@@ -85,7 +85,6 @@ EUR => ${rates.cbn.eur} \n\nCURRENCY => BUY / SELL`;
     return numbro(value).format('0,0') + " naira, is what you will get in return";
   }
 }
-listener("cbn rates");
 
 async function sendTextMessage(recipientId, messageText, postback) {
   let response;
