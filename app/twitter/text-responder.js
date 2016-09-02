@@ -1,7 +1,7 @@
 import fx from "money";
 import numbro from "numbro"
 import transform from "../util/transform";
-import Rates from "../get-rates";
+import Rates from "./get-rates";
 import returnRates from "../util/return-rates";
 import wordAI from "../util/word-ai";
 
