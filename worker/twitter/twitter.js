@@ -10,10 +10,13 @@ const Tweet = new Twit({
 });
 
 (async function publishRates() {
-  const generateShortId = "#"+shortId.generate();
+  const generateShortId = "#" + shortId.generate();
   const rates = await report("rates");
-  const constructTweet = rates + "\n"+generateShortId;
-
-  const tweetUpdate = await Tweet.post('statuses/update', { status: constructTweet });
-  console.log(tweetUpdate.data);
+  const constructTweet = rates + "\n" + generateShortId;
+  try {
+    const tweetUpdate = await Tweet.post('statuses/update', { status: constructTweet });
+    console.log(tweetUpdate.data.created_at);
+  } catch (e) {
+    console.log(e, "error occured posting tweet update");
+  }
 }());

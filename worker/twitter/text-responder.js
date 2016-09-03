@@ -8,7 +8,7 @@ async function listener(text) {
   const parallel = wordAI.generalRates.includes(text);
 
   if (parallel) {
-    const endRatesResult = `Todays parallel market rates on ${moment().format("MMMM Do YYYY")} at ${moment().utcOffset(1).format("h:mm:ss a")} \n\nUSD => ${rates.parallel.usd} \nGBP => ${rates.parallel.gbp} 
+    const endRatesResult = `Todays rates on ${moment().format("MMMM Do YYYY")} at ${moment().utcOffset(1).format("h:mm:ss a")} \n\nUSD => ${rates.parallel.usd} \nGBP => ${rates.parallel.gbp} 
 EUR => ${rates.parallel.eur} \n\nCURRENCY => BUY / SELL`;
     return endRatesResult;
   }
