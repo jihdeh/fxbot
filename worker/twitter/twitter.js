@@ -15,5 +15,5 @@ const Tweet = new Twit({
   const constructTweet = rates + "\n"+generateShortId;
 
   const tweetUpdate = await Tweet.post('statuses/update', { status: constructTweet });
-  console.log(tweetUpdate.data.created_at);
+  console.log(tweetUpdate.data);
 }());
