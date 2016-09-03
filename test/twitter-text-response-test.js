@@ -21,6 +21,8 @@ describe("Test for twitter configuration", () => {
   it("results should have values in json", async(done) => {
     const rates = await getRates();
     expect(rates).to.have.deep.property("parallel.usd").that.is.a("string").and.not.equal("");
+    expect(rates).to.have.deep.property("parallel.gbp").that.is.a("string").and.not.equal("");
+    expect(rates).to.have.deep.property("parallel.eur").that.is.a("string").and.not.equal("");
     done();
   });
 
