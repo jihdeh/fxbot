@@ -42,6 +42,12 @@ $ npm install
 $ npm run dev
 ```
 
+To run test
+
+```
+$ env_vars npm run test
+```
+
 Advantage of the Facebook Messenger Bot?
 
 It's good for your business page.
