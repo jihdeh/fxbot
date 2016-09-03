@@ -1,9 +1,9 @@
 import fx from "money";
 import numbro from "numbro"
-import transform from "../util/transform";
+import transform from "../../app/util/transform";
 import Rates from "./get-rates";
-import returnRates from "../util/return-rates";
-import wordAI from "../util/word-ai";
+import returnRates from "../../app/util/return-rates";
+import wordAI from "../../app/util/word-ai";
 
 
 fx.base = "NGN";
