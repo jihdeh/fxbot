@@ -16,7 +16,7 @@ export default async function publishRates() {
   const construct = rates + "\n"+generateShortId;
 
   Tweet.post('statuses/update', { status: construct }, function(err, data, response) {
-    console.log(data)
+    console.log(data.id)
   })
 }
 
