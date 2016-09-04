@@ -90,7 +90,7 @@ async function sendTextMessage(recipientId, messageText, postback) {
   messageText = messageText.toLowerCase();
   if (postback === "help") {
     response = messageText
-  } else if (messageText === "help") {
+  } else if (messageText === "help" || messageText === "hi" || messageText === "hello") {
     response = `Hello there welcome to NAIRABOT! \nYou can use commands like
     \n"rates"\n"convert 100 dollars"
     \n"westy"(for western union rates)\n"wu convert 400 pounds"
