@@ -63,9 +63,9 @@ function scrape() {
           eur: wu0[11]
         },
         cbn: {
-          usd: $(cbnRates[1][1]).text(),
-          gbp: $(cbnRates[1][2]).text(),
-          eur: $(cbnRates[1][3]).text()
+          usd: $(get(cbnRates, "[1][1]")).text(),
+          gbp: $(get(cbnRates, "[1][2]")).text(),
+          eur: $(get(cbnRates, "[1][3]")).text()
         }
       }
       try {
