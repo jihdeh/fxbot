@@ -19,7 +19,6 @@ function getFirstResult() {
   return cbnRates;
 }
 
-
 function getSiblings() {
   let cbnRates = [];
   $(".entry-content table tbody tr").last().siblings().filter(function() {
