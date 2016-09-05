@@ -18,9 +18,9 @@ function scrape() {
           return $(this).html();
         }).get();
         parallelRates.push({
-          usd: $(recentData[1]).text(),
-          gbp: $(recentData[2]).text(),
-          eur: $(recentData[3]).text()
+          usd: $(get(recentData, "[1]")).text(),
+          gbp: $(get(recentData, "[2]")).text(),
+          eur: $(get(recentData, "[3]")).text()
         });
       });
       let storeWURates = [];
