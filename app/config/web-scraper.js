@@ -2,6 +2,7 @@ import request from "request";
 import cheerio from "cheerio";
 import axios from "axios";
 import {get} from "lodash";
+import officerCbn from "./cbn";
 
 let API_BASE = process.env.JSON_RATES_STORE;
 let url = "http://abokifx.com";
@@ -34,17 +35,7 @@ function scrape() {
       });
       //western union rates is currently unstable and sometimes breaks.
       const wu0 = JSON.parse(JSON.stringify($(get(storeWURates, "[0][0]")).text().split("\n")));
-      console.log(parallelRates[0], wu0[9]);
-      let cbnRates = [];
-      $(".entry-content table tbody tr").last().siblings().filter(function() {
-        let data = $(this);
-        let recentData = data.contents().map(function(i, el) {
-          return $(this).html();
-        }).get();
-        let x = JSON.stringify(recentData);
-        let y = JSON.parse(x);
-        cbnRates.push(y);
-      });
+      const cbnRates = officerCbn(html);
 
       if (!parallelRates[0] || parallelRates[0] === undefined) {
         console.log("calling self again to get data");
@@ -63,11 +54,12 @@ function scrape() {
           eur: wu0[11]
         },
         cbn: {
-          usd: $(get(cbnRates, "[1][1]")).text(),
-          gbp: $(get(cbnRates, "[1][2]")).text(),
-          eur: $(get(cbnRates, "[1][3]")).text()
+          usd: $(get(cbnRates, "[1]")).text(),
+          gbp: $(get(cbnRates, "[2]")).text(),
+          eur: $(get(cbnRates, "[3]")).text()
         }
       }
+      console.log(nse);
       try {
         if (nse) {
           request.put({ url: API_BASE, body: nse, json: true }, function(error, response, body) {
