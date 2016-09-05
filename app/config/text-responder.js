@@ -85,8 +85,6 @@ EUR => ${rates.cbn.eur} \n\nCURRENCY => BUY / SELL`;
   }
 }
 
-listener("rates")
-
 async function sendTextMessage(recipientId, messageText, postback) {
   let response;
   messageText = messageText.toLowerCase();
