@@ -38,7 +38,6 @@ function scrape() {
       const cbnRates = officerCbn(html);
 
       if (!parallelRates[0] || parallelRates[0] === undefined) {
-        console.log("calling self again to get data");
         scrape();
         return;
       }

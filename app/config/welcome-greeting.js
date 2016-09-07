@@ -4,7 +4,7 @@ function sendGreetingText() {
   const messageData = {
     setting_type: "greeting",
     greeting: {
-      "text": "Welcome to NAIRABOT, a quick Foreign exchange bot at your service"
+      "text": "Welcome to NAIRABOT, instant Foreign exchange bot at your service"
     }
   }
   callSendGreetingText(messageData);
