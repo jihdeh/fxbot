@@ -9,6 +9,22 @@ import wordAI from "../util/word-ai";
 fx.base = "NGN";
 fx.settings = { from: "NGN" };
 
+function currencyResponse(text) {
+  switch(text) {
+    case "USD":
+      return "Dollars";
+      break;
+    case "GBP": 
+      return "Pounds";
+      break;
+    case "EUR":
+      return "Euro";
+      break;
+    default:
+      return "naira";
+      break;
+  }
+}
 
 function generate(text) {
   let newText = text.split(" ");
@@ -81,7 +97,7 @@ EUR => ${rates.cbn.eur} \n\nCURRENCY => BUY / SELL`;
       return "😔 Sorry there was a problem processing your command \nPlease 🙏 check the commands on the facebook page \n \
       @ https://facebook.com/nairabot";
     }
-    return numbro(value).format('0,0') + " naira, is what you will get in return ✌️";
+    return numbro(value).format('0,0') + " " +currencyResponse(response.convertCurrencyTo) +", is what you will get in return ✌️";
   }
 }
 
