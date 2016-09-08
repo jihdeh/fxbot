@@ -81,7 +81,7 @@ EUR => ${rates.cbn.eur} \n\nCURRENCY => BUY / SELL`;
       return "😔 Sorry there was a problem processing your command \nPlease 🙏 check the commands on the facebook page \n \
       @ https://facebook.com/nairabot";
     }
-    return numbro(value).format('0,0') + " naira, is what you will get in return";
+    return numbro(value).format('0,0') + " naira, is what you will get in return ✌️";
   }
 }
 
