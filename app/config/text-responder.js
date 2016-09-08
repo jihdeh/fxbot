@@ -5,6 +5,7 @@ import transform from "../util/transform";
 import Rates from "./web-scraper";
 import returnRates from "../util/return-rates";
 import wordAI from "../util/word-ai";
+import helpText from "../util/helper-text";
 
 fx.base = "NGN";
 fx.settings = { from: "NGN" };
@@ -107,11 +108,7 @@ async function sendTextMessage(recipientId, messageText, postback) {
   if (postback === "help") {
     response = messageText
   } else if (messageText === "help" || messageText === "hi" || messageText === "hello") {
-    response = `Hello there welcome to NAIRABOT! \nYou can use commands like
-    \n"rates"\n"convert 100 dollars"
-    \n"westy"(for western union rates)\n"wu convert 400 pounds"
-    \n"cbn rates(for cbn exchange rates)"
-    \nplease check our page for more commands you can use`;
+    response = helpText;
   } else {
     response = await listener(messageText);
   }

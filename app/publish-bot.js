@@ -1,6 +1,7 @@
 import welcomeGreeting from "./config/welcome-greeting";
 import sendActions from "./config/sender-actions";
 import sendTextMessage from "./config/text-responder";
+import helpText from "./util/helper-text";
 
 function* webhook() {
   const data = this.request.body;
@@ -92,14 +93,12 @@ function receivedPostback(event) {
     "at %d", senderID, recipientID, payload, timeOfPostback);
 
   if (payload === "PAYLOAD_HELP" || payload === "PAYLOAD_GETTING_STARTED") {
-    postbackMessage = `Hello there welcome to NAIRABOT! \nYou can use commands like
-    \n"rates"\n"convert 100 dollars(to convert at parallel market rates)"
-    \n"westy"(for western union rates)\n"wu convert 400 pounds"
-    \n"cbn rates(for cbn exchange rates)"
-    \nplease check our page for more commands you can use`;
+    postbackMessage = helpText;
     sendTextMessage(senderID, postbackMessage, "help");
   } else if(payload === "PAYLOAD_PARALLEL") {
     sendTextMessage(senderID, "rates");
+  } else if(payload === "PAYLOAD_USER_OPTIN") {
+    console.log("X");
   }
 }
 
