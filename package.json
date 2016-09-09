@@ -25,6 +25,7 @@
     "lodash": "^4.14.2",
     "moment": "^2.14.1",
     "money": "^0.2.0",
+    "mongoose": "^4.6.0",
     "nodemon": "^1.9.2",
     "numbro": "^1.9.2",
     "request": "^2.74.0",

@@ -24,34 +24,4 @@ curl -X POST -H "Content-Type: application/json" -d '{
     }
   ]
 }' "https://graph.facebook.com/v2.6/me/thread_settings?access_token=EAAHQl22ysgcBAOZBz5uEgUNxSfzjfsZCh4WklAfGmmaJHMtxTlZBsXvZCZC9lzb0krjKljQIerkd0GG3UarVueGT7AP3wV0s9hj1tmeQauakxwmNAMmaply03WSqKecZBsiIWkjHNP2sgQQP3ZBB1JnMeKB4jZBx3SORxgpTCvMZAEAZDZD"
-
-
-
-//////FOR BUTTON
-
-curl -X POST -H "Content-Type: application/json" -d '{
-  "recipient":{
-    "id":"USER_ID"
-  },
-  "message":{
-    "attachment":{
-      "type":"template",
-      "payload":{
-        "template_type":"button",
-        "text":"What do you want to do next?",
-        "buttons":[
-          {
-            "type":"web_url",
-            "url":"https://petersapparel.parseapp.com",
-            "title":"Show Website"
-          },
-          {
-            "type":"postback",
-            "title":"Start Chatting",
-            "payload":"USER_DEFINED_PAYLOAD"
-          }
-        ]
-      }
-    }
-  }
-}' "https://graph.facebook.com/v2.6/me/messages?access_token=PAGE_ACCESS_TOKEN"  
+ 
