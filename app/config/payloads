@@ -2,6 +2,7 @@
 // "payload":"PAYLOAD_HELP" 
 // "payload":"PAYLOAD_PARALLEL"
 // "payload":"PAYLOAD_USER_OPTIN"
+// PAYLOAD__NOTIFY_ENABLE
 
 curl -X POST -H "Content-Type: application/json" -d '{
   "setting_type" : "call_to_actions",

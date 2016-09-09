@@ -99,8 +99,9 @@ function receivedPostback(event) {
   } else if(payload === "PAYLOAD_PARALLEL") {
     sendTextMessage(senderID, "rates");
   } else if(payload === "PAYLOAD_USER_OPTIN") {
-    console.log("X");
-    notifier(senderID);
+    notifier.notify(senderID);
+  } else if(payload === "PAYLOAD_NOTIFY_ENABLE") {
+    notifier.addToList(senderID);
   }
 }
 
