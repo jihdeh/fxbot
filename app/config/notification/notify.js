@@ -2,7 +2,7 @@ import callSendAPI from "../send-requests";
 import NotifyModel from "./notify-model";
 
 async function findUserId(id) {
-  const response = await NotifyModel.find({ recipient: id }).lean().exec();
+  const response = await NotifyModel.find({ recipient: id });
   console.log(response, "i enter")
   if (response.length > 0) {
     return {
