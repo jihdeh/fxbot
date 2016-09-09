@@ -21,7 +21,6 @@ function* findUserId(id) {
 }
 
 function notify(recipientId) {
-  findUserId(recipientId)
   const actionData = {
     recipient: {
       id: recipientId
@@ -37,7 +36,8 @@ function notify(recipientId) {
       }
     }
   }
-  callSendAPI(actionData);
+  console.log(actionData)
+  // callSendAPI(actionData);
 }
 
 
