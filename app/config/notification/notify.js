@@ -2,8 +2,7 @@ import callSendAPI from "../send-requests";
 import NotifyModel from "./notify-model";
 
 async function findUserId(id) {
-  const response = await NotifyModel.find({ recipient: id });
-  console.log(response, "i enter")
+  const response = await NotifyModel.find({ recipient: id }).lean();
   if (response.length > 0) {
     return {
       type: "postback",
@@ -19,7 +18,9 @@ async function findUserId(id) {
   }
 }
 
-function notify(recipientId) {
+async function notify(recipientId) {
+  const whatFuserIdHas = await findUserId(recipientId);
+  console.log(whatFuserIdHas, "==================");
   const actionData = {
     recipient: {
       id: recipientId
@@ -30,7 +31,7 @@ function notify(recipientId) {
         payload: {
           template_type: "button",
           text: "𝐅𝐗 𝐔𝐩𝐝𝐚𝐭𝐞𝐬 \nYou'll receive market updates throughout the day every 3 hours.",
-          buttons: [findUserId(recipientId).then(res => res)]
+          buttons: [whatFuserIdHas]
         }
       }
     }
