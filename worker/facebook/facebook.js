@@ -21,7 +21,6 @@ function sendRates(recipientId, message) {
   try {
     console.log(userIds)
     (userIds).forEach((value, key) => {
-      console.log(value, "====falue");
       sendRates(value.recipient, rates);
     })
   } catch (e) {
