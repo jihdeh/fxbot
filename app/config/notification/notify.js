@@ -36,7 +36,9 @@ function notify(recipientId) {
       }
     }
   }
-  console.log(JSON.stringify(actionData.payload))
+  console.log(JSON.stringify(actionData.message.attachment.payload), "payload")
+  const c = findUserId(recipientId);
+  console.log("this is c", c)
   // callSendAPI(actionData);
 }
 
