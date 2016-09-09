@@ -1,6 +1,6 @@
 import report from "./text-responder";
 import callSendAPI from "../../app/config/send-requests";
-import {forEach} from "lodash";
+import { forEach } from "lodash";
 import NotifyModel from "../../app/config/notification/notify-model";
 
 function sendRates(recipientId, message) {
@@ -18,12 +18,14 @@ function sendRates(recipientId, message) {
 (async function publishRates() {
   const rates = await report("rates");
   const userIds = await NotifyModel.find().lean();
-  try {
-    console.log(userIds)
-    (userIds).forEach((value, key) => {
-      sendRates(value.recipient, rates);
-    })
-  } catch (e) {
-    console.log(e, "error occured posting fb broadcast");
+  console.log(userIds)
+  if (userIds.length > 0) {
+    try {
+      (userIds).forEach((value, key) => {
+        sendRates(value.recipient, rates);
+      })
+    } catch (e) {
+      console.log(e, "error occured posting fb broadcast");
+    }
   }
 }());
