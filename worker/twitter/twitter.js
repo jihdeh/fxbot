@@ -13,7 +13,7 @@ const Tweet = new Twit({
   const constructTweet = rates;
   try {
     const tweetUpdate = await Tweet.post('statuses/update', { status: constructTweet });
-    console.log(tweetUpdate.data);
+    console.log(tweetUpdate.data.created_at);
   } catch (e) {
     console.log(e, "error occured posting tweet update");
   }
