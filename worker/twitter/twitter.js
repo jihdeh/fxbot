@@ -10,9 +10,8 @@ const Tweet = new Twit({
 });
 
 (async function publishRates() {
-  const generateShortId = "#" + shortId.generate();
   const rates = await report("rates");
-  const constructTweet = rates + "\n" + generateShortId;
+  const constructTweet = rates;
   try {
     const tweetUpdate = await Tweet.post('statuses/update', { status: constructTweet });
     console.log(tweetUpdate.data.created_at);
