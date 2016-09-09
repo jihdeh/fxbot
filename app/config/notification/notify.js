@@ -1,8 +1,8 @@
 import callSendAPI from "../send-requests";
 import NotifyModel from "./notify-model";
 
-function* findUserId(id) {
-  const response = yield NotifyModel.find({ recipient: id });
+function findUserId(id) {
+  const response = NotifyModel.find({ recipient: id });
   console.log(response, "response finding");
   if (Object.keys(response).length !== 0) {
     return {
