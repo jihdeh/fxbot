@@ -111,9 +111,9 @@ async function sendTextMessage(recipientId, messageText, postback) {
   } else if (messageText === "help" || messageText === "hi" || messageText === "hello") {
     response = helpText;
   } else if (messageText === "naira sub" || messageText === "sub") {
-    notifier.addToList(recipientId);
+    return notifier.addToList(recipientId);
   } else if (messageText === "unsub" || messageText === "naira unsub") {
-    notifier.removeFromList(recipientId);
+    return notifier.removeFromList(recipientId);
   } else {
     response = await listener(messageText);
   }
