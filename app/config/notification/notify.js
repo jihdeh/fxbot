@@ -3,7 +3,6 @@ import NotifyModel from "./notify-model";
 
 function findUserId(id) {
   const response = NotifyModel.find({ recipient: id });
-  console.log(response, "response finding");
   if (Object.keys(response).length !== 0) {
     return {
       type: "postback",
@@ -35,10 +34,7 @@ function notify(recipientId) {
       }
     }
   }
-  console.log(JSON.stringify(actionData.message.attachment.payload), "payload")
-  const c = findUserId(recipientId);
-  console.log("this is c", c)
-  // callSendAPI(actionData);
+  callSendAPI(actionData);
 }
 
 
@@ -55,7 +51,6 @@ function addToList(recipientId) {
     const list = new NotifyModel();
     list.recipient = recipientId;
     list.save();
-    console.log(list, "========");
     callSendAPI(actionData);
   } catch (e) {
     console.log("Error trying to save recipient id", e);
