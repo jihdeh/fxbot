@@ -5,7 +5,7 @@ function* findUserId(id) {
   const user = new NotifyModel();
   const response = yield user.find({ recipient: id });
   console.log(response, "response finding");
-  if (response) {
+  if (Object.keys(response).length !== 0) {
     return {
       type: "postback",
       title: "Disable Notification",
