@@ -21,6 +21,7 @@ function* findUserId(id) {
 }
 
 function notify(recipientId) {
+  findUserId(recipientId)
   const actionData = {
     recipient: {
       id: recipientId
@@ -31,7 +32,7 @@ function notify(recipientId) {
         payload: {
           template_type: "button",
           text: "𝐅𝐗 𝐔𝐩𝐝𝐚𝐭𝐞𝐬 \nYou'll receive market updates throughout the day every 3 hours.",
-          buttons: [`${findUserId(recipientId)}`]
+          buttons: [findUserId(recipientId)]
         }
       }
     }
