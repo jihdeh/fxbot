@@ -36,7 +36,7 @@ function notify(recipientId) {
       }
     }
   }
-  console.log(actionData)
+  console.log(JSON.stringify(actionData.payload))
   // callSendAPI(actionData);
 }
 
