@@ -23,7 +23,7 @@ async function publishRates() {
     try {
       (userIds).forEach((value, key) => {
         sendRates(value.recipient, rates);
-      })
+      });
     } catch (e) {
       console.log(e, "error occured posting fb broadcast");
     }
