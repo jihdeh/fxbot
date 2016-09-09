@@ -20,7 +20,6 @@ async function findUserId(id) {
 
 async function notify(recipientId) {
   const whatFuserIdHas = await findUserId(recipientId);
-  console.log(whatFuserIdHas, "==================");
   const actionData = {
     recipient: {
       id: recipientId
@@ -36,8 +35,7 @@ async function notify(recipientId) {
       }
     }
   }
-  console.log(JSON.stringify(actionData.message.attachment.payload));
-  // callSendAPI(actionData);
+  callSendAPI(actionData);
 }
 
 
