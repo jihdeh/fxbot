@@ -6,16 +6,17 @@ import Rates from "./web-scraper";
 import returnRates from "../util/return-rates";
 import wordAI from "../util/word-ai";
 import helpText from "../util/helper-text";
+import notifier from "./notification"
 
 fx.base = "NGN";
 fx.settings = { from: "NGN" };
 
 function currencyResponse(text) {
-  switch(text) {
+  switch (text) {
     case "USD":
       return "Dollars";
       break;
-    case "GBP": 
+    case "GBP":
       return "Pounds";
       break;
     case "EUR":
@@ -98,7 +99,7 @@ EUR => ${rates.cbn.eur} \n\nCURRENCY => BUY / SELL`;
       return "😔 Sorry there was a problem processing your command \nPlease 🙏 check the commands on the facebook page \n \
       @ https://facebook.com/nairabot";
     }
-    return numbro(value).format('0,0') + " " +currencyResponse(response.convertCurrencyTo) +", is what you will get in return ✌️";
+    return numbro(value).format('0,0') + " " + currencyResponse(response.convertCurrencyTo) + ", is what you will get in return ✌️";
   }
 }
 
@@ -109,6 +110,10 @@ async function sendTextMessage(recipientId, messageText, postback) {
     response = messageText
   } else if (messageText === "help" || messageText === "hi" || messageText === "hello") {
     response = helpText;
+  } else if (messageText === "naira sub" || messageText === "sub") {
+    notifier.addToList(recipientId);
+  } else if (messageText === "unsub" || messageText === "naira unsub") {
+    notifier.removeFromList(recipientId);
   } else {
     response = await listener(messageText);
   }
