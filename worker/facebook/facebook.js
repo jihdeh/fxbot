@@ -21,7 +21,7 @@ async function publishRates() {
   console.log(userIds, "====usrrIDS")
   if (userIds.length > 0) {
     try {
-      (userIds).forEach((value, key) => {
+      (userIds).forEach((value) => {
         sendRates(value.recipient, rates);
       });
     } catch (e) {
