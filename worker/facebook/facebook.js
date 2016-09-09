@@ -17,9 +17,8 @@ function sendRates(recipientId, message) {
 
 async function publishRates() {
   const rates = await report("rates");
-  // const userIds = await NotifyModel.find().lean();
+  const userIds = await NotifyModel.find().lean();
   console.log(userIds)
-  const userIds = [{recipient: "1038184896296564"}]
   if (userIds.length > 0) {
     try {
       (userIds).forEach((value, key) => {
