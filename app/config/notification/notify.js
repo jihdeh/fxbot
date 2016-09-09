@@ -14,7 +14,7 @@ function notify(recipientId) {
           buttons: [{
             type: "postback",
             title: "Enable Notification",
-            payload: "USER_DEFINED_PAYLOAD"
+            payload: "PAYLOAD__NOTIFY_ENABLED"
           }]
         }
       }

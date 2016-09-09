@@ -2,6 +2,7 @@ import welcomeGreeting from "./config/welcome-greeting";
 import sendActions from "./config/sender-actions";
 import sendTextMessage from "./config/text-responder";
 import helpText from "./util/helper-text";
+import notifier from "./config/notification"
 
 function* webhook() {
   const data = this.request.body;
@@ -99,6 +100,7 @@ function receivedPostback(event) {
     sendTextMessage(senderID, "rates");
   } else if(payload === "PAYLOAD_USER_OPTIN") {
     console.log("X");
+    notifier(senderID);
   }
 }
 
