@@ -1,3 +1,3 @@
-require("babel-core/register");
-require("babel-polyfill");
-require("./facebook");
+import fbBroadcast from "./facebook";
+
+export default fbBroadcast;

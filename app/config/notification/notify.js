@@ -45,7 +45,7 @@ function addToList(recipientId) {
       id: recipientId
     },
     message: {
-      text: "Notification status updated"
+      text: "Notification status updated - Subscribed"
     }
   }
   try {
@@ -59,4 +59,22 @@ function addToList(recipientId) {
 }
 
 
-export default { notify, addToList };
+function removeFromList(recipientId) {
+  const actionData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: "Notification status updated - unSubscribed"
+    }
+  }
+  try {
+    NotifyModel.find({ recipient: recipientId}).remove().exec();
+    callSendAPI(actionData);
+  } catch (e) {
+    console.log("Error trying to remove recipient id", e);
+  }
+}
+
+
+export default { notify, addToList, removeFromList };

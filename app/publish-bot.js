@@ -96,12 +96,14 @@ function receivedPostback(event) {
   if (payload === "PAYLOAD_HELP" || payload === "PAYLOAD_GETTING_STARTED") {
     postbackMessage = helpText;
     sendTextMessage(senderID, postbackMessage, "help");
-  } else if(payload === "PAYLOAD_PARALLEL") {
+  } else if (payload === "PAYLOAD_PARALLEL") {
     sendTextMessage(senderID, "rates");
-  } else if(payload === "PAYLOAD_USER_OPTIN") {
+  } else if (payload === "PAYLOAD_USER_OPTIN") {
     notifier.notify(senderID);
-  } else if(payload === "PAYLOAD_NOTIFY_ENABLE") {
+  } else if (payload === "PAYLOAD_NOTIFY_ENABLE") {
     notifier.addToList(senderID);
+  } else if (payload === "PAYLOAD_NOTIFY_DISABLE") {
+    notifier.removeFromList(senderID);
   }
 }
 

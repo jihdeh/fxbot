@@ -15,7 +15,7 @@ function sendRates(recipientId, message) {
   callSendAPI(actionData);
 }
 
-(async function publishRates() {
+async function publishRates() {
   const rates = await report("rates");
   const userIds = await NotifyModel.find().lean();
   console.log(userIds)
@@ -28,4 +28,6 @@ function sendRates(recipientId, message) {
       console.log(e, "error occured posting fb broadcast");
     }
   }
-}());
+};
+
+export default publishRates;
