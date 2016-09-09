@@ -16,7 +16,7 @@ function notify(recipientId) {
         type: "template",
         payload: {
           template_type: "button",
-          text: "FX Uᴘᴅᴀᴛᴇs \nYou'll receive market updates throughout the day every 3 hours.",
+          text: "𝐅𝐗 𝐔𝐩𝐝𝐚𝐭𝐞𝐬 \nYou'll receive market updates throughout the day every 3 hours.",
           buttons: [{
             type: "postback",
             title: "Enable Notification",
@@ -43,6 +43,7 @@ function addToList(recipientId) {
     const list = new NotifyModel();
     list.recipient = recipientId;
     list.save();
+    console.log(list);
     callSendAPI(actionData);
   } catch (e) {
     console.log("Error trying to save recipient id", e);
