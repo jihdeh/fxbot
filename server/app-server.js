@@ -4,6 +4,8 @@ import os from "os";
 import cluster from "cluster";
 
 import App from "./app";
+import mongoose from "mongoose";
+import mongoConnectionString from "../util/mongo-connection-string";
 
 function startMaster() {
   const workforce = process.env.WEB_CONCURRENCY || os.cpus().length;
@@ -21,7 +23,7 @@ function startMaster() {
 }
 
 function startWorker() {
-
+  mongoose.connect(mongoConnectionString);
   const app = App();
   const port = process.env.PORT || 6500;
   app.listen(port);
