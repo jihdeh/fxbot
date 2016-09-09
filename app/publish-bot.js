@@ -92,18 +92,27 @@ function receivedPostback(event) {
 
   console.log("Received postback for user %d and page %d with payload '%s' " +
     "at %d", senderID, recipientID, payload, timeOfPostback);
-
-  if (payload === "PAYLOAD_HELP" || payload === "PAYLOAD_GETTING_STARTED") {
-    postbackMessage = helpText;
-    sendTextMessage(senderID, postbackMessage, "help");
-  } else if (payload === "PAYLOAD_PARALLEL") {
-    sendTextMessage(senderID, "rates");
-  } else if (payload === "PAYLOAD_USER_OPTIN") {
-    notifier.notify(senderID);
-  } else if (payload === "PAYLOAD_NOTIFY_ENABLE") {
-    notifier.addToList(senderID);
-  } else if (payload === "PAYLOAD_NOTIFY_DISABLE") {
-    notifier.removeFromList(senderID);
+  switch(payload) {
+    case "PAYLOAD_GETTING_STARTED":
+      postbackMessage = helpText;
+      sendTextMessage(senderID, postbackMessage, "help");
+      break;
+    case "PAYLOAD_PARALLEL":
+      sendTextMessage(senderID, "rates");
+      break;
+    case "PAYLOAD_USER_OPTIN":
+      notifier.notify(senderID);
+      break;
+    case "PAYLOAD_NOTIFY_ENABLE":
+      notifier.addToList(senderID);
+      break;
+    case "PAYLOAD_NOTIFY_DISABLE":
+      notifier.removeFromList(senderID);
+      break;
+    default: 
+      postbackMessage = helpText;
+      sendTextMessage(senderID, postbackMessage, "help");
+      break;
   }
 }
 
