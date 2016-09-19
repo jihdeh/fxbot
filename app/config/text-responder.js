@@ -67,8 +67,12 @@ EUR => ${rates.moneygram.eur} \n\nCURRENCY => BUY / SELL`;
         to: response.convertCurrencyFrom
       });
     } else {
-      return "😔 Sorry there was a problem processing your command \nPlease 🙏 check the commands on the facebook page \n \
-      @ https://facebook.com/nairabot";
+      return "😔 Sorry did you want to try any of these? \
+      \nwesty => for Western union rates \
+      \ngram rates => from Moneygram rates \
+      \ncbn rates => for Central Bank rates OR\
+      \nrates => for Parallel market rates\
+      \n Visit @ https://facebook.com/nairabot for more info";
     }
     return numbro(value).format('0,0') + " " + currencyResponse(response.convertCurrencyTo) + ", is what you will get in return ✌️";
   }
