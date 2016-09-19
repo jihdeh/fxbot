@@ -33,8 +33,21 @@ function scrape() {
         let y = JSON.parse(x);
         storeWURates.push(y);
       });
+
+      let storeMoneyGramRates = [];
+      $(".entry-content table").last().prev().prev().prev().next().filter(function() {
+        let data = $(this);
+        let recentData = data.contents().map(function(i, el) {
+          return $(this).html();
+        }).get();
+        let x = JSON.stringify(recentData);
+        let y = JSON.parse(x);
+        storeMoneyGramRates.push(y);
+      });
+
       //western union rates is currently unstable and sometimes breaks.
       const wu0 = JSON.parse(JSON.stringify($(get(storeWURates, "[0][0]")).text().split("\n")));
+      const moneyGram0 = JSON.parse(JSON.stringify($(get(storeMoneyGramRates, "[0][0]")).text().split("\n")));
       const cbnRates = officerCbn(html);
 
       if (!parallelRates[0] || parallelRates[0] === undefined) {
@@ -51,6 +64,11 @@ function scrape() {
           usd: wu0[9],
           gbp: wu0[10],
           eur: wu0[11]
+        },
+        moneygram: {
+          usd: moneyGram0[9],
+          gbp: moneyGram0[10],
+          eur: moneyGram0[11]
         },
         cbn: {
           usd: $(get(cbnRates, "[1]")).text(),
