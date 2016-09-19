@@ -107,18 +107,27 @@ EUR => ${rates.cbn.eur} \n\nCURRENCY => BUY / SELL`;
 async function sendTextMessage(recipientId, messageText) {
   let response;
   messageText = messageText.toLowerCase();
-  if (messageText === "help") {
-    response = helpText;
-  } else if (genericResponse.greetings.includes(messageText)) {
-    response = `Hi There!\nHow may i help you 🎩?`;
-  } else if (genericResponse.byes.includes(messageText)) {
-    response = `Alright! Thank you, bye now 🙏`;
-  } else if (messageText === "naira sub" || messageText === "sub") {
-    return notifier.addToList(recipientId);
-  } else if (messageText === "unsub" || messageText === "naira unsub") {
-    return notifier.removeFromList(recipientId);
-  } else {
-    response = await listener(messageText);
+  switch (true) {
+    case messageText === "help":
+      response = helpText;
+      break;
+    case genericResponse.greetings.includes(messageText):
+      response = `Hi There!\nHow may i help you 🎩?`;
+      break;
+    case genericResponse.byes.includes(messageText):
+      response = `Alright! Thank you, bye now 🙏`;
+      break;
+    case messageText === "naira sub":
+    case messageText === "sub":
+      return notifier.addToList(recipientId);
+      break;
+    case messageText === "unsub":
+    case messageText === "naira unsub":
+      return notifier.removeFromList(recipientId);
+      break;
+    default:
+      response = await listener(messageText);
+      break;
   }
   const messageData = {
     recipient: {
