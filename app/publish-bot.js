@@ -94,8 +94,7 @@ function receivedPostback(event) {
     "at %d", senderID, recipientID, payload, timeOfPostback);
   switch(payload) {
     case "PAYLOAD_GETTING_STARTED":
-      postbackMessage = helpText;
-      sendTextMessage(senderID, postbackMessage, "help");
+      sendTextMessage(senderID, "help");
       break;
     case "PAYLOAD_PARALLEL":
       sendTextMessage(senderID, "rates");
@@ -110,8 +109,7 @@ function receivedPostback(event) {
       notifier.removeFromList(senderID);
       break;
     default: 
-      postbackMessage = helpText;
-      sendTextMessage(senderID, postbackMessage, "help");
+      sendTextMessage(senderID, "help");
       break;
   }
 }

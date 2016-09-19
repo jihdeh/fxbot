@@ -6,6 +6,7 @@ import Rates from "./web-scraper";
 import returnRates from "../util/return-rates";
 import wordAI from "../util/word-ai";
 import helpText from "../util/helper-text";
+import genericResponse from "../util/generic-response-text";
 import notifier from "./notification"
 
 fx.base = "NGN";
@@ -103,13 +104,15 @@ EUR => ${rates.cbn.eur} \n\nCURRENCY => BUY / SELL`;
   }
 }
 
-async function sendTextMessage(recipientId, messageText, postback) {
+async function sendTextMessage(recipientId, messageText) {
   let response;
   messageText = messageText.toLowerCase();
-  if (postback === "help") {
-    response = messageText
-  } else if (messageText === "help" || messageText === "hi" || messageText === "hello") {
+  if (messageText === "help") {
     response = helpText;
+  } else if (genericResponse.greetings.includes(messageText)) {
+    response = `Hi There!\nHow may i help you 🎩?`;
+  } else if (genericResponse.byes.includes(messageText)) {
+    response = `Alright! Thank you, bye now 🙏`;
   } else if (messageText === "naira sub" || messageText === "sub") {
     return notifier.addToList(recipientId);
   } else if (messageText === "unsub" || messageText === "naira unsub") {
