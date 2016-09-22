@@ -78,6 +78,8 @@ EUR => ${rates.moneygram.eur} \n\nCURRENCY => BUY / SELL`;
   }
 }
 
+listener("rates");
+
 async function sendTextMessage(recipientId, messageText) {
   let response;
   messageText = messageText.toLowerCase();

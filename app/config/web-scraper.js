@@ -1,14 +1,17 @@
 import request from "request";
 import cheerio from "cheerio";
 import axios from "axios";
-import {get} from "lodash";
+import {get } from "lodash";
 import officerCbn from "./cbn";
 
 let API_BASE = process.env.JSON_RATES_STORE;
 let url = "http://abokifx.com";
 
 function scrape() {
-  request(url, function(error, response, html) {
+  const j = request.jar();
+  const cookie = request.cookie(`PHPSESSID=${process.env.SESS}`);
+  j.setCookie(cookie, url);
+  request({ url: url, jar: j }, function(error, response, html) {
     if (!error) {
       let $ = cheerio.load(html);
       let parallelRates = [];

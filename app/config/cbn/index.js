@@ -34,6 +34,6 @@ function getSiblings() {
 }
  const firstFn = getFirstResult();
  const secondFn = getSiblings();
- const passRatesDown = ($(get(firstFn, "[0][1]")).text() !== "") ? firstFn[0] : secondFn[1];
+ const passRatesDown = ($(get(secondFn, "[0][1]")).text() !== "") ? secondFn[1] : firstFn[0];
  return passRatesDown;
 }
