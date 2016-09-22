@@ -3,6 +3,8 @@ import cheerio from "cheerio";
 import axios from "axios";
 import {get } from "lodash";
 import officerCbn from "./cbn";
+import officerWesty from "./western";
+import officerMoneyGram from "./moneygram";
 
 let API_BASE = process.env.JSON_RATES_STORE;
 let url = "http://abokifx.com";
@@ -26,32 +28,11 @@ function scrape() {
           eur: $(get(recentData, "[3]")).text()
         });
       });
-      let storeWURates = [];
-      $(".entry-content table").last().prev().prev().prev().prev().filter(function() {
-        let data = $(this);
-        let recentData = data.contents().map(function(i, el) {
-          return $(this).html();
-        }).get();
-        let x = JSON.stringify(recentData);
-        let y = JSON.parse(x);
-        storeWURates.push(y);
-      });
-
-      let storeMoneyGramRates = [];
-      $(".entry-content table").last().prev().prev().prev().next().filter(function() {
-        let data = $(this);
-        let recentData = data.contents().map(function(i, el) {
-          return $(this).html();
-        }).get();
-        let x = JSON.stringify(recentData);
-        let y = JSON.parse(x);
-        storeMoneyGramRates.push(y);
-      });
-
+    
       //western union rates is currently unstable and sometimes breaks.
-      const wu0 = JSON.parse(JSON.stringify($(get(storeWURates, "[0][0]")).text().split("\n")));
-      const moneyGram0 = JSON.parse(JSON.stringify($(get(storeMoneyGramRates, "[0][0]")).text().split("\n")));
       const cbnRates = officerCbn(html);
+      const westernRates = officerWesty(html);
+      const moneyGramRates = officerMoneyGram(html);
 
       if (!parallelRates[0] || parallelRates[0] === undefined) {
         scrape();
@@ -64,14 +45,14 @@ function scrape() {
           eur: parallelRates[0].eur
         },
         wu: {
-          usd: wu0[9],
-          gbp: wu0[10],
-          eur: wu0[11]
+          usd: westernRates[9],
+          gbp: westernRates[10],
+          eur: westernRates[11]
         },
         moneygram: {
-          usd: moneyGram0[9],
-          gbp: moneyGram0[10],
-          eur: moneyGram0[11]
+          usd: moneyGramRates[9],
+          gbp: moneyGramRates[10],
+          eur: moneyGramRates[11]
         },
         cbn: {
           usd: $(get(cbnRates, "[1]")).text(),
@@ -80,18 +61,18 @@ function scrape() {
         }
       }
       console.log(nse);
-      try {
-        if (nse) {
-          request.put({ url: API_BASE, body: nse, json: true }, function(error, response, body) {
-            if (error) {
-              return console.error("upload failed:", error);
-            }
-            console.log("Upload successful!  Server responded with:", body);
-          });
-        }
-      } catch (e) {
-        console.log("error occured sending json", e);
-      }
+      // try {
+      //   if (nse) {
+      //     request.put({ url: API_BASE, body: nse, json: true }, function(error, response, body) {
+      //       if (error) {
+      //         return console.error("upload failed:", error);
+      //       }
+      //       console.log("Upload successful!  Server responded with:", body);
+      //     });
+      //   }
+      // } catch (e) {
+      //   console.log("error occured sending json", e);
+      // }
     }
   });
 }
