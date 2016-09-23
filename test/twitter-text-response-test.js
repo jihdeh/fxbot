@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import supertest from "supertest-as-promised";
 import report from "../worker/twitter/text-responder";
-import getRates from "../worker/twitter/get-rates";
+import getRates from "../worker/get-rates";
 import moment from "moment";
 
 describe("Test for twitter configuration", () => {

@@ -1,4 +1,4 @@
-import AbokiModel from "../model/aboki/aboki-model";
+import AbokiModel from "../model/aboki";
 import axios from "axios";
 
 async function AbokiAdd(recipientID) {

@@ -97,6 +97,9 @@ async function sendTextMessage(recipientId, messageText) {
     case wordAI.aboki.includes(messageText):
       response = await Aboki.AbokiAdd(recipientId);
       break;
+    case wordAI.request.includes(messageText):
+      response = await Aboki.AbokiAdd(recipientId);
+      break;
     case genericResponse.byes.includes(messageText):
       response = `Alright! Thank you, bye now 🙏`;
       break;
@@ -112,19 +115,19 @@ async function sendTextMessage(recipientId, messageText) {
       response = await listener(messageText);
       break;
   }
-  const messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      text: response
-    }
-  };
-  try {
-    callSendAPI(messageData);
-  } catch (error) {
-    console.log("An error occured");
-  }
+  // const messageData = {
+  //   recipient: {
+  //     id: recipientId
+  //   },
+  //   message: {
+  //     text: response
+  //   }
+  // };
+  // try {
+  //   callSendAPI(messageData);
+  // } catch (error) {
+  //   console.log("An error occured");
+  // }
 }
 
 export default sendTextMessage;
