@@ -21,9 +21,10 @@ async function publishRates() {
   console.log(userIds, "====usrrIDS")
   if (userIds.length > 0) {
     try {
-      (userIds).forEach((value) => {
-        sendRates(value.recipient, rates);
-      });
+      let promises = userIds.map((value) => sendRates(value.recipient, rates));
+
+      let results = await Promise.all(promises);
+      console.log(results);
     } catch (e) {
       console.log(e, "error occured posting fb broadcast");
     }

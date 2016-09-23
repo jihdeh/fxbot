@@ -1,8 +1,7 @@
 import RequestModel from "../model/request/requester-model";
-import axios from "axios";
 import crypto from "crypto";
 
-async function AddRequest(recipientID) {
+async function AddRequest(recipientID, text) {
   try {
     const findRequester = await RequestModel.findOne({ requester: recipientID, isRequesting: { $eq: true } }).lean();
     if (findRequester) {
@@ -23,11 +22,14 @@ async function AddRequest(recipientID) {
   return;
 }
 
+function broadcastRequest() {
+  
+}
 
 async function RemoveRequest(recipientID) {
   const findRequester = await RequestModel.findOne({ requester: recipientID }).lean();
   if (findRequester) {
-    AbokiModel.findOneAndRemove({ requester: recipientID }, (err) => {});
+    RequestModel.findOneAndRemove({ requester: recipientID }, () => {});
     return "Request has been cancelled";
   } else {
     return "You had no existing requests";
