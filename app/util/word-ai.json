@@ -3,6 +3,6 @@
   "westernRates": ["wu rates", "wu rate", "western union rates", "westy"],
   "cbnRates": ["cbn rates", "cbn rate", "cb"],
   "moneygramRates": ["gram rates", "moneygram rates", "moneygram rate", "gram rate", "grammy"],
-  "aboki": ["aboki register", "register", "i want to be an aboki", "register as aboki"],
-  "abokiRm": ["aboki remove", "unregister", "i don't want to be an aboki"]
+  "aboki": ["aboki register", "register", "i want to be an aboki", "register as aboki", "aboki sub"],
+  "abokiRm": ["aboki remove", "unregister", "i don't want to be an aboki", "aboki unsub"]
 }
