@@ -18,7 +18,7 @@ async function AbokiAdd(recipientID) {
         abokiID: recipientID
       }));
     aboki.save();
-    return "Successfully Registered as an Aboki, \nyou will now receive notifications when there's a request";
+    return "Successfully Registered as an Aboki, \nPlease note, you will now receive notifications when there's a request";
   }
   return;
 }
