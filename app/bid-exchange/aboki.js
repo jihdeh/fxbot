@@ -1,8 +1,7 @@
 import AbokiModel from "../model/aboki/aboki-model";
-// import callSendAPI from "../send-requests";
 import axios from "axios";
 
-export default async function Aboki(recipientID) {
+async function AbokiAdd(recipientID) {
   const findAboki = await AbokiModel.findOne({ abokiID: recipientID }).lean();
   if (findAboki) {
     return `Hello ${findAboki.name}, you are already registered as an Aboki :)`;
@@ -19,7 +18,21 @@ export default async function Aboki(recipientID) {
         abokiID: recipientID
       }));
     aboki.save();
-    return "Successfully Registered as an Aboki";
+    return "Successfully Registered as an Aboki, \nyou will now receive notifications when there's a request";
   }
   return;
 }
+
+async function AbokiRemove(recipientID) {
+  const findAboki = await AbokiModel.findOne({ abokiID: recipientID }).lean();
+  if(findAboki) {
+    AbokiModel.findOneAndRemove({abokiID: recipientID}, (err) => {});
+    return `You have successfully been removed as an Aboki`;
+  } else {
+    return "You were never an Aboki, sorry.";
+  }
+  return;
+}
+
+
+export default {AbokiAdd, AbokiRemove}
