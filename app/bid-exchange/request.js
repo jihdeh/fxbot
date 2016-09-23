@@ -1,4 +1,5 @@
-import RequestModel from "../model/request/requester-model";
+import RequestModel from "../model/request";
+import AbokiModel from "../model/aboki";
 import crypto from "crypto";
 
 async function AddRequest(recipientID, text) {
@@ -22,8 +23,17 @@ async function AddRequest(recipientID, text) {
   return;
 }
 
-function broadcastRequest() {
-  
+
+
+function broadcastRequest(text) {
+  const getAllAbokis = await AbokiModel.find({inSession: false, banned: false});
+  try {
+      let promises = userIds.map((value) => sendRates(value.recipient, rates));
+      let results = await Promise.all(promises);
+      console.log(results);
+    } catch (e) {
+      console.log(e, "error occured posting fb broadcast");
+    }
 }
 
 async function RemoveRequest(recipientID) {

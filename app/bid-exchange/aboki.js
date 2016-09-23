@@ -26,7 +26,7 @@ async function AbokiAdd(recipientID) {
 async function AbokiRemove(recipientID) {
   const findAboki = await AbokiModel.findOne({ abokiID: recipientID }).lean();
   if(findAboki) {
-    AbokiModel.findOneAndRemove({abokiID: recipientID}, (err) => {});
+    AbokiModel.findOneAndRemove({abokiID: recipientID}, () => {});
     return `You have successfully been removed as an Aboki`;
   } else {
     return "You were never an Aboki, sorry.";

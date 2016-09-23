@@ -8,7 +8,8 @@ const Aboki = new Schema({
   locale: String,
   timezone: Number,
   gender: String,
-  inSession: {type: Boolean, index: true, default: false}
+  inSession: {type: Boolean, index: true, default: false},
+  banned: {type: Boolean, default: false}
 });
 
 export default mongoose.model("Aboki", Aboki);
