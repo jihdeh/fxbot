@@ -45,15 +45,15 @@ EUR => ${rates.parallel.eur} \n\nCURRENCY => BUY / SELL`;
     return endRatesResult;
   } else if (wu) {
     const endWuRatesResult = `Todays Western Union Rates(receiving) \n\nUSD => ${rates.wu.usd} \nGBP => ${rates.wu.gbp} 
-EUR => ${rates.wu.eur} \n\nCURRENCY => BUY / SELL`;
+EUR => ${rates.wu.eur}`;
     return endWuRatesResult;
   } else if (cbn) {
     const endCbnRatesResult = `Todays CBN EX Rates \n\nUSD => ${rates.cbn.usd} \nGBP => ${rates.cbn.gbp} 
-EUR => ${rates.cbn.eur} \n\nCURRENCY => BUY / SELL`;
+EUR => ${rates.cbn.eur}`;
     return endCbnRatesResult;
   } else if (moneygram) {
     const endmoneygramRatesResult = `Todays Moneygram EX Rates(receiving) \n\nUSD => ${rates.moneygram.usd} \nGBP => ${rates.moneygram.gbp} 
-EUR => ${rates.moneygram.eur} \n\nCURRENCY => BUY / SELL`;
+EUR => ${rates.moneygram.eur}`;
     return endmoneygramRatesResult;
   } else {
     const response = generate(text);
@@ -79,7 +79,7 @@ EUR => ${rates.moneygram.eur} \n\nCURRENCY => BUY / SELL`;
   }
 }
 
-// sendTextMessage(1038184896296564, "aboki remove")
+// sendTextMessage(1038184896296564, "aboki register");
 
 async function sendTextMessage(recipientId, messageText) {
   let response;

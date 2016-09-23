@@ -20,11 +20,19 @@ async function AddRequest(recipientID) {
   } catch (error) {
     console.trace("Error occured adding request", error);
   }
+  return;
 }
 
 
-async function RemoveRequest() {
-
+async function RemoveRequest(recipientID) {
+  const findRequester = await RequestModel.findOne({ requester: recipientID }).lean();
+  if (findRequester) {
+    AbokiModel.findOneAndRemove({ requester: recipientID }, (err) => {});
+    return "Request has been cancelled";
+  } else {
+    return "You had no existing requests";
+  }
+  return;
 }
 
 export default { AddRequest, RemoveRequest }
