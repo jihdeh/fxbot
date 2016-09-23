@@ -1,6 +1,5 @@
 import report from "./text-responder";
 import callSendAPI from "../../app/config/send-requests";
-import { forEach } from "lodash";
 import NotifyModel from "../../app/config/notification/notify-model";
 
 function sendRates(recipientId, message) {
