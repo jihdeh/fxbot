@@ -8,6 +8,7 @@ import helpText from "../util/helper-text";
 import genericResponse from "../util/generic-response-text";
 import notifier from "./notification";
 import generate from "./conversion-generator";
+import aboki from "../bid-exchange/aboki";
 
 fx.base = "NGN";
 fx.settings = { from: "NGN" };
@@ -78,7 +79,7 @@ EUR => ${rates.moneygram.eur} \n\nCURRENCY => BUY / SELL`;
   }
 }
 
-listener("rates");
+// sendTextMessage(1038184896296564, "aboki register")
 
 async function sendTextMessage(recipientId, messageText) {
   let response;
@@ -89,6 +90,9 @@ async function sendTextMessage(recipientId, messageText) {
       break;
     case genericResponse.greetings.includes(messageText):
       response = `Hi There!\nHow may i help you 🎩?`;
+      break;
+    case wordAI.aboki.includes(messageText):
+      response = await aboki(recipientId);
       break;
     case genericResponse.byes.includes(messageText):
       response = `Alright! Thank you, bye now 🙏`;
