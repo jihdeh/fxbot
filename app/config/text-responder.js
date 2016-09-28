@@ -9,6 +9,7 @@ import genericResponse from "../util/generic-response-text";
 import notifier from "./notification";
 import generate from "./conversion-generator";
 import Aboki from "../bid-exchange/aboki";
+import Request from "../bid-exchange/request";
 
 fx.base = "NGN";
 fx.settings = { from: "NGN" };
@@ -79,7 +80,7 @@ EUR => ${rates.moneygram.eur}`;
   }
 }
 
-// sendTextMessage(1038184896296564, "westy");
+sendTextMessage(1038184896296564, "aboki remove");
 
 async function sendTextMessage(recipientId, messageText) {
   let response;
@@ -98,7 +99,7 @@ async function sendTextMessage(recipientId, messageText) {
       response = await Aboki.AbokiAdd(recipientId);
       break;
     case wordAI.request.includes(messageText):
-      response = await Aboki.AbokiAdd(recipientId);
+      response = await Request.AddRequest(recipientId);
       break;
     case genericResponse.byes.includes(messageText):
       response = `Alright! Thank you, bye now 🙏`;
@@ -115,19 +116,19 @@ async function sendTextMessage(recipientId, messageText) {
       response = await listener(messageText);
       break;
   }
-  const messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      text: response
-    }
-  };
-  try {
-    callSendAPI(messageData);
-  } catch (error) {
-    console.log("An error occured");
-  }
+  // const messageData = {
+  //   recipient: {
+  //     id: recipientId
+  //   },
+  //   message: {
+  //     text: response
+  //   }
+  // };
+  // try {
+  //   callSendAPI(messageData);
+  // } catch (error) {
+  //   console.log("An error occured");
+  // }
 }
 
 export default sendTextMessage;

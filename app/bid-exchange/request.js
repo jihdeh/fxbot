@@ -25,7 +25,7 @@ async function AddRequest(recipientID, text) {
 
 
 
-function broadcastRequest(text) {
+async function broadcastRequest(text) {
   const getAllAbokis = await AbokiModel.find({inSession: false, banned: false});
   try {
       let promises = userIds.map((value) => sendRates(value.recipient, rates));

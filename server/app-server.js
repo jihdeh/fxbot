@@ -5,6 +5,8 @@ import cluster from "cluster";
 
 import App from "./app";
 import mongoose from "mongoose";
+// Make use of ES6 promise
+mongoose.Promise = global.Promise;
 import mongoConnectionString from "../util/mongo-connection-string";
 
 function startMaster() {
