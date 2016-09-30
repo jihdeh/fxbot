@@ -3,8 +3,8 @@ import SessionModel from "../../model/session";
 import AbokiModel from "../../model/aboki";
 
 async function findSessionData(sessionID, abokiID) {
-  const findSession = await SessionModel.findOne({ sessionId: sessionID, aboki: { $exists: true } }).lean();
-  if (findSession) {
+  const findSession = await SessionModel.findOne({ sessionId: sessionID }).lean().exec();
+  if (findSession.aboki) {
     console.log("Sessin taken");
     return "Sorry this session is already taken, you will be notified when there's another";
   } else {
