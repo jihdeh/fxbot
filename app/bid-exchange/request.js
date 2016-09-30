@@ -19,13 +19,13 @@ async function AddRequest(recipientID, text) {
         isRequesting: true //set to false after deal is sealed
       }));
       addNewRequest.save().then(async() => {
-        console.log(sessionID);
+        console.log(sessionID, "after save");
         const session = new SessionModel(
           Object.assign({}, {
             sessionId: sessionID,
             requester: recipientID
           }));
-          session.save();
+        session.save();
         await broadcastRequest(text, sessionID);
       });
     }
@@ -64,7 +64,7 @@ async function broadcastRequest(text, sessionID) {
   const getAllAbokis = await AbokiModel.find({ inSession: false, banned: false });
   console.log("abokies", getAllAbokis)
   try {
-    let promises = getAllAbokis.map(async (value) => await template(value.abokiID, text, sessionID));
+    let promises = getAllAbokis.map(async(value) => await template(value.abokiID, text, sessionID));
   } catch (e) {
     console.log(e, "error occured posting fb broadcast");
   }

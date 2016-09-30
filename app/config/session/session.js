@@ -22,16 +22,12 @@ function sendMessagesToParty(abokiID, recipientID) {
 
 export default async function findSessionData(sessionID, abokiID) {
   const findSession = await SessionModel.findOne({ sessionId: sessionID, aboki: { $exists: true } }).lean();
-  console.log(findSession);
+  console.log(findSession, "inSession");
   if (findSession) {
     return "Sorry this session is already taken, you will be notified when there's another";
   } else {
-    const addNewSession = new SessionModel(Object.assign({}, {
-      aboki: abokiID
-    }));
-    addNewSession.save();
-    const setInsession = new AbokiModel({ inSession: true });
-    setInsession.save();
+    SessionModel.update({sessionID: sessionID, aboki: abokiID});
+    AbokiModel.update({ inSession: true });
     //TODO: send message to requester that they are connected,
     sendMessagesToParty(abokiID, findSession.requester);
     //TODO: send message to aboki as well.
