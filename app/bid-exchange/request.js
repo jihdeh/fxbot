@@ -11,7 +11,7 @@ async function AddRequest(recipientID, text) {
     console.log(findRequester, getAllAbokis)
     if (findRequester) {
       return "Hello, you currently have a request hanging \nIf you want to cancel this request, just send cancel";
-    } else if (!getAllAbokis) {
+    } else if (!getAllAbokis.length) {
       return "Sorry there are currently no Abokis available, please try later";
     } else {
       const buf = crypto.randomBytes(3);
