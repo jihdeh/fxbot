@@ -1,10 +1,12 @@
 import RequestModel from "../model/request";
 import AbokiModel from "../model/aboki";
 import crypto from "crypto";
+import callSendAPI from "../config/send-requests";
 
 async function AddRequest(recipientID, text) {
   try {
     const findRequester = await RequestModel.findOne({ requester: recipientID, isRequesting: { $eq: true } }).lean();
+    console.log(findRequester)
     if (findRequester) {
       return "Hello, you currently have a request hanging \nIf you want to cancel this request, just send cancel";
     } else {
@@ -13,9 +15,11 @@ async function AddRequest(recipientID, text) {
       const addNewRequest = new RequestModel(Object.assign({}, {
         requester: recipientID,
         requestID: requestKey,
-        isRequesting: true
+        isRequesting: true //set to false after deal is sealed
       }));
-      addNewRequest.save();
+      addNewRequest.save().then(async() => {
+        await broadcastRequest(text, requestKey);
+      });
     }
   } catch (error) {
     console.trace("Error occured adding request", error);
@@ -23,17 +27,39 @@ async function AddRequest(recipientID, text) {
   return;
 }
 
-
-
-async function broadcastRequest(text) {
-  const getAllAbokis = await AbokiModel.find({inSession: false, banned: false});
-  try {
-      let promises = userIds.map((value) => sendRates(value.recipient, rates));
-      let results = await Promise.all(promises);
-      console.log(results);
-    } catch (e) {
-      console.log(e, "error occured posting fb broadcast");
+async function template(recipientId, requestText, payload) {
+  console.log(recipientId, requestText, payload, "====template")
+  const actionData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text: requestText,
+          buttons: [{
+            type: "postback",
+            title: "Accept Request",
+            payload: payload
+          }]
+        }
+      }
     }
+  }
+  callSendAPI(actionData);
+}
+
+async function broadcastRequest(text, bufferKey) {
+  //TODO: send now making your request.....
+  const getAllAbokis = await AbokiModel.find({ inSession: false, banned: false });
+  console.log("abokies", getAllAbokis)
+  try {
+    let promises = getAllAbokis.map(async (value) => await template(value.abokiID, text, bufferKey));
+  } catch (e) {
+    console.log(e, "error occured posting fb broadcast");
+  }
 }
 
 async function RemoveRequest(recipientID) {

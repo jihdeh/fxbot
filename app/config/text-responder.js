@@ -10,6 +10,7 @@ import notifier from "./notification";
 import generate from "./conversion-generator";
 import Aboki from "../bid-exchange/aboki";
 import Request from "../bid-exchange/request";
+import {forEach} from "lodash";
 
 fx.base = "NGN";
 fx.settings = { from: "NGN" };
@@ -80,7 +81,18 @@ EUR => ${rates.moneygram.eur}`;
   }
 }
 
-sendTextMessage(1038184896296564, "aboki remove");
+// sendTextMessage(1038184896296564, "aboki remove");
+// sendTextMessage(1038184896296564, "start i need 1m dollars in lagos");
+sendTextMessage(1038184896296564, "cancel");
+// sendTextMessage(1104717939582429, "start i need 1m dollars in lagos");
+function isContains(word, substr) {
+  let nevalue = false;
+  forEach(substr, (value) => { 
+    if (word.indexOf(value !== "" && value) > -1) return nevalue = true;
+  });
+  return nevalue;
+}
+
 
 async function sendTextMessage(recipientId, messageText) {
   let response;
@@ -98,8 +110,11 @@ async function sendTextMessage(recipientId, messageText) {
     case wordAI.aboki.includes(messageText):
       response = await Aboki.AbokiAdd(recipientId);
       break;
-    case wordAI.request.includes(messageText):
-      response = await Request.AddRequest(recipientId);
+    case isContains(messageText, wordAI.request):
+      return Request.AddRequest(recipientId, messageText);
+      break;
+    case isContains(messageText, wordAI.cancelRequest):
+      response = await Request.RemoveRequest(recipientId);
       break;
     case genericResponse.byes.includes(messageText):
       response = `Alright! Thank you, bye now 🙏`;
@@ -116,19 +131,19 @@ async function sendTextMessage(recipientId, messageText) {
       response = await listener(messageText);
       break;
   }
-  // const messageData = {
-  //   recipient: {
-  //     id: recipientId
-  //   },
-  //   message: {
-  //     text: response
-  //   }
-  // };
-  // try {
-  //   callSendAPI(messageData);
-  // } catch (error) {
-  //   console.log("An error occured");
-  // }
+  const messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: response
+    }
+  };
+  try {
+    callSendAPI(messageData);
+  } catch (error) {
+    console.log("An error occured");
+  }
 }
 
 export default sendTextMessage;
