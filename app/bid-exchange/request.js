@@ -8,11 +8,27 @@ async function AddRequest(recipientID, text) {
   try {
     const findRequester = await RequestModel.findOne({ requester: recipientID, isRequesting: { $eq: true } }).lean();
     const getAllAbokis = await AbokiModel.find({ inSession: false, banned: false }).lean();
-    console.log(findRequester, getAllAbokis)
+    console.log(findRequester, getAllAbokis, !getAllAbokis.length)
     if (findRequester) {
-      return "Hello, you currently have a request hanging \nIf you want to cancel this request, just send cancel";
+      const actionData = {
+        recipient: {
+          id: recipientID
+        },
+        message: {
+          text: "Hello, you currently have a request hanging \nIf you want to cancel this request, just send cancel"
+        }
+      };
+      return callSendAPI(actionData);
     } else if (!getAllAbokis.length) {
-      return "Sorry there are currently no Abokis available, please try later";
+      const actionData = {
+        recipient: {
+          id: recipientID
+        },
+        message: {
+          text: "Sorry there are currently no Abokis available, please try later"
+        }
+      };
+      return callSendAPI(actionData);
     } else {
       const buf = crypto.randomBytes(3);
       const sessionID = buf.toString('hex');
@@ -35,7 +51,6 @@ async function AddRequest(recipientID, text) {
   } catch (error) {
     console.trace("Error occured adding request", error);
   }
-  return;
 }
 
 async function template(recipientId, requestText, payload) {
