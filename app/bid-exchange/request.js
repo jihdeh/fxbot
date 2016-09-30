@@ -26,7 +26,7 @@ async function AddRequest(recipientID, text) {
             requester: recipientID
           }));
         session.save();
-        await broadcastRequest(text, sessionID);
+        await broadcastRequest(text, sessionID, recipientID);
       });
     }
   } catch (error) {
@@ -59,7 +59,7 @@ async function template(recipientId, requestText, payload) {
   callSendAPI(actionData);
 }
 
-async function broadcastRequest(text, sessionID) {
+async function broadcastRequest(text, sessionID, recipientID) {
   //TODO: send now making your request.....
   const getAllAbokis = await AbokiModel.find({ inSession: false, banned: false });
   console.log("abokies", getAllAbokis)
@@ -70,7 +70,15 @@ async function broadcastRequest(text, sessionID) {
       console.log(e, "error occured posting fb broadcast");
     }
   } else {
-    return "Sorry there are currently no Abokis available, please try later";
+    const actionData = {
+      recipient: {
+        id: recipientID
+      },
+      message: {
+        text: "Sorry there are currently no Abokis available, please try later"
+      }
+    };
+    return callSendAPI(actionData);
   }
 }
 
