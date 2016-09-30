@@ -26,8 +26,10 @@ export default async function findSessionData(sessionID, abokiID) {
   if (findSession) {
     return "Sorry this session is already taken, you will be notified when there's another";
   } else {
-    SessionModel.update({ sessionID: sessionID }, { $set: { aboki: abokiID } });
-    AbokiModel.update({ abokiID: abokiID }, { $set: { inSession: true } });
+    SessionModel.findOneAndUpdate({ sessionID: sessionID }, { aboki: abokiID }, {upsert:true}, (err, doc) => {
+      console.log("errrrr", err, "====", doc)
+    });
+    AbokiModel.findOneAndUpdate({ abokiID: abokiID }, { inSession: true }, {upsert:true});
     //TODO: send message to requester that they are connected,
     sendMessagesToParty(abokiID, findSession.requester);
     //TODO: send message to aboki as well.
