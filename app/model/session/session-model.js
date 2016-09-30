@@ -3,11 +3,10 @@ const Schema = mongoose.Schema;
 
 
 const Session = new Schema({
-  bids: [Object.assign({}, {
-    user1: String,
-    user2: String,
-    index: true
-    })],
+  requester: String,
+  aboki: String,
+  
+  sessionId: { type: String, index: true },
   time: { type: Date, default: Date.now }
 });
 

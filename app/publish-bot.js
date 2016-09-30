@@ -2,7 +2,8 @@ import welcomeGreeting from "./config/welcome-greeting";
 import sendActions from "./config/sender-actions";
 import sendTextMessage from "./config/text-responder";
 import helpText from "./util/helper-text";
-import notifier from "./config/notification"
+import notifier from "./config/notification";
+import sessioner from "./config/session";
 
 function* webhook() {
   const data = this.request.body;
@@ -107,8 +108,9 @@ function receivedPostback(event) {
     case "PAYLOAD_NOTIFY_DISABLE":
       notifier.removeFromList(senderID);
       break;
-    default: 
-      sendTextMessage(senderID, "help");
+    default:
+      sessioner(payload, senderID);
+      // sendTextMessage(senderID, "help");
       break;
   }
 }
