@@ -7,9 +7,12 @@ import callSendAPI from "../config/send-requests";
 async function AddRequest(recipientID, text) {
   try {
     const findRequester = await RequestModel.findOne({ requester: recipientID, isRequesting: { $eq: true } }).lean();
-    console.log(findRequester)
+    const getAllAbokis = await AbokiModel.find({ inSession: false, banned: false }).lean();
+    console.log(findRequester, getAllAbokis)
     if (findRequester) {
       return "Hello, you currently have a request hanging \nIf you want to cancel this request, just send cancel";
+    } else if (!getAllAbokis) {
+      return "Sorry there are currently no Abokis available, please try later";
     } else {
       const buf = crypto.randomBytes(3);
       const sessionID = buf.toString('hex');
@@ -63,22 +66,10 @@ async function broadcastRequest(text, sessionID, recipientID) {
   //TODO: send now making your request.....
   const getAllAbokis = await AbokiModel.find({ inSession: false, banned: false });
   console.log("abokies", getAllAbokis)
-  if (getAllAbokis.length) {
-    try {
-      let promises = getAllAbokis.map(async(value) => await template(value.abokiID, text, sessionID));
-    } catch (e) {
-      console.log(e, "error occured posting fb broadcast");
-    }
-  } else {
-    const actionData = {
-      recipient: {
-        id: recipientID
-      },
-      message: {
-        text: "Sorry there are currently no Abokis available, please try later"
-      }
-    };
-    return callSendAPI(actionData);
+  try {
+    let promises = getAllAbokis.map(async(value) => await template(value.abokiID, text, sessionID));
+  } catch (e) {
+    console.log(e, "error occured posting fb broadcast");
   }
 }
 
