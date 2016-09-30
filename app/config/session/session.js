@@ -17,10 +17,11 @@ function servicify(id, text) {
 
 async function findSessionData(sessionID, abokiID) {
   const findSession = await SessionModel.findOne({ sessionId: sessionID }).lean().exec();
+
   if (findSession.aboki && findSession.aboki === abokiID) {
-    servicify(id, "Sorry this session is already taken by you, if you want to cancel, just send > aboki cancel");
+    servicify(abokiID, "Sorry this session is already taken by you, if you want to cancel, just send > aboki cancel");
   } else if(findSession.aboki) {
-    servicify(id, "Sorry this session is already taken, you will be notified when there's another");
+    servicify(abokiID, "Sorry this session is already taken, you will be notified when there's another");
   }
   else {
     SessionModel.findOneAndUpdate({ sessionId: sessionID }, { aboki: abokiID }, { upsert: true }, (err, doc) => {});
