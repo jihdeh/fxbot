@@ -63,10 +63,14 @@ async function broadcastRequest(text, sessionID) {
   //TODO: send now making your request.....
   const getAllAbokis = await AbokiModel.find({ inSession: false, banned: false });
   console.log("abokies", getAllAbokis)
-  try {
-    let promises = getAllAbokis.map(async(value) => await template(value.abokiID, text, sessionID));
-  } catch (e) {
-    console.log(e, "error occured posting fb broadcast");
+  if (getAllAbokis.length) {
+    try {
+      let promises = getAllAbokis.map(async(value) => await template(value.abokiID, text, sessionID));
+    } catch (e) {
+      console.log(e, "error occured posting fb broadcast");
+    }
+  } else {
+    return "Sorry there are currently no Abokis available, please try later";
   }
 }
 

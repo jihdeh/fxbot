@@ -46,8 +46,8 @@ async function listener(text) {
   fx.rates = returnRates(text, rates);
 
   const parallel = isContains(text, wordAI.generalRates);
-  const wu = wordAI.westernRates.includes(text);
-  const cbn = wordAI.cbnRates.includes(text);
+  const wu = isContains(text, wordAI.westernRates);
+  const cbn = isContains(text, wordAI.cbnRates);
   const moneygram = wordAI.moneygramRates.includes(text);
 
   if (parallel) {
