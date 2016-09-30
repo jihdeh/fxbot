@@ -5,8 +5,9 @@ import AbokiModel from "../../model/aboki";
 //TODO: make sure to set insession to tru after aboki accepts req
 
 function sendMessagesToParty(abokiID, recipientID) {
+  console.log("ahah", abokiID)
   const IDs = [abokiID, recipientID];
-  console.lof(IDs, "00---------")
+  console.log(IDs, "00---------")
   for (let id of IDs) {
     console.log("the ids ohhhh", id);
     const actionData = {
