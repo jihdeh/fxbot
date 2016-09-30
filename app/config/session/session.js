@@ -6,6 +6,7 @@ import AbokiModel from "../../model/aboki";
 
 function sendMessagesToParty(abokiID, recipientID) {
   const IDs = [abokiID, recipientID];
+  console.lof(IDs, "00---------")
   for (let id of IDs) {
     console.log("the ids ohhhh", id);
     const actionData = {
@@ -27,6 +28,6 @@ export default async function findSessionData(sessionID, abokiID) {
   } else {
     SessionModel.findOneAndUpdate({ sessionId: sessionID }, { aboki: abokiID }, {upsert:true}, (err, doc) => {});
     AbokiModel.findOneAndUpdate({ abokiID: abokiID }, { inSession: true }, {upsert:true}, (err, doc) => {});
-    sendMessagesToParty(abokiID, findSession.requester);
+    await sendMessagesToParty(abokiID, findSession.requester);
   }
 }
