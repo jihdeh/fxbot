@@ -10,8 +10,8 @@ async function findSessionData(sessionID, abokiID) {
   } else {
     SessionModel.findOneAndUpdate({ sessionId: sessionID }, { aboki: abokiID }, { upsert: true }, (err, doc) => {});
     AbokiModel.findOneAndUpdate({ abokiID: abokiID }, { inSession: true }, { upsert: true }, (err, doc) => {});
-    console.log("ahah", abokiID)
-    const IDs = [abokiID, recipientID];
+    console.log("ahah", abokiID, findSession)
+    let IDs = [abokiID, findSession.requester];
     console.log(IDs, "00---------")
     for (let id of IDs) {
       console.log("the ids ohhhh", id);
