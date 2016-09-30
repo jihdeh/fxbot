@@ -32,11 +32,20 @@ function currencyResponse(text) {
   }
 }
 
+function isContains(word, substr) {
+  let nevalue = false;
+  forEach(substr, (value) => { 
+    if (word.indexOf(value !== "" && value) > -1) return nevalue = true;
+  });
+  return nevalue;
+}
+
+
 async function listener(text) {
   const rates = await Rates.getRates();
   fx.rates = returnRates(text, rates);
 
-  const parallel = wordAI.generalRates.includes(text);
+  const parallel = isContains(text, wordAI.generalRates);
   const wu = wordAI.westernRates.includes(text);
   const cbn = wordAI.cbnRates.includes(text);
   const moneygram = wordAI.moneygramRates.includes(text);
@@ -85,13 +94,7 @@ EUR => ${rates.moneygram.eur}`;
 // sendTextMessage(1038184896296564, "start i need 1m dollars in lagos");
 // sendTextMessage(1038184896296564, "cancel");
 // sendTextMessage(1104717939582429, "start i need 1m dollars in lagos");
-function isContains(word, substr) {
-  let nevalue = false;
-  forEach(substr, (value) => { 
-    if (word.indexOf(value !== "" && value) > -1) return nevalue = true;
-  });
-  return nevalue;
-}
+
 
 
 async function sendTextMessage(recipientId, messageText) {
