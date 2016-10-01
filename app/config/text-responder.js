@@ -93,9 +93,6 @@ EUR => ${rates.moneygram.eur}`;
 // sendTextMessage(1038184896296564, "aboki remove");
 // sendTextMessage(1038184896296564, "start i need 1m dollars in lagos");
 // sendTextMessage(1038184896296564, "cancel");
-// sendTextMessage(1104717939582429, "start i need 1m dollars in lagos");
-
-
 
 async function sendTextMessage(recipientId, messageText) {
   let response;
