@@ -1,9 +1,11 @@
 import welcomeGreeting from "./config/welcome-greeting";
 import sendActions from "./config/sender-actions";
 import sendTextMessage from "./config/text-responder";
+import sendSessionTextMessage from "./config/session-text-responder";
 import helpText from "./util/helper-text";
 import notifier from "./config/notification";
 import sessioner from "./config/session";
+import SessionModel from "./model/session";
 
 function* webhook() {
   const data = this.request.body;
@@ -62,7 +64,13 @@ async function receivedMessage(event) {
       } catch (error) {
         console.log(error)
       }
-      sendTextMessage(senderID, messageText);
+      const isUserInSession = await SessionModel.findOne({$or: [{requester: senderID}, {aboki: senderID}]});
+      console.log(isUserInSession, "???is he")
+      if(isUserInSession) {
+        sendSessionTextMessage(senderID, messageText);
+      } else {
+        sendTextMessage(senderID, messageText);
+      }
     }
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
