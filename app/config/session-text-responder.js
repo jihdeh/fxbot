@@ -2,7 +2,7 @@ import callSendAPI from "./send-requests";
 
 
 
-async function sendSessionMessage (recipientId, messageText) {
+async function sendSessionMessage(recipientId, messageText) {
   const messageData = {
     recipient: {
       id: recipientId
@@ -18,4 +18,4 @@ async function sendSessionMessage (recipientId, messageText) {
   }
 }
 
-export default 
+export default sendSessionMessage
