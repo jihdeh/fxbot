@@ -3,6 +3,12 @@ import callSendAPI from "./send-requests";
 
 
 async function sendSessionMessage(recipientId, messageText) {
+  messageText = messageText.toLowerCase();
+  switch (messageText) {
+    case isContains(messageText, wordAI.cancelRequest):
+      messageText = await Request.RemoveRequest(recipientId);
+      break;
+  }
   const messageData = {
     recipient: {
       id: recipientId

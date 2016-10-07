@@ -114,9 +114,6 @@ async function sendTextMessage(recipientId, messageText) {
     case isContains(messageText, wordAI.request):
       return Request.AddRequest(recipientId, messageText);
       break;
-    case isContains(messageText, wordAI.cancelRequest):
-      response = await Request.RemoveRequest(recipientId);
-      break;
     case genericResponse.byes.includes(messageText):
       response = `Alright! Thank you, bye now 🙏`;
       break;
