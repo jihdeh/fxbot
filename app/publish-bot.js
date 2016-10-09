@@ -73,7 +73,7 @@ async function receivedMessage(event) {
 
       const relayRequestUser = get(isUserInSession, "requester");
       const relayAbokiUser = get(isUserInSession, "aboki");
-      console.log(isUserInSession, "???is he", relayAbokiUser, relayRequestUser, "is her", findAboki, findRequester);
+      console.log(isUserInSession, "???is he", (isUserInSession && findAboki), (isUserInSession && findRequester));
       if(isUserInSession && findAboki) {
         sendSessionTextMessage(relayRequestUser, messageText);
       } else if(isUserInSession && findRequester) {
