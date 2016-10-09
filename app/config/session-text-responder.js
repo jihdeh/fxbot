@@ -11,11 +11,11 @@ function isContains(word, substr) {
 
 async function sendSessionMessage(recipientId, messageText) {
   messageText = messageText.toLowerCase();
-  switch (messageText) {
-    case isContains(messageText, wordAI.cancelRequest):
-      messageText = await Request.RemoveRequest(recipientId);
-      break;
-  }
+  // switch (messageText) {
+  //   case isContains(messageText, wordAI.cancelRequest):
+  //     messageText = await Request.RemoveRequest(recipientId);
+  //     break;
+  // }
   console.log(recipientId, messageText, "========")
   const messageData = {
     recipient: {
