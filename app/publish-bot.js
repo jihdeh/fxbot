@@ -71,9 +71,9 @@ async function receivedMessage(event) {
       const findAboki = await AbokiModel.findOne({ abokiID: senderID }).lean();
       const findRequester = await RequestModel.findOne({ requester: senderID, isRequesting: { $eq: true } }).lean();
 
-      const relayRequestUser = get(isUserInSession.requester);
-      const relayAbokiUser = get(isUserInSession.aboki);
-      console.log(isUserInSession, "???is he", relayAbokiUser);
+      const relayRequestUser = get(isUserInSession, "requester");
+      const relayAbokiUser = get(isUserInSession, "aboki");
+      console.log(isUserInSession, "???is he", relayAbokiUser, relayRequestUser, "is her", findAboki, findRequester);
       if(isUserInSession && findAboki) {
         sendSessionTextMessage(relayRequestUser, messageText);
       } else if(isUserInSession && findRequester) {
