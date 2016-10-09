@@ -5,6 +5,9 @@ import sendSessionTextMessage from "./config/session-text-responder";
 import helpText from "./util/helper-text";
 import notifier from "./config/notification";
 import sessioner from "./config/session";
+import {get} from "lodash";
+import AbokiModel from "../model/aboki";
+import RequestModel from "../model/request";
 import SessionModel from "./model/session";
 
 function* webhook() {
@@ -64,10 +67,17 @@ async function receivedMessage(event) {
       } catch (error) {
         console.log(error)
       }
-      const isUserInSession = await SessionModel.findOne({$or: [{requester: senderID}, {aboki: senderID}]});
-      console.log(isUserInSession, "???is he")
-      if(isUserInSession) {
-        sendSessionTextMessage(senderID, messageText);
+      const isUserInSession = await SessionModel.findOne({$or: [{requester: senderID}, {aboki: senderID}]}).lean();
+      const findAboki = await AbokiModel.findOne({ abokiID: senderID }).lean();
+      const findRequester = await RequestModel.findOne({ requester: senderID, isRequesting: { $eq: true } }).lean();
+
+      const relayRequestUser = get(isUserInSession.requester);
+      const relayAbokiUser = get(isUserInSession.aboki);
+      console.log(isUserInSession, "???is he", relayAbokiUser);
+      if(isUserInSession && findAboki) {
+        sendSessionTextMessage(relayRequestUser, messageText);
+      } else if(isUserInSession && findRequester) {
+          sendSessionTextMessage(relayAbokiUser, messageText);
       } else {
         sendTextMessage(senderID, messageText);
       }

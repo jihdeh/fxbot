@@ -8,7 +8,6 @@ async function AddRequest(recipientID, text) {
   try {
     const findRequester = await RequestModel.findOne({ requester: recipientID, isRequesting: { $eq: true } }).lean();
     const getAllAbokis = await AbokiModel.find({ inSession: false, banned: false }).lean();
-    console.log(findRequester, getAllAbokis, !getAllAbokis.length)
     if (findRequester) {
       const actionData = {
         recipient: {
