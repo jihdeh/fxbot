@@ -6,8 +6,8 @@ import helpText from "./util/helper-text";
 import notifier from "./config/notification";
 import sessioner from "./config/session";
 import {get} from "lodash";
-import AbokiModel from "../model/aboki";
-import RequestModel from "../model/request";
+import AbokiModel from "./model/aboki";
+import RequestModel from "./model/request";
 import SessionModel from "./model/session";
 
 function* webhook() {
