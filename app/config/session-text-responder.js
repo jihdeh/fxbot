@@ -39,15 +39,15 @@ async function cancelRequest(senderId, recipientId) {
 }
 
 
-async function sendSessionMessage(recipientId, messageText, senderId) {
+async function triggerSession(recipientId, messageText, senderId) {
   messageText = messageText.toLowerCase();
   let newText = messageText;
   console.log(isContains(messageText, wordAI.cancelRequest));
-  // if (isContains(messageText, wordAI.cancelRequest)) {
-  //   await cancelRequest(senderId, recipientId);
-  //   return;
-  // }
+  if (isContains(messageText, wordAI.cancelRequest)) {
+    await cancelRequest(senderId, recipientId);
+    return;
+  }
   sendSessionMessage(recipientId, messageText);
 }
 
-export default sendSessionMessage
+export default triggerSession
