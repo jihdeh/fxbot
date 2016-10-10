@@ -78,8 +78,17 @@ async function template(recipientId, requestText, payload) {
 
 async function broadcastRequest(text, sessionID, recipientID) {
   //TODO: send now making your request.....
+  const actionData = {
+    recipient: {
+      id: recipientID
+    },
+    message: {
+      text: "Now Broadcasting your request, please hold....."
+    }
+  };
+  callSendAPI(actionData);
   const getAllAbokis = await AbokiModel.find({ inSession: false, banned: false });
-  console.log("abokies", getAllAbokis)
+  console.log("abokies", getAllAbokis);
   try {
     let promises = getAllAbokis.map(async(value) => await template(value.abokiID, text, sessionID));
   } catch (e) {

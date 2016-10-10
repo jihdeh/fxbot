@@ -1,4 +1,5 @@
 import callSendAPI from "./send-requests";
+import Request from "../bid-exchange/request";
 import wordAI from "../util/word-ai";
 
 function isContains(word, substr) {
@@ -12,13 +13,13 @@ function isContains(word, substr) {
 
 async function sendSessionMessage(recipientId, messageText) {
   messageText = messageText.toLowerCase();
-  // switch (messageText) {
-  //   case isContains(messageText, wordAI.cancelRequest):
-  //     messageText = await Request.RemoveRequest(recipientId);
-  //     break;
-  //   default: 
-  //     return;
-  // }
+  switch (messageText) {
+    case isContains(messageText, wordAI.cancelRequest):
+      messageText = await Request.RemoveRequest(recipientId);
+      break;
+    default:
+      return messageText;
+  }
   const messageData = {
     recipient: {
       id: recipientId
