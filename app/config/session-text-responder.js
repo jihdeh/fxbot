@@ -11,6 +11,10 @@ function isContains(word, substr) {
   return nevalue;
 }
 
+String.prototype.capitalizeFirstLetter = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
 
 async function sendSessionMessage(recipientId, messageText) {
   messageText = messageText.toLowerCase();
@@ -31,7 +35,7 @@ async function sendSessionMessage(recipientId, messageText) {
       id: recipientId
     },
     message: {
-      text: newText
+      text: newText.capitalizeFirstLetter()
     }
   };
   try {
