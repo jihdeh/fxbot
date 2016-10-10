@@ -42,7 +42,6 @@ async function cancelRequest(senderId, recipientId, uniqId) {
 async function triggerSession(recipientId, messageText, senderId, uniqId) {
   messageText = messageText.toLowerCase();
   let newText = messageText;
-  console.log(isContains(messageText, wordAI.cancelRequest));
   if (isContains(messageText, wordAI.cancelRequest)) {
     await cancelRequest(senderId, recipientId, uniqId);
     return;

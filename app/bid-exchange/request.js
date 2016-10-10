@@ -78,6 +78,20 @@ async function template(recipientId, requestText, payload) {
 
 async function broadcastRequest(text, sessionID, recipientID) {
   //TODO: send now making your request.....
+  const isAboki = await AbokiModel.findOne({ abokiID: recipientID });
+  if (isAboki) {
+    console.log("cannot allow");
+    const actionData = {
+      recipient: {
+        id: recipientID
+      },
+      message: {
+        text: "You cannot make a request, because of your Aboki status \n you can use => aboki cancel, to be able to make requests"
+      }
+    };
+    callSendAPI(actionData);
+    return;
+  }
   const actionData = {
     recipient: {
       id: recipientID
@@ -98,11 +112,11 @@ async function broadcastRequest(text, sessionID, recipientID) {
 
 async function RemoveRequest(uniqId) {
   console.log(uniqId)
-  const findRequester = await RequestModel.findOne({ requestID:  uniqId}).lean();
+  const findRequester = await RequestModel.findOne({ requestID: uniqId }).lean();
   if (findRequester) {
-    RequestModel.findOneAndRemove({ requestID:  uniqId}, () => {});
-    SessionModel.findOneAndRemove({ sessionId:  uniqId}, () => {});
-    AbokiModel.update({ sessionId:  uniqId }, {inSession: false, sessionId: null}, () => {});
+    RequestModel.findOneAndRemove({ requestID: uniqId }, () => {});
+    SessionModel.findOneAndRemove({ sessionId: uniqId }, () => {});
+    AbokiModel.update({ sessionId: uniqId }, { inSession: false, sessionId: null }, () => {});
     return "Request has been cancelled";
   } else {
     return "You had no existing requests";
