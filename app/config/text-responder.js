@@ -93,7 +93,7 @@ EUR => ${rates.moneygram.eur}`;
 // sendTextMessage(1038184896296564, "aboki remove");
 // sendTextMessage(1038184896296564, "start i need 1m dollars in lagos");
 // sendTextMessage(1038184896296564, "cancel");
-// listener("rates")
+listener("rates")
 
 async function sendTextMessage(recipientId, messageText) {
   let response;
@@ -129,19 +129,19 @@ async function sendTextMessage(recipientId, messageText) {
       response = await listener(messageText);
       break;
   }
-  const messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: {
-      text: response
-    }
-  };
-  try {
-    callSendAPI(messageData);
-  } catch (error) {
-    console.log("An error occured");
-  }
+  // const messageData = {
+  //   recipient: {
+  //     id: recipientId
+  //   },
+  //   message: {
+  //     text: response
+  //   }
+  // };
+  // try {
+  //   callSendAPI(messageData);
+  // } catch (error) {
+  //   console.log("An error occured");
+  // }
 }
 
 export default sendTextMessage;

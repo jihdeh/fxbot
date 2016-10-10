@@ -60,19 +60,19 @@ function scrape() {
           eur: $(get(cbnRates, "[3]")).text()
         }
       }
-      // console.log(nse);
-      // try {
-      //   if (nse) {
-      //     request.put({ url: API_BASE, body: nse, json: true }, function(error, response, body) {
-      //       if (error) {
-      //         return console.error("upload failed:", error);
-      //       }
-      //       console.log("Upload successful!  Server responded with:", body);
-      //     });
-      //   }
-      // } catch (e) {
-      //   console.log("error occured sending json", e);
-      // }
+      console.log(nse);
+      try {
+        if (nse) {
+          request.put({ url: API_BASE, body: nse, json: true }, function(error, response, body) {
+            if (error) {
+              return console.error("upload failed:", error);
+            }
+            console.log("Upload successful!  Server responded with:", body);
+          });
+        }
+      } catch (e) {
+        console.log("error occured sending json", e);
+      }
     }
   });
 }
