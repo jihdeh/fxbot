@@ -1,5 +1,6 @@
 import callSendAPI from "./send-requests";
 import wordAI from "../util/word-ai";
+import Request from "../bid-exchange/request";
 import {forEach} from "lodash";
 
 
