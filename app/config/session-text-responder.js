@@ -32,18 +32,19 @@ function sendSessionMessage(recipientId, newText) {
   }
 }
 
-function cancelRequest(otherpartyId) {
+function cancelRequest(senderId, recipientId) {
   let newText = await Request.RemoveRequest(recipientId);
-  sendSessionMessage(otherpartyId, newText)
+  sendSessionMessage(senderId, newText);
+  sendSessionMessage(recipientId, "Oops the requester has cancelled this session.");
 }
 
 
-async function sendSessionMessage(recipientId, messageText, otherpartyId) {
+async function sendSessionMessage(recipientId, messageText, senderId) {
   messageText = messageText.toLowerCase();
   let newText = messageText;
   console.log(isContains(messageText, wordAI.cancelRequest));
   if (isContains(messageText, wordAI.cancelRequest)) {
-    cancelRequest(otherpartyId);
+    cancelRequest(senderId, recipientId);
     return;
   }
   sendSessionMessage(recipientId, messageText);
