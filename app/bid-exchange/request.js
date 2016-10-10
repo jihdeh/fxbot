@@ -98,10 +98,10 @@ async function broadcastRequest(text, sessionID, recipientID) {
 }
 
 async function RemoveRequest(recipientID, senderID) {
-  const findRequester = await RequestModel.findOne({ requester: recipientID }).lean();
+  const findRequester = await RequestModel.findOne({ $or: [{ requester: recipientID }, { aboki: senderID }]}).lean();
   if (findRequester) {
-    RequestModel.findOneAndRemove({ requester: recipientID }, () => {});
-    SessionModel.findOneAndRemove({ requester: recipientID }, () => {});
+    RequestModel.findOneAndRemove({ $or: [{ requester: recipientID }, { requester: senderID }] }, () => {});
+    SessionModel.findOneAndRemove({ $or: [{ requester: recipientID }, { requester: senderID }] }, () => {});
     AbokiModel.update({ abokiID: senderID }, {inSession: false}, () => {});
     return "Request has been cancelled";
   } else {

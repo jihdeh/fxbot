@@ -35,7 +35,7 @@ function sendSessionMessage(recipientId, newText) {
 async function cancelRequest(senderId, recipientId) {
   let newText = await Request.RemoveRequest(recipientId, senderId);
   sendSessionMessage(senderId, newText);
-  sendSessionMessage(recipientId, "Oops the requester has cancelled this session.");
+  sendSessionMessage(recipientId, "Oops the session has been cancelled by the other party");
 }
 
 
@@ -50,4 +50,4 @@ async function triggerSession(recipientId, messageText, senderId) {
   sendSessionMessage(recipientId, messageText);
 }
 
-export default triggerSession
+export default triggerSession;
