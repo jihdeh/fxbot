@@ -29,7 +29,7 @@ async function notify(recipientId) {
         type: "template",
         payload: {
           template_type: "button",
-          text: "UNDER TESTING: 𝐅𝐗 𝐔𝐩𝐝𝐚𝐭𝐞𝐬 \nYou'll receive market updates every 1 minute until unsubscribed.",
+          text: "𝐅𝐗 𝐔𝐩𝐝𝐚𝐭𝐞𝐬 \nYou'll receive market updates every 3 hours until unsubscribed.",
           buttons: [whatFuserIdHas]
         }
       }

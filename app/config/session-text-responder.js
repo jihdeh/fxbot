@@ -1,4 +1,5 @@
 import callSendAPI from "./send-requests";
+import wordAI from "../util/word-ai";
 
 function isContains(word, substr) {
   let nevalue = false;
@@ -15,8 +16,9 @@ async function sendSessionMessage(recipientId, messageText) {
   //   case isContains(messageText, wordAI.cancelRequest):
   //     messageText = await Request.RemoveRequest(recipientId);
   //     break;
+  //   default: 
+  //     return;
   // }
-  console.log(recipientId, messageText, "========")
   const messageData = {
     recipient: {
       id: recipientId

@@ -5,7 +5,7 @@ import sendSessionTextMessage from "./config/session-text-responder";
 import helpText from "./util/helper-text";
 import notifier from "./config/notification";
 import sessioner from "./config/session";
-import {get} from "lodash";
+import {get } from "lodash";
 import AbokiModel from "./model/aboki";
 import RequestModel from "./model/request";
 import SessionModel from "./model/session";
@@ -67,19 +67,17 @@ async function receivedMessage(event) {
       } catch (error) {
         console.log(error)
       }
-      const isUserInSession = await SessionModel.findOne({$or: [{requester: senderID}, {aboki: senderID}]}).lean();
+      const isUserInSession = await SessionModel.findOne({ $or: [{ requester: senderID }, { aboki: senderID }] }).lean();
       const findAboki = await AbokiModel.findOne({ abokiID: senderID }).lean();
       const findRequester = await RequestModel.findOne({ requester: senderID, isRequesting: { $eq: true } }).lean();
 
       const relayRequestUser = get(isUserInSession, "requester");
       const relayAbokiUser = get(isUserInSession, "aboki");
 
-      if(isUserInSession && findAboki) {
-        console.log("aboki resort")
+      if (isUserInSession && findAboki) {
         sendSessionTextMessage(relayRequestUser, messageText);
-      } else if(isUserInSession && findRequester) {
-          console.log("requester resort")
-          sendSessionTextMessage(relayAbokiUser, messageText);
+      } else if (isUserInSession && findRequester) {
+        sendSessionTextMessage(relayAbokiUser, messageText);
       } else {
         sendTextMessage(senderID, messageText);
       }
@@ -112,7 +110,7 @@ function receivedPostback(event) {
 
   console.log("Received postback for user %d and page %d with payload '%s' " +
     "at %d", senderID, recipientID, payload, timeOfPostback);
-  switch(payload) {
+  switch (payload) {
     case "PAYLOAD_GETTING_STARTED":
       sendTextMessage(senderID, "help");
       break;

@@ -6,5 +6,6 @@
   "aboki": ["aboki register", "register", "i want to be an aboki", "register as aboki", "aboki sub"],
   "abokiRm": ["aboki remove", "unregister", "i don't want to be an aboki", "aboki unsub"],
   "request": ["start", "request"],
-  "cancelRequest": ["cancel"]
+  "cancelRequest": ["cancel"],
+  "filters": ["phone", "phone number", "mobile", "mobile number", "digits", "zeroeightzero", "zero eight", "name"]
 }
