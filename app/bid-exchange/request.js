@@ -96,7 +96,8 @@ async function broadcastRequest(text, sessionID, recipientID) {
   }
 }
 
-async function RemoveRequest(recipientID, senderID, uniqId) {
+async function RemoveRequest(uniqId) {
+  console.log(uniqId)
   const findRequester = await RequestModel.findOne({ requestID:  uniqId}).lean();
   if (findRequester) {
     RequestModel.findOneAndRemove({ requestID:  uniqId}, () => {});
