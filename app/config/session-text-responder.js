@@ -33,7 +33,7 @@ function sendSessionMessage(recipientId, newText) {
 }
 
 async function cancelRequest(senderId, recipientId, uniqId) {
-  let newText = await Request.RemoveRequest(uniqId);
+  let newText = await Request.RemoveRequest(uniqId, senderId, recipientId);
   sendSessionMessage(senderId, newText);
   sendSessionMessage(recipientId, "Oops the session has been cancelled by the other party");
 }
