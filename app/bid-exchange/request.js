@@ -8,7 +8,7 @@ async function AddRequest(recipientID, text) {
   try {
     const findRequester = await RequestModel.findOne({ requester: recipientID, isRequesting: { $eq: true } }).lean();
     const getAllAbokis = await AbokiModel.find({ inSession: false, banned: false }).lean();
-    console.log(recipientID, findRequester);
+
     if (findRequester) {
       const actionData = {
         recipient: {
@@ -54,7 +54,6 @@ async function AddRequest(recipientID, text) {
 }
 
 async function template(recipientId, requestText, payload) {
-  console.log(recipientId, requestText, payload, "====template")
   const actionData = {
     recipient: {
       id: recipientId
@@ -98,11 +97,11 @@ async function broadcastRequest(text, sessionID, recipientID) {
 }
 
 async function RemoveRequest(recipientID, senderID) {
-  const findRequester = await RequestModel.findOne({ $or: [{ requester: recipientID }, { aboki: senderID }]}).lean();
+  const findRequester = await RequestModel.findOne({ requester: senderID }).lean();
   if (findRequester) {
-    RequestModel.findOneAndRemove({ $or: [{ requester: recipientID }, { requester: senderID }] }, () => {});
-    SessionModel.findOneAndRemove({ $or: [{ requester: recipientID }, { requester: senderID }] }, () => {});
-    AbokiModel.update({ abokiID: senderID }, {inSession: false}, () => {});
+    RequestModel.findOneAndRemove({ requester: senderID }, () => {});
+    SessionModel.findOneAndRemove({ requester: senderID }, () => {});
+    AbokiModel.update({ $or: [{ abokiID: senderID }, { abokiID: senderID }] }, {inSession: false}, () => {});
     return "Request has been cancelled";
   } else {
     return "You had no existing requests";
