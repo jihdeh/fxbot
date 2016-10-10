@@ -8,7 +8,19 @@ async function AddRequest(recipientID, text) {
   try {
     const findRequester = await RequestModel.findOne({ requester: recipientID, isRequesting: { $eq: true } }).lean();
     const getAllAbokis = await AbokiModel.find({ inSession: false, banned: false }).lean();
-
+    const isAboki = await AbokiModel.findOne({ abokiID: recipientID });
+    if (isAboki) {
+      const actionData = {
+        recipient: {
+          id: recipientID
+        },
+        message: {
+          text: "You cannot make a request, because of your Aboki status \nyou can use => aboki remove, to be able to make requests"
+        }
+      };
+      callSendAPI(actionData);
+      return;
+    }
     if (findRequester) {
       const actionData = {
         recipient: {
@@ -77,21 +89,6 @@ async function template(recipientId, requestText, payload) {
 }
 
 async function broadcastRequest(text, sessionID, recipientID) {
-  //TODO: send now making your request.....
-  const isAboki = await AbokiModel.findOne({ abokiID: recipientID });
-  if (isAboki) {
-    console.log("cannot allow");
-    const actionData = {
-      recipient: {
-        id: recipientID
-      },
-      message: {
-        text: "You cannot make a request, because of your Aboki status \n you can use => aboki cancel, to be able to make requests"
-      }
-    };
-    callSendAPI(actionData);
-    return;
-  }
   const actionData = {
     recipient: {
       id: recipientID
