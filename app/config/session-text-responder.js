@@ -33,7 +33,7 @@ function sendSessionMessage(recipientId, newText) {
 }
 
 function cancelRequest(senderId, recipientId) {
-  let newText = await Request.RemoveRequest(recipientId);
+  let newText = await Request.RemoveRequest(recipientId, senderId);
   sendSessionMessage(senderId, newText);
   sendSessionMessage(recipientId, "Oops the requester has cancelled this session.");
 }

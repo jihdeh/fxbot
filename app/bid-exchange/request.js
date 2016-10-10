@@ -97,11 +97,12 @@ async function broadcastRequest(text, sessionID, recipientID) {
   }
 }
 
-async function RemoveRequest(recipientID) {
+async function RemoveRequest(recipientID, senderID) {
   const findRequester = await RequestModel.findOne({ requester: recipientID }).lean();
   if (findRequester) {
     RequestModel.findOneAndRemove({ requester: recipientID }, () => {});
     SessionModel.findOneAndRemove({ requester: recipientID }, () => {});
+    AbokiModel.update({ abokiID: senderID }, {inSession: false}, () => {});
     return "Request has been cancelled";
   } else {
     return "You had no existing requests";
