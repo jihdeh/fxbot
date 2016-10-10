@@ -75,9 +75,9 @@ async function receivedMessage(event) {
       const relayAbokiUser = get(isUserInSession, "aboki");
 
       if (isUserInSession && findAboki) {
-        sendSessionTextMessage(relayRequestUser, "Aboki Says: \n\n" + messageText, relayAbokiUser);
+        sendSessionTextMessage(relayRequestUser, "Aboki Says: \n\n" + messageText, relayAbokiUser, isUserInSession.sessionId);
       } else if (isUserInSession && findRequester) {
-        sendSessionTextMessage(relayAbokiUser, "Requester says: \n\n" + messageText, relayRequestUser);
+        sendSessionTextMessage(relayAbokiUser, "Requester says: \n\n" + messageText, relayRequestUser, isUserInSession.sessionId);
       } else {
         sendTextMessage(senderID, messageText);
       }
