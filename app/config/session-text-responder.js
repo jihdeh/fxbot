@@ -4,34 +4,40 @@ import wordAI from "../util/word-ai";
 
 function isContains(word, substr) {
   let nevalue = false;
-  forEach(substr, (value) => { 
+  forEach(substr, (value) => {
     if (word.indexOf(value !== "" && value) > -1) return nevalue = true;
   });
   return nevalue;
 }
 
-
-async function sendSessionMessage(recipientId, messageText) {
-  messageText = messageText.toLowerCase();
-  switch (true) {
-    case isContains(messageText, wordAI.cancelRequest):
-      messageText = await Request.RemoveRequest(recipientId);
-      break;
-    default:
-      return messageText;
-  }
-  const messageData = {
+function msgData(recipientId, messageText) {
+  return {
     recipient: {
       id: recipientId
     },
     message: {
       text: messageText
     }
-  };
-  try {
-    callSendAPI(messageData);
-  } catch (error) {
-    console.log("An error occured");
+  }
+}
+
+async function sendSessionMessage(recipientId, messageText) {
+  messageText = messageText.toLowerCase();
+  switch (true) {
+    case isContains(messageText, wordAI.cancelRequest):
+      messageText = await Request.RemoveRequest(recipientId);
+      try {
+        callSendAPI(msgData(recipientId, messageText));
+      } catch (error) {
+        console.log(error)
+      }
+      break;
+    default:
+      try {
+        callSendAPI(msgData(recipientId, messageText));;
+      } catch (error) {
+        console.log(error);
+      }
   }
 }
 
