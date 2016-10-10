@@ -15,6 +15,7 @@ function isContains(word, substr) {
 async function sendSessionMessage(recipientId, messageText) {
   messageText = messageText.toLowerCase();
   // let newText = messageText;
+  console.log(isContains(messageText, wordAI.cancelRequest));
   // if(isContains(messageText, wordAI.cancelRequest)) {
   //   newText = await Request.RemoveRequest(recipientId);
   //   console.log("yesss",newText);
