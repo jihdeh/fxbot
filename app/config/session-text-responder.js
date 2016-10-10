@@ -13,7 +13,7 @@ function isContains(word, substr) {
 
 async function sendSessionMessage(recipientId, messageText) {
   messageText = messageText.toLowerCase();
-  switch (messageText) {
+  switch (true) {
     case isContains(messageText, wordAI.cancelRequest):
       messageText = await Request.RemoveRequest(recipientId);
       break;
