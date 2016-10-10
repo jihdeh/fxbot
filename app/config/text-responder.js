@@ -129,19 +129,19 @@ async function sendTextMessage(recipientId, messageText) {
       response = await listener(messageText);
       break;
   }
-  // const messageData = {
-  //   recipient: {
-  //     id: recipientId
-  //   },
-  //   message: {
-  //     text: response
-  //   }
-  // };
-  // try {
-  //   callSendAPI(messageData);
-  // } catch (error) {
-  //   console.log("An error occured");
-  // }
+  const messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: response
+    }
+  };
+  try {
+    callSendAPI(messageData);
+  } catch (error) {
+    console.log("An error occured");
+  }
 }
 
 export default sendTextMessage;
