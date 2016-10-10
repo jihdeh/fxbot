@@ -14,12 +14,12 @@ function isContains(word, substr) {
 
 async function sendSessionMessage(recipientId, messageText) {
   messageText = messageText.toLowerCase();
-  // let newText = messageText;
+  let newText = messageText;
   console.log(isContains(messageText, wordAI.cancelRequest));
-  // if(isContains(messageText, wordAI.cancelRequest)) {
-  //   newText = await Request.RemoveRequest(recipientId);
-  //   console.log("yesss",newText);
-  // }
+  if(isContains(messageText, wordAI.cancelRequest)) {
+    newText = await Request.RemoveRequest(recipientId);
+    console.log("yesss",newText);
+  }
   // switch (messageText) {
   //   case isContains(messageText, wordAI.cancelRequest):
   //     break;
@@ -31,7 +31,7 @@ async function sendSessionMessage(recipientId, messageText) {
       id: recipientId
     },
     message: {
-      text: messageText
+      text: newText
     }
   };
   try {
