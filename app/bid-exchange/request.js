@@ -101,7 +101,7 @@ async function RemoveRequest(recipientID, senderID) {
   if (findRequester) {
     RequestModel.findOneAndRemove({ requester: senderID }, () => {});
     SessionModel.findOneAndRemove({ requester: senderID }, () => {});
-    AbokiModel.update({ $or: [{ abokiID: senderID }, { abokiID: senderID }] }, {inSession: false}, () => {});
+    AbokiModel.update({ $or: [{ abokiID: senderID }, { abokiID: recipientID }] }, {inSession: false}, () => {});
     return "Request has been cancelled";
   } else {
     return "You had no existing requests";
