@@ -1,43 +1,40 @@
 import callSendAPI from "./send-requests";
-import Request from "../bid-exchange/request";
 import wordAI from "../util/word-ai";
 
 function isContains(word, substr) {
   let nevalue = false;
-  forEach(substr, (value) => {
+  forEach(substr, (value) => { 
     if (word.indexOf(value !== "" && value) > -1) return nevalue = true;
   });
   return nevalue;
 }
 
-function msgData(recipientId, messageText) {
-  return {
+
+async function sendSessionMessage(recipientId, messageText) {
+  messageText = messageText.toLowerCase();
+  let newText = messageText;
+  if(isContains(messageText, wordAI.cancelRequest)) {
+    newText = await Request.RemoveRequest(recipientId);
+    console.log("yesss",newText);
+  }
+  // switch (messageText) {
+  //   case isContains(messageText, wordAI.cancelRequest):
+  //     break;
+  //   default: 
+  //     return;
+  // }
+  const messageData = {
     recipient: {
       id: recipientId
     },
     message: {
       text: messageText
     }
-  }
-}
-
-async function sendSessionMessage(recipientId, messageText) {
-  messageText = messageText.toLowerCase();
-  switch (true) {
-    case isContains(messageText, wordAI.cancelRequest):
-      messageText = await Request.RemoveRequest(recipientId);
-      try {
-        callSendAPI(msgData(recipientId, messageText));
-      } catch (error) {
-        console.log(error)
-      }
-      break;
-    default:
-      try {
-        callSendAPI(msgData(recipientId, messageText));;
-      } catch (error) {
-        console.log(error);
-      }
+  };
+  try {
+    callSendAPI(messageData);
+  } catch (error) {
+    console.log("An error occured");
   }
 }
 
