@@ -25,7 +25,7 @@ async function findSessionData(sessionID, abokiID) {
   }
   else {
     SessionModel.findOneAndUpdate({ sessionId: sessionID }, { aboki: abokiID }, { upsert: true }, (err, doc) => {});
-    AbokiModel.findOneAndUpdate({ abokiID: abokiID }, { inSession: true }, { upsert: true }, (err, doc) => {});
+    AbokiModel.findOneAndUpdate({ abokiID: abokiID }, { inSession: true, sessionId: sessionID }, { upsert: true }, (err, doc) => {});
     let IDs = [abokiID, findSession.requester];
     for (let id of IDs) {
       servicify(id, "You are now connected, please send a message")

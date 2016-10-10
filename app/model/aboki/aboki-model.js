@@ -9,6 +9,7 @@ const Aboki = new Schema({
   timezone: Number,
   gender: String,
   inSession: {type: Boolean, index: true, default: false},
+  sessionId: String,
   banned: {type: Boolean, default: false}
 });
 
