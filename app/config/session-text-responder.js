@@ -1,5 +1,7 @@
 import callSendAPI from "./send-requests";
 import wordAI from "../util/word-ai";
+import {forEach} from "lodash";
+
 
 function isContains(word, substr) {
   let nevalue = false;
@@ -12,11 +14,11 @@ function isContains(word, substr) {
 
 async function sendSessionMessage(recipientId, messageText) {
   messageText = messageText.toLowerCase();
-  let newText = messageText;
-  if(isContains(messageText, wordAI.cancelRequest)) {
-    newText = await Request.RemoveRequest(recipientId);
-    console.log("yesss",newText);
-  }
+  // let newText = messageText;
+  // if(isContains(messageText, wordAI.cancelRequest)) {
+  //   newText = await Request.RemoveRequest(recipientId);
+  //   console.log("yesss",newText);
+  // }
   // switch (messageText) {
   //   case isContains(messageText, wordAI.cancelRequest):
   //     break;
