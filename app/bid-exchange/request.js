@@ -83,7 +83,8 @@ async function broadcastRequest(text, sessionID, recipientID) {
     let newText = text.split(" ");
     newText.shift();
     newText.join(" ");
-    let promises = getAllAbokis.map(async(value) => await template(value.abokiID, newText, sessionID));
+    console.log(newText)
+    let promises = getAllAbokis.map(async(value) => await template(value.abokiID, text, sessionID));
   } catch (e) {
     console.log(e, "error occured posting fb broadcast");
   }
