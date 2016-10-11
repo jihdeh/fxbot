@@ -82,7 +82,7 @@ async function broadcastRequest(text, sessionID, recipientID) {
   try {
     let newText = text.split(" ");
     newText.shift();
-    let newTextProp = newText.join(" ") || text;
+    let newTextProp = newText.join(" ");
     if(newTextProp === "") {
       servicify(recipientID, "Sorry you need to enter more context to your message");
       throw new "Error";
