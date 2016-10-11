@@ -77,7 +77,6 @@ async function template(recipientId, requestText, payload) {
 }
 
 async function broadcastRequest(text, sessionID, recipientID) {
-  servicify(recipientID, "Now Broadcasting your request, please hold.....");
   const getAllAbokis = await AbokiModel.find({ inSession: false, banned: false });
   try {
     let newText = text.split(" ");
@@ -85,9 +84,10 @@ async function broadcastRequest(text, sessionID, recipientID) {
     let newTextProp = newText.join(" ");
     if(newTextProp === "") {
       servicify(recipientID, "Sorry you need to enter more context to your message");
-      throw new "Error";
+      throw new Error;
       return;
     }
+    servicify(recipientID, "Now Broadcasting your request, please hold.....");
     let promises = getAllAbokis.map(async(value) => await template(value.abokiID, newTextProp, sessionID));
   } catch (e) {
     console.log(e, "error occured posting fb broadcast");
