@@ -37,15 +37,15 @@ async function AddRequest(recipientID, text) {
         requestID: sessionID,
         isRequesting: true //set to false after deal is sealed
       }));
-      addNewRequest.save().then(async() => {
-        console.log(sessionID, "after save");
-        const session = new SessionModel(
-          Object.assign({}, {
-            sessionId: sessionID,
-            requester: recipientID
-          }));
-        session.save();
-        await broadcastRequest(text, sessionID, recipientID);
+      broadcastRequest(text, sessionID, recipientID).then(() => {
+        addNewRequest.save().then(() => {
+          const session = new SessionModel(
+            Object.assign({}, {
+              sessionId: sessionID,
+              requester: recipientID
+            }));
+          session.save();
+        });
       });
     }
   } catch (error) {
@@ -83,6 +83,11 @@ async function broadcastRequest(text, sessionID, recipientID) {
     let newText = text.split(" ");
     newText.shift();
     let newTextProp = newText.join(" ") || text;
+    if(newTextProp === "") {
+      servicify(recipientID, "Sorry you need to enter more context to your message");
+      throw new "Error";
+      return;
+    }
     let promises = getAllAbokis.map(async(value) => await template(value.abokiID, newTextProp, sessionID));
   } catch (e) {
     console.log(e, "error occured posting fb broadcast");
