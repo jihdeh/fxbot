@@ -90,11 +90,6 @@ EUR => ${rates.moneygram.eur}`;
   }
 }
 
-// sendTextMessage(1038184896296564, "aboki remove");
-// sendTextMessage(1038184896296564, "start i need 1m dollars in lagos");
-// sendTextMessage(1038184896296564, "cancel");
-// listener("rates")
-
 async function sendTextMessage(recipientId, messageText) {
   let response;
   messageText = messageText.toLowerCase();

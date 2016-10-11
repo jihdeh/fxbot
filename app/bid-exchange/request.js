@@ -4,43 +4,31 @@ import SessionModel from "../model/session";
 import crypto from "crypto";
 import callSendAPI from "../config/send-requests";
 
+
+function servicify(recipientID, text) {
+  const actionData = {
+    recipient: {
+      id: recipientID
+    },
+    message: {
+      text: text
+    }
+  };
+  callSendAPI(actionData);
+}
 async function AddRequest(recipientID, text) {
   try {
     const findRequester = await RequestModel.findOne({ requester: recipientID, isRequesting: { $eq: true } }).lean();
     const getAllAbokis = await AbokiModel.find({ inSession: false, banned: false }).lean();
     const isAboki = await AbokiModel.findOne({ abokiID: recipientID });
     if (isAboki) {
-      const actionData = {
-        recipient: {
-          id: recipientID
-        },
-        message: {
-          text: "You cannot make a request, because of your Aboki status \nyou can use => aboki remove, to be able to make requests"
-        }
-      };
-      callSendAPI(actionData);
+      servicify(recipientID, "You cannot make a request, because of your Aboki status \nyou can use => aboki remove, to be able to make requests");
       return;
     }
     if (findRequester) {
-      const actionData = {
-        recipient: {
-          id: recipientID
-        },
-        message: {
-          text: "Hello, you currently have a request hanging \nIf you want to cancel this request, just send cancel"
-        }
-      };
-      return callSendAPI(actionData);
+      servicify(recipientID, "Hello, you currently have a request hanging \nIf you want to cancel this request, just send cancel");
     } else if (!getAllAbokis.length) {
-      const actionData = {
-        recipient: {
-          id: recipientID
-        },
-        message: {
-          text: "Sorry there are currently no Abokis available, please try later"
-        }
-      };
-      return callSendAPI(actionData);
+      servicify(recipientID, "Sorry there are currently no Abokis available, please try later");
     } else {
       const buf = crypto.randomBytes(3);
       const sessionID = buf.toString('hex');
@@ -89,26 +77,19 @@ async function template(recipientId, requestText, payload) {
 }
 
 async function broadcastRequest(text, sessionID, recipientID) {
-  const actionData = {
-    recipient: {
-      id: recipientID
-    },
-    message: {
-      text: "Now Broadcasting your request, please hold....."
-    }
-  };
-  callSendAPI(actionData);
+  servicify(recipientID, "Now Broadcasting your request, please hold.....");
   const getAllAbokis = await AbokiModel.find({ inSession: false, banned: false });
-  console.log("abokies", getAllAbokis);
   try {
-    let promises = getAllAbokis.map(async(value) => await template(value.abokiID, text, sessionID));
+    let newText = text.split(" ");
+    newText.shift();
+    newText.join(" ");
+    let promises = getAllAbokis.map(async(value) => await template(value.abokiID, newText, sessionID));
   } catch (e) {
     console.log(e, "error occured posting fb broadcast");
   }
 }
 
 async function RemoveRequest(uniqId) {
-  console.log(uniqId)
   const findRequester = await RequestModel.findOne({ requestID: uniqId }).lean();
   if (findRequester) {
     RequestModel.findOneAndRemove({ requestID: uniqId }, () => {});
