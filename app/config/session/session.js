@@ -17,7 +17,9 @@ function servicify(id, text) {
 
 async function findSessionData(sessionID, abokiID) {
   const findSession = await SessionModel.findOne({ sessionId: sessionID }).lean().exec();
-
+  if(!findSession) {
+    servicify(abokiID, "Request no longer available");
+  }
   if (findSession.aboki && findSession.aboki === abokiID) {
     servicify(abokiID, "Sorry this session is already taken by you, if you want to cancel, just send > aboki cancel");
   } else if(findSession.aboki) {
