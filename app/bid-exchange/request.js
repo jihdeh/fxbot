@@ -90,6 +90,7 @@ async function broadcastRequest(text, sessionID, recipientID) {
     servicify(recipientID, "Now Broadcasting your request, please hold.....");
     let promises = getAllAbokis.map(async(value) => await template(value.abokiID, newTextProp, sessionID));
   } catch (e) {
+    throw new e;
     console.log(e, "error occured posting fb broadcast");
   }
 }
