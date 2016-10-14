@@ -2,6 +2,7 @@ import request from "request";
 import cheerio from "cheerio";
 import axios from "axios";
 import {get } from "lodash";
+import officerParallel from "./parallel";
 import officerCbn from "./cbn";
 import officerWesty from "./western";
 import officerMoneyGram from "./moneygram";
@@ -16,34 +17,22 @@ function scrape() {
   request({ url: url, jar: j }, function(error, response, html) {
     if (!error) {
       let $ = cheerio.load(html);
-      let parallelRates = [];
-      $(".entry-content table tbody").first().filter(function() {
-        let data = $(this);
-        let recentData = data.contents().map(function(i, el) {
-          return $(this).html();
-        }).get();
-        // console.log(recentData)
-        parallelRates.push({
-          usd: $(get(recentData, "[3]")).text(),
-          gbp: $(get(recentData, "[4]")).text(),
-          eur: $(get(recentData, "[5]")).text()
-        });
-      });
     
       //western union rates is currently unstable and sometimes breaks.
+      const parallelRates = officerParallel(html);
       const cbnRates = officerCbn(html);
       const westernRates = officerWesty(html);
       const moneyGramRates = officerMoneyGram(html);
 
-      if (!parallelRates[0] || parallelRates[0] === undefined) {
+      if (!parallelRates || parallelRates === undefined) {
         scrape();
         return;
       }
       const nse = {
         parallel: {
-          usd: parallelRates[0].usd,
-          gbp: parallelRates[0].gbp,
-          eur: parallelRates[0].eur
+          usd: parallelRates.usd,
+          gbp: parallelRates.gbp,
+          eur: parallelRates.eur
         },
         wu: {
           usd: westernRates[9],
