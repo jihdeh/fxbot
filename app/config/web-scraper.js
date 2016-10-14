@@ -17,15 +17,16 @@ function scrape() {
     if (!error) {
       let $ = cheerio.load(html);
       let parallelRates = [];
-      $(".entry-content table tbody tr").first().next().next().filter(function() {
+      $(".entry-content table tbody").first().filter(function() {
         let data = $(this);
         let recentData = data.contents().map(function(i, el) {
           return $(this).html();
         }).get();
+        // console.log(recentData)
         parallelRates.push({
-          usd: $(get(recentData, "[1]")).text(),
-          gbp: $(get(recentData, "[2]")).text(),
-          eur: $(get(recentData, "[3]")).text()
+          usd: $(get(recentData, "[3]")).text(),
+          gbp: $(get(recentData, "[4]")).text(),
+          eur: $(get(recentData, "[5]")).text()
         });
       });
     
