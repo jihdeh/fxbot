@@ -41,6 +41,5 @@ export default function fetchParallelRates(html) {
   const firstFn = getFirstResult();
   const secondFn = getNextResult();
   const passRatesDown = (get(secondFn, "[0].usd") !== "") ? secondFn[0] : firstFn[0];
-  console.log(secondFn[0])
   return passRatesDown;
 }
