@@ -13,7 +13,6 @@ export default function fetchParallelRates(html) {
       let recentData = data.contents().map(function(i, el) {
         return $(this).html();
       }).get();
-      // console.log(recentData)
       parallelRates.push({
         usd: $(get(recentData, "[3]")).text(),
         gbp: $(get(recentData, "[4]")).text(),
