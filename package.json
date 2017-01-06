@@ -54,7 +54,8 @@
     "supertest-as-promised": "^3.2.0"
   },
   "scripts": {
-    "start": "touch rates.json && node server/index.js",
+    "start": "node server/index.js",
+    "cron": "node cron/index.js",
     "dev": "nodemon --ignore public -d 2 server/index.js",
     "lint": "eslint ./app",
     "test": "istanbul cover _mocha -- -R spec $npm_package_options_mocha"
