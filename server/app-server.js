@@ -37,6 +37,7 @@ function startWorker() {
     process.send("online");
   }
 }
+console.log("Shud call")
 
 // Not enough memory on free heroku for fork mode
 if (cluster.isMaster && process.env.NODE_ENV !== "development") {
