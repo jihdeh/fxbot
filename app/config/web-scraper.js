@@ -11,10 +11,7 @@ let API_BASE = process.env.JSON_RATES_STORE;
 let url = "http://abokifx.com";
 
 function scrape() {
-  const j = request.jar();
-  const cookie = request.cookie(`PHPSESSID=${process.env.SESS}`);
-  j.setCookie(cookie, url);
-  request({ url: url, jar: j }, function(error, response, html) {
+  request({ url }, function(error, response, html) {
     if (!error) {
       let $ = cheerio.load(html);
     
@@ -24,10 +21,8 @@ function scrape() {
       const westernRates = officerWesty(html);
       const moneyGramRates = officerMoneyGram(html);
 
-      if (!parallelRates || parallelRates === undefined) {
-        scrape();
-        return;
-      }
+      if (parallelRates && parallelRates !== undefined) {
+      console.log(parallelRates)
       const nse = {
         parallel: {
           usd: parallelRates.usd,
@@ -63,6 +58,7 @@ function scrape() {
       } catch (e) {
         console.log("error occured sending json", e);
       }
+    }
     }
   });
 }
