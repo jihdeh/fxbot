@@ -33,9 +33,9 @@ function scrape() {
           eur: westernRates.eur
         },
         moneygram: {
-          usd: moneyGramRates[9],
-          gbp: moneyGramRates[10],
-          eur: moneyGramRates[11]
+          usd: moneyGramRates.usd,
+          gbp: moneyGramRates.gbp,
+          eur: moneyGramRates.eur
         },
         cbn: {
           usd: $(get(cbnRates, "[1]")).text(),
