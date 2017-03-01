@@ -10,18 +10,12 @@ export default function WesternRates(html) {
     let recentData = data.contents().map(function(i, el) {
       return $(this).html();
     }).get();
-    // let x = JSON.stringify(recentData);
-    // let y = JSON.parse(x);
-    // storeWURates.push(y);
     storeWURates = {
         usd: $(get(recentData, "[1]")).text().trim(),
         gbp: $(get(recentData, "[2]")).text().trim(),
         eur: $(get(recentData, "[3]")).text().trim()
       };
-    console.log(storeWURates)
     return storeWURates;
   });
-
-  // const wu0 = JSON.parse(JSON.stringify($(get(storeWURates, "[0][0]")).text().split("\n")));
   return storeWURates;
 }
