@@ -38,9 +38,9 @@ function scrape() {
           eur: moneyGramRates.eur
         },
         cbn: {
-          usd: $(get(cbnRates, "[1]")).text(),
-          gbp: $(get(cbnRates, "[2]")).text(),
-          eur: $(get(cbnRates, "[3]")).text()
+          usd: cbnRates.usd,
+          gbp: cbnRates.gbp,
+          eur: cbnRates.eur
         }
       }
       console.log(nse);

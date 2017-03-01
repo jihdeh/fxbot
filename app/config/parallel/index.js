@@ -2,8 +2,6 @@ import cheerio from "cheerio";
 import {get } from "lodash";
 
 export default function fetchParallelRates(html) {
-  //if there no other results
-  //either the first or the second function must return results that are not empty strings
   let $ = cheerio.load(html);
 
   function getFirstResult() {
