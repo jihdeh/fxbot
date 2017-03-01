@@ -21,8 +21,6 @@ function scrape() {
       const westernRates = officerWesty(html);
       const moneyGramRates = officerMoneyGram(html);
 
-      if (parallelRates && parallelRates !== undefined) {
-      console.log(parallelRates)
       const nse = {
         parallel: {
           usd: parallelRates.usd,
@@ -30,9 +28,9 @@ function scrape() {
           eur: parallelRates.eur
         },
         wu: {
-          usd: westernRates[9],
-          gbp: westernRates[10],
-          eur: westernRates[11]
+          usd: westernRates.usd,
+          gbp: westernRates.gbp,
+          eur: westernRates.eur
         },
         moneygram: {
           usd: moneyGramRates[9],
@@ -58,7 +56,6 @@ function scrape() {
       } catch (e) {
         console.log("error occured sending json", e);
       }
-    }
     }
   });
 }
