@@ -8,7 +8,7 @@ import officerWesty from "./western";
 import officerMoneyGram from "./moneygram";
 
 let API_BASE = process.env.JSON_RATES_STORE;
-let url = "http://abokifx.com";
+let url = "https://abokifx.com";
 
 function scrape() {
   request({ url }, function(error, response, html) {
